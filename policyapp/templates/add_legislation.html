@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}"> 
+    <title>Add Legislation</title>
+</head>
+<body>
+    <h2>Add New Legislation</h2>
+    <form action="/add-legislation" method="post">
+        <label for="title">Title:</label>
+        <input type="text" name="title" required><br><br>
+
+        <label for="summary">Summary:</label>
+        <textarea name="summary"></textarea><br><br>
+
+        <!-- Add other fields similarly -->
+        <!-- ... -->
+
+        <input type="submit" value="Add Legislation">
+    </form>
+    <br>
+    <a href="/legislations">Back to Legislations</a>
+</body>
+</html>

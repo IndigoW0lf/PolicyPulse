@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Legislations</title>
+</head>
+<body>
+    <h1>All Legislations</h1>
+    <ul>
+        {% for legislation in legislations %}
+        <li>
+            <a href="{{ url_for('legislation_detail', id=legislation.id) }}">{{ legislation.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <!-- Pagination links can be added here -->
+</body>
+</html>

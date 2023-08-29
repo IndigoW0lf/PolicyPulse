@@ -1,4 +1,4 @@
-from app import db
+from policyapp import db
 
 class Legislation(db.Model):
     # 'Text' types may need to be updated later, but these may be csv, JSON, or other structured formats
