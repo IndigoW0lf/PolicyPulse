@@ -1,13 +1,23 @@
 import requests
 from bs4 import BeautifulSoup
+import time
 
 # URL of the page you want to scrape
 URL = 'https://www.congress.gov/search?q=%7B%22source%22%3A%22legislation%22%2C%22congress%22%3A118%7D'
 
-# Fetch the HTML content using requests
-response = requests.get(URL)
-response.raise_for_status()  # Raise an exception for HTTP errors
-html = response.text
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.5",
+    "Referer": "https://www.google.com/"
+}
+
+with requests.Session() as session:
+    session.headers.update(headers)
+    time.sleep(2)  # Introduce a delay
+    response = session.get(URL)
+    response.raise_for_status()  # Raise an exception for HTTP errors
+    html = response.text
 
 # Parse the HTML with Beautiful Soup
 soup = BeautifulSoup(html, 'html.parser')

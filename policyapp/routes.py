@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for
 from policyapp import app, db
-from policyapp.models import Legislation
+from policyapp.models import *
     
 @app.route('/legislations')
 def get_legislations():
