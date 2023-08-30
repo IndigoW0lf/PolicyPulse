@@ -1,9 +1,13 @@
+import requests
 from bs4 import BeautifulSoup
 
-# Sample HTML (for demonstration purposes)
-html = '''
-... (your HTML content here) ...
-'''
+# URL of the page you want to scrape
+URL = 'https://www.congress.gov/search?q=%7B%22source%22%3A%22legislation%22%2C%22congress%22%3A118%7D'
+
+# Fetch the HTML content using requests
+response = requests.get(URL)
+response.raise_for_status()  # Raise an exception for HTTP errors
+html = response.text
 
 # Parse the HTML with Beautiful Soup
 soup = BeautifulSoup(html, 'html.parser')
