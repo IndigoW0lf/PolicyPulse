@@ -1,14 +1,33 @@
 import requests
 import time
+from datetime import datetime, timedelta
 from policyapp.models import Bill, Action, Amendment, Committee, db  # Updated Bill to Bill
 from config import API_KEY
+
+from datetime import datetime, timedelta
 
 class ApiState:
     def __init__(self):
         self.total_requests = 0
         self.total_items_fetched = 0
         self.total_items_saved = 0
-        self.batch_counter = 0 
+        self.batch_counter = 0
+        self.first_request_time = None 
+
+    def check_and_reset_rate_limit(self):
+        current_time = datetime.now()
+        if self.first_request_time is None:
+            self.first_request_time = current_time
+
+        if current_time - self.first_request_time >= timedelta(hours=1):
+            self.total_requests = 0
+            self.first_request_time = current_time
+
+        if self.total_requests >= 1000:
+            print("Approaching rate limit. Pausing for 1 hour.")
+            time.sleep(3600)  # 1 hour
+            self.total_requests = 0  # Reset the counter
+            self.first_request_time = datetime.now()  # Update the first request time
 
 api_state = ApiState()
 
