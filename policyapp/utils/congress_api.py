@@ -1,6 +1,7 @@
 import requests
 import time
 import logging
+from sqlalchemy.exc import SQLAlchemyError
 from datetime import datetime, timedelta
 from policyapp.models import Bill, Action, Amendment, Committee, db  # Updated Bill to Bill
 from config import API_KEY
@@ -25,10 +26,12 @@ class ApiState:
             self.first_request_time = current_time
 
         if self.total_requests >= 1000:
-            logging.error("Approaching rate limit. Pausing for 1 hour.")
-            time.sleep(3600)  # 1 hour
-            self.total_requests = 0  # Reset the counter
-            self.first_request_time = datetime.now()  # Update the first request time
+            reset_time = self.first_request_time + timedelta(hours=1)
+            sleep_time = (reset_time - current_time).seconds
+            logging.error(f"Approaching rate limit. Pausing for {sleep_time} seconds.")
+            time.sleep(sleep_time)
+            self.total_requests = 0
+            self.first_request_time = datetime.now()
 
 api_state = ApiState()
 
@@ -47,7 +50,7 @@ def manage_api_state(api_state, batch_size, commit_threshold=500):
             return True  # Indicates that a commit was performed
         except Exception as e:
             db.session.rollback()
-            logging.error(f"An error occurred: {e}")
+            logging.error(f"Database error occurred: {e}")
             return False  # Indicates that no commit was performed due to an exception
     elif api_state.total_items_saved >= commit_threshold:
         try:
