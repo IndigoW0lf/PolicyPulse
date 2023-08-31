@@ -31,7 +31,7 @@ class ApiState:
 
 api_state = ApiState()
 
-def manage_api_state(api_state, batch_size):
+def manage_api_state(api_state, batch_size, commit_threshold=500):
     if api_state is None:
         return
 
@@ -42,13 +42,21 @@ def manage_api_state(api_state, batch_size):
     if api_state.batch_counter >= batch_size:
         try:
             db.session.commit()
+            api_state.batch_counter = 0  # Reset the counter
             return True  # Indicates that a commit was performed
         except Exception as e:
             db.session.rollback()
             print(f"An error occurred: {e}")
-        api_state.batch_counter = 0  # Reset the counter
-        return False  # Indicates that no commit was performed due to an exception
-
+            return False  # Indicates that no commit was performed due to an exception
+    elif api_state.total_items_saved >= commit_threshold:
+        try:
+            db.session.commit()
+            api_state.total_items_saved = 0  # Reset the counter
+            return True  # Indicates that a commit was performed
+        except Exception as e:
+            db.session.rollback()
+            print(f"An error occurred: {e}")
+            return False  # Indicates that no commit was performed due to an exception
 
 API_BASE_URL = "https://api.congress.gov/"
 MAX_RETRIES = 3
