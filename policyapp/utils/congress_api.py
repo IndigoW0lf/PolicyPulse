@@ -67,7 +67,7 @@ HEADERS = {
 def make_request(endpoint, params={}, api_state=None):
     if api_state:
         api_state.check_and_reset_rate_limit()
-
+    
     offset = 0  
     all_data = []
 
@@ -77,6 +77,9 @@ def make_request(endpoint, params={}, api_state=None):
         for retry in range(MAX_RETRIES):
             try:
                 response = requests.get(f"{API_BASE_URL}{endpoint}", headers=HEADERS, params=params)
+                if response.status_code >= 400:
+                    logging.error(f"Received {response.status_code} error for endpoint {endpoint}.")
+                    return all_data
                 response.raise_for_status()
                 data = response.json()
 
@@ -311,7 +314,7 @@ def get_bill_summary(congress, bill_type, api_state=None):
 
 def check_and_reset_rate_limit(api_state):
     if api_state.total_requests >= 990:
-        logging.error("Approaching rate limit. Pausing for 1 hour.")
+        logging.warning("Approaching rate limit. Pausing for 1 hour.")
         time.sleep(3600)  # 1 hour
         api_state.total_requests = 0  # Reset the counter
 
