@@ -1,10 +1,11 @@
 import requests
 import time
+import logging
 from datetime import datetime, timedelta
 from policyapp.models import Bill, Action, Amendment, Committee, db  # Updated Bill to Bill
 from config import API_KEY
 
-from datetime import datetime, timedelta
+logging.basicConfig(filename='app.log', level=logging.ERROR)
 
 class ApiState:
     def __init__(self):
@@ -24,7 +25,7 @@ class ApiState:
             self.first_request_time = current_time
 
         if self.total_requests >= 1000:
-            print("Approaching rate limit. Pausing for 1 hour.")
+            logging.error("Approaching rate limit. Pausing for 1 hour.")
             time.sleep(3600)  # 1 hour
             self.total_requests = 0  # Reset the counter
             self.first_request_time = datetime.now()  # Update the first request time
@@ -46,7 +47,7 @@ def manage_api_state(api_state, batch_size, commit_threshold=500):
             return True  # Indicates that a commit was performed
         except Exception as e:
             db.session.rollback()
-            print(f"An error occurred: {e}")
+            logging.error(f"An error occurred: {e}")
             return False  # Indicates that no commit was performed due to an exception
     elif api_state.total_items_saved >= commit_threshold:
         try:
@@ -55,7 +56,7 @@ def manage_api_state(api_state, batch_size, commit_threshold=500):
             return True  # Indicates that a commit was performed
         except Exception as e:
             db.session.rollback()
-            print(f"An error occurred: {e}")
+            logging.error(f"An error occurred: {e}")
             return False  # Indicates that no commit was performed due to an exception
 
 API_BASE_URL = "https://api.congress.gov/"
@@ -91,21 +92,21 @@ def make_request(endpoint, params={}, api_state=None):
                     if api_state is not None:
                         api_state.total_requests += 1
                         if api_state.total_requests >= 990:
-                            print("Approaching rate limit. Pausing for 1 hour.")
+                            logging.error("Approaching rate limit. Pausing for 1 hour.")
                             time.sleep(3600)
                             
                 else:
-                    print("No 'results' key present in the data.")
+                    logging.error("No 'results' key present in the data.")
                     return all_data
 
                 break  # Successfully fetched data, so exit the retry loop
                 
             except requests.RequestException as e:
-                print(f"Error fetching data from {endpoint}: {e}. Retrying {retry+1}/{MAX_RETRIES}.")
+                logging.error(f"Error fetching data from {endpoint}: {e}. Retrying {retry+1}/{MAX_RETRIES}.")
                 time.sleep(2)  # Introducing a small delay before retrying
 
         else:
-            print(f"Reached maximum retries ({MAX_RETRIES}) for endpoint {endpoint}. Moving on.")
+            logging.error(f"Reached maximum retries ({MAX_RETRIES}) for endpoint {endpoint}. Moving on.")
             return all_data
 
 # Bill Endpoint
@@ -231,7 +232,7 @@ def store_bill(data, batch_size=50, api_state=None):
         processed_bill_ids.add(bill_id)  # Add here after successful commit
     except Exception as e:
         db.session.rollback()
-        print(f"An error occurred while saving to database: {e}")
+        logging.error(f"An error occurred while saving to database: {e}")
 
 
 
@@ -241,7 +242,7 @@ def main(mode='populate'):
     elif mode == 'maintain':
         delay_time = 300  # Run every 5 minutes when in maintenance mode
     else:
-        print("Invalid mode")
+        logging.error("Invalid mode")
         return
     
     KEYWORDS = [
@@ -274,17 +275,17 @@ def main(mode='populate'):
     "trans youth mental health", "trans youth support services", "trans youth resources"
     ]
     for keyword in KEYWORDS:
-        print(f"Fetching bills for keyword: {keyword}")
+        logging.error(f"Fetching bills for keyword: {keyword}")
         bills_data = fetch_all_bills_by_keyword(keyword)
         api_state.total_items_fetched += len(bills_data)
         
-        print(f"Storing {len(bills_data)} bills in the database.")
+        logging.error(f"Storing {len(bills_data)} bills in the database.")
         store_bill(bills_data, api_state=api_state)
         
-        # Print summary stats after each keyword
-        print(f"Total Requests Made: {api_state.total_requests}")
-        print(f"Total Items Fetched: {api_state.total_items_fetched}")
-        print(f"Total Items Saved: {api_state.total_items_saved}")
+        # logging summary stats after each keyword
+        logging.error(f"Total Requests Made: {api_state.total_requests}")
+        logging.error(f"Total Items Fetched: {api_state.total_items_fetched}")
+        logging.error(f"Total Items Saved: {api_state.total_items_saved}")
         
         time.sleep(delay_time)
 
@@ -303,7 +304,7 @@ def get_bill_summary(congress, bill_type, api_state=None):
 
 def check_and_reset_rate_limit(api_state):
     if api_state.total_requests >= 990:
-        print("Approaching rate limit. Pausing for 1 hour.")
+        logging.error("Approaching rate limit. Pausing for 1 hour.")
         time.sleep(3600)  # 1 hour
         api_state.total_requests = 0  # Reset the counter
 
@@ -317,10 +318,10 @@ def get_committee_details(congress, chamber, api_state=None, batch_size=100):
         if response.status_code == 200:
             return response.json()
         else:
-            print(f"Failed to get details for {congress} {chamber}. Status code: {response.status_code}")
+            logging.error(f"Failed to get details for {congress} {chamber}. Status code: {response.status_code}")
             return None
     else:
-        print("No response received.")
+        logging.error("No response received.")
         return None
 
 
@@ -330,10 +331,10 @@ def run_script():
     first_run = True  # Set this to False once the initial population is done
 
     if first_run:
-        print("Populating database...")
+        logging.error("Populating database...")
         main('populate')
     else:
-        print("Maintaining database...")
+        logging.error("Maintaining database...")
         main('maintain')
 
 if __name__ == "__main__":
