@@ -102,43 +102,19 @@ def fetch_all_bills_by_keyword(keyword):
     return all_data
 
 def fetch_bill_actions(bill_id, api_state=None):
-    if api_state is not None:
-        if api_state.total_requests >= 990:
-            print("Approaching rate limit. Pausing for 1 hour.")
-            time.sleep(3600)
-            api_state.total_requests = 0
-        
-        api_state.total_requests += 1
-    
+    manage_api_state(api_state, 1)
     endpoint = f"bill/{bill_id}/actions"
     return make_request(endpoint, api_state=api_state)
 
-
 def fetch_bill_amendments(bill_id, api_state=None):
-    if api_state is not None:
-        if api_state.total_requests >= 990:
-            print("Approaching rate limit. Pausing for 1 hour.")
-            time.sleep(3600)
-            api_state.total_requests = 0
-            
-        api_state.total_requests += 1
-    
+    manage_api_state(api_state, 1)
     endpoint = f"bill/{bill_id}/amendments"
     return make_request(endpoint, api_state=api_state)
 
-
 def fetch_bill_committees(bill_id, api_state=None):
-    if api_state is not None:
-        if api_state.total_requests >= 990:
-            print("Approaching rate limit. Pausing for 1 hour.")
-            time.sleep(3600)
-            api_state.total_requests = 0
-            
-        api_state.total_requests += 1
-    
+    manage_api_state(api_state, 1)
     endpoint = f"bill/{bill_id}/committees"
     return make_request(endpoint, api_state=api_state)
-
 
 # Create a single bill from an item dictionary
 def create_bill(item):
@@ -218,7 +194,7 @@ def store_bill(data, batch_size=50, api_state=None):
 
         # Manage API state and transactions
         commit_performed = manage_api_state(api_state, batch_size)
-
+        
         if commit_performed:
             processed_bill_ids.add(bill_id)
 
@@ -286,29 +262,40 @@ def main(mode='populate'):
         time.sleep(delay_time)
 
 def get_bill_summary(congress, bill_type, api_state=None):
-    if api_state is not None:
-        if api_state.total_requests >= 990:
-            print("Approaching rate limit. Pausing for 1 hour.")
-            time.sleep(3600)
-            api_state.total_requests = 0
-            
-        api_state.total_requests += 1
-    
+    # Check if we're nearing the rate limit, if so, reset.
+    if api_state:
+        check_and_reset_rate_limit(api_state)
+
+    # Create the API endpoint for this specific bill summary
     endpoint = f"v3/summaries/{congress}/{bill_type}"
-    return make_request(endpoint, api_state=api_state)
 
+    # Make a request to fetch the summary data
+    summary_data = make_request(endpoint, api_state=api_state)
 
-def get_committee_details(congress, chamber, api_state=None):
-    if api_state is not None:
-        if api_state.total_requests >= 990:
-            print("Approaching rate limit. Pausing for 1 hour.")
-            time.sleep(3600)
-            api_state.total_requests = 0
-            
-        api_state.total_requests += 1
+    return summary_data
+
+def check_and_reset_rate_limit(api_state):
+    if api_state.total_requests >= 990:
+        print("Approaching rate limit. Pausing for 1 hour.")
+        time.sleep(3600)  # 1 hour
+        api_state.total_requests = 0  # Reset the counter
+
+def get_committee_details(congress, chamber, api_state=None, batch_size=100):
+    manage_api_state(api_state, batch_size)
     
     endpoint = f"v3/committee/{congress}/{chamber}"
-    return make_request(endpoint, api_state=api_state)
+    response = make_request(endpoint, api_state=api_state)
+    
+    if response is not None:
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print(f"Failed to get details for {congress} {chamber}. Status code: {response.status_code}")
+            return None
+    else:
+        print("No response received.")
+        return None
+
 
 
 # Add a function to switch modes
