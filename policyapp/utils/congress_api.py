@@ -72,9 +72,6 @@ def make_request(endpoint, params={}, api_state=None):
         
         for retry in range(MAX_RETRIES):
             try:
-                # Check and reset rate limit here
-                api_state.check_and_reset_rate_limit()
-
                 response = requests.get(f"{API_BASE_URL}{endpoint}", headers=HEADERS, params=params)
                 response.raise_for_status()
                 data = response.json()
@@ -90,6 +87,11 @@ def make_request(endpoint, params={}, api_state=None):
 
                     if api_state is not None:
                         api_state.total_requests += 1
+                        if api_state.total_requests >= 990:
+                            reset_time = int(response.headers.get('X-RateLimit-Reset', 0))
+                            sleep_time = reset_time - int(datetime.datetime.now().timestamp())
+                            logging.error(f"Approaching rate limit. Pausing for {sleep_time} seconds.")
+                            time.sleep(sleep_time)
                             
                 else:
                     logging.error("No 'results' key present in the data.")
@@ -99,12 +101,11 @@ def make_request(endpoint, params={}, api_state=None):
                 
             except requests.RequestException as e:
                 logging.error(f"Error fetching data from {endpoint}: {e}. Retrying {retry+1}/{MAX_RETRIES}.")
-                time.sleep(2)  # Introducing a small delay
+                time.sleep(2)  # Introducing a small delay before retrying
 
         else:
             logging.error(f"Reached maximum retries ({MAX_RETRIES}) for endpoint {endpoint}. Moving on.")
             return all_data
-
 
 # Bill Endpoint
 def fetch_all_bills_by_keyword(keyword):
@@ -237,7 +238,6 @@ def store_bill(data, batch_size=50, api_state=None):
     except Exception as e:
         db.session.rollback()
         logging.error(f"An error occurred while saving to database: {e}")
-
 
 def main(mode='populate'):
     if mode == 'populate':
