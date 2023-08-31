@@ -6,4 +6,4 @@ class TitleType(db.Model):
     description = db.Column(db.String(200), nullable=False)
     
     # Relationships
-    bills = db.relationship('Legislation', backref='title_type', lazy=True)
+    bills = db.relationship('Bill', backref='title_type', lazy=True)

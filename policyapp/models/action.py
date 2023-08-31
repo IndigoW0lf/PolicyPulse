@@ -6,8 +6,14 @@ class Action(db.Model):
     description = db.Column(db.Text, nullable=True)
     chamber = db.Column(db.String(50), nullable=True)  # e.g., "House", "Senate"
     
-    # Foreign Key to Legislation
-    legislation_id = db.Column(db.Integer, db.ForeignKey('legislation.id'), nullable=False)
+     # Foreign Key to Bill
+    Bill_id = db.Column(db.Integer, db.ForeignKey('Bill.id'), nullable=False)
     
-    # Relationship with Legislation
-    legislation = db.relationship('Legislation', backref=db.backref('actions', lazy=True))
+    # Foreign Key to ActionType
+    action_type_id = db.Column(db.Integer, db.ForeignKey('action_type.id'), nullable=True)
+    
+    # Relationship with Bill
+    Bill = db.relationship('Bill', backref=db.backref('actions', lazy=True))
+    
+    # Relationship with ActionType
+    action_type = db.relationship('ActionType', backref=db.backref('actions', lazy=True))

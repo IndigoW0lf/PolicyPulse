@@ -6,7 +6,7 @@ const Navbar = () => {
             <h1>PolicyPulse</h1>
             <ul>
                 <li><a href="/">Home</a></li>
-                <li><a href="/legislations">Legislations</a></li>
+                <li><a href="/Bills">Bills</a></li>
                 <li><a href="/search">Search</a></li>
                 <li><a href="/filter">Filter</a></li>
             </ul>

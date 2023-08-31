@@ -1,31 +1,63 @@
 import requests
-from policyapp.models import Legislation, db
+import time
+from policyapp.models import Bill, Action, Amendment, Committee, db  # Updated Bill to Bill
 from config import API_KEY
 
 API_BASE_URL = "https://api.congress.gov/"
+LIMIT = 250
 headers = {
     "X-API-Key": API_KEY,
     "Accept": "application/json"
 }
 
-def search_bills_by_keyword(keyword):
-    endpoint = "bill"
-    response = requests.get(f"{API_BASE_URL}{endpoint}?search={keyword}", headers=headers)
-    return response.json()
+def make_request(endpoint, params={}):
+    offset = 0  # Initialize offset inside the function to start from 0 for each new endpoint request
+    all_data = []  # List to accumulate all data across paginated requests
 
+    while True:
+        # Update params with limit and offset for pagination
+        params.update({"limit": LIMIT, "offset": offset})
+
+        try:
+            response = requests.get(f"{API_BASE_URL}{endpoint}", headers=headers, params=params)
+            response.raise_for_status()
+            data = response.json()
+
+            # Assuming the main data is in a key named 'results' (adjust if different)
+            if 'results' in data:
+                all_data.extend(data['results'])
+
+                # If the length of the data is less than the limit, it means we've fetched all the data
+                if len(data['results']) < LIMIT:
+                    break
+
+                # Increase the offset for the next batch
+                offset += LIMIT
+
+                # Introduce a delay of 5 seconds to avoid hitting the rate limit
+                time.sleep(5)
+            else:
+                break  # Break out of the loop if 'results' key is not present
+
+        except requests.RequestException as e:
+            print(f"Error fetching data from {endpoint}: {e}")
+            break  # Break out of the loop in case of an error
+
+    return all_data  # Return the accumulated data
+
+# Bill Endpoint
 def fetch_all_bills_by_keyword(keyword):
     endpoint = "bill"
     all_data = []
-
     page = 1
+
     while True:
-        response = requests.get(f"{API_BASE_URL}{endpoint}?search={keyword}&page={page}", headers=headers)
-        data = response.json()
-        
-        # Assuming 'bills' is the key containing the results
+        data = make_request(endpoint, params={"search": keyword, "page": page})
+        if not data:
+            break
+
         all_data.extend(data.get('bills', []))
 
-        # Check if there's a next page
         if "next" not in data.get('Pagination', {}):
             break
 
@@ -33,13 +65,25 @@ def fetch_all_bills_by_keyword(keyword):
 
     return all_data
 
-def store_legislation(data):
+def fetch_bill_actions(bill_id):
+    endpoint = f"bill/{bill_id}/actions"
+    return make_request(endpoint)
+
+def fetch_bill_amendments(bill_id):
+    endpoint = f"bill/{bill_id}/amendments"
+    return make_request(endpoint)
+
+def fetch_bill_committees(bill_id):
+    endpoint = f"bill/{bill_id}/committees"
+    return make_request(endpoint)
+
+def store_bill(data):
     for item in data:
-        legislation = Legislation(
+        bill = Bill(
             title=item.get('title', ''),
             summary=item.get('summary', ''),
             bill_number=item.get('billNumber', ''),
-            sponsor=item.get('sponsor', ''),
+            sponsor_name=item.get('sponsor', ''),  # Note: Changed 'sponsor' to 'sponsor_name' to match your model
             date_introduced=item.get('introducedDate', None),
             status=item.get('status', ''),
             committee=",".join(item.get('committees', [])),  # Assuming committees is a list
@@ -48,7 +92,44 @@ def store_legislation(data):
             last_action_date=item.get('latestActionDate', None),
             last_action_description=item.get('latestAction', ''),
         )
-        db.session.add(legislation)
+        db.session.add(bill)
+        
+        # Fetch and store related data
+        actions = fetch_bill_actions(item.get('bill_id'))
+        if actions:
+            for action in actions:
+                action_record = Action(
+                    action_date=action.get('date', None),
+                    description=action.get('description', ''),
+                    chamber=action.get('chamber', ''),
+                    bill_id=bill.id  # Linking to the bill
+                )
+                db.session.add(action_record)
+        
+        amendments = fetch_bill_amendments(item.get('bill_id'))
+        if amendments:
+            for amendment in amendments:
+                amendment_record = Amendment(
+                    amendment_number=amendment.get('number', ''),
+                    description=amendment.get('description', ''),
+                    date_proposed=amendment.get('proposedDate', None),
+                    status=amendment.get('status', ''),
+                    bill_id=bill.id  # Linking to the bill
+                )
+                db.session.add(amendment_record)
+        
+        committees = fetch_bill_committees(item.get('bill_id'))
+        if committees:
+            for committee in committees:
+                committee_record = Committee(
+                    name=committee.get('name', ''),
+                    chamber=committee.get('chamber', ''),
+                    committee_code=committee.get('systemCode', ''),
+                )
+                db.session.add(committee_record)
+        
+        # ... Add more data storage logic for other endpoints ...
+
     db.session.commit()
 
 def main():
@@ -80,12 +161,22 @@ def main():
     "trans youth medical rights", "trans youth parental rights", "trans youth legal protection",
     "trans youth medical protection", "trans youth education rights", "trans youth school rights",
     "trans youth mental health", "trans youth support services", "trans youth resources"
-]
+    ]
     for keyword in keywords:
         print(f"Fetching bills for keyword: {keyword}")
         bills_data = fetch_all_bills_by_keyword(keyword)
         print(f"Storing {len(bills_data)} bills in the database.")
-        store_legislation(bills_data)
+        store_bill(bills_data)
+
+# Summaries Endpoint
+def get_bill_summary(congress, bill_type):
+    endpoint = f"v3/summaries/{congress}/{bill_type}"
+    return make_request(endpoint)
+
+# Committee Endpoint
+def get_committee_details(congress, chamber):
+    endpoint = f"v3/committee/{congress}/{chamber}"
+    return make_request(endpoint)
 
 if __name__ == "__main__":
     main()

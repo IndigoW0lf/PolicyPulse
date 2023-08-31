@@ -1,7 +1,13 @@
 from datetime import datetime
 from policyapp import db
 
-class Legislation(db.Model):
+# Association table for many-to-many relationship between Bill and Committee
+bill_committee = db.Table('bill_committee',
+    db.Column('bill_id', db.Integer, db.ForeignKey('bill.id'), primary_key=True),
+    db.Column('committee_id', db.Integer, db.ForeignKey('committee.id'), primary_key=True)
+)
+
+class Bill(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
     summary = db.Column(db.Text, nullable=True)
@@ -25,3 +31,4 @@ class Legislation(db.Model):
     sponsor = db.relationship('Politician', backref='sponsored_bills', lazy=True)
     co_sponsors = db.relationship('CoSponsor', backref='bill', lazy=True)
     related_bills = db.relationship('RelatedBill', backref='main_bill', lazy=True)
+    committees = db.relationship('Committee', secondary=bill_committee, backref=db.backref('bills', lazy='dynamic'))

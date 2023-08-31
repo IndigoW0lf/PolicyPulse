@@ -1,5 +1,11 @@
 from policyapp import db
 
+# Association table for many-to-many relationship between Bill and Committee
+bill_committee = db.Table('bill_committee',
+    db.Column('bill_id', db.Integer, db.ForeignKey('bill.id'), primary_key=True),
+    db.Column('committee_id', db.Integer, db.ForeignKey('committee.id'), primary_key=True)
+)
+
 class Committee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False)
@@ -7,10 +13,4 @@ class Committee(db.Model):
     committee_code = db.Column(db.String(50), nullable=False, unique=True)
     
     # Relationships
-    bills = db.relationship('Legislation', secondary='legislation_committee', backref=db.backref('committees', lazy='dynamic'))
-
-# Association table for many-to-many relationship between Legislation and Committee
-legislation_committee = db.Table('legislation_committee',
-    db.Column('legislation_id', db.Integer, db.ForeignKey('legislation.id'), primary_key=True),
-    db.Column('committee_id', db.Integer, db.ForeignKey('committee.id'), primary_key=True)
-)
+    bills = db.relationship('Bill', secondary=bill_committee, backref=db.backref('committees', lazy='dynamic'))

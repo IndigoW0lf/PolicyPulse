@@ -9,5 +9,5 @@ class Politician(db.Model):
     profile_link = db.Column(db.String(500), nullable=True)
 
     # Relationships
-    sponsored_bills = db.relationship('Legislation', backref='sponsor', lazy=True)
+    sponsored_bills = db.relationship('Bill', backref='sponsor', lazy=True)
     co_sponsored_bills = db.relationship('CoSponsor', backref='politician', lazy=True)

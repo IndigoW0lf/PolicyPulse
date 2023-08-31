@@ -7,8 +7,8 @@ class Amendment(db.Model):
     date_proposed = db.Column(db.Date, nullable=True)
     status = db.Column(db.String(100), nullable=True)
     
-    # Foreign Key to Legislation
-    legislation_id = db.Column(db.Integer, db.ForeignKey('legislation.id'), nullable=False)
+    # Foreign Key to Bill
+    Bill_id = db.Column(db.Integer, db.ForeignKey('Bill.id'), nullable=False)
     
-    # Relationship with Legislation
-    legislation = db.relationship('Legislation', backref=db.backref('amendments', lazy=True))
+    # Relationship with Bill
+    Bill = db.relationship('Bill', backref=db.backref('amendments', lazy=True))
