@@ -3,6 +3,10 @@ import time
 from policyapp.models import Bill, Action, Amendment, Committee, db  # Updated Bill to Bill
 from config import API_KEY
 
+total_requests = 0
+total_items_fetched = 0
+total_items_saved = 0
+
 API_BASE_URL = "https://api.congress.gov/"
 LIMIT = 250
 headers = {
@@ -11,6 +15,7 @@ headers = {
 }
 
 def make_request(endpoint, params={}):
+    global total_requests
     offset = 0  # Initialize offset inside the function to start from 0 for each new endpoint request
     all_data = []  # List to accumulate all data across paginated requests
 
@@ -36,6 +41,15 @@ def make_request(endpoint, params={}):
 
                 # Introduce a delay of 5 seconds to avoid hitting the rate limit
                 time.sleep(5)
+
+                # Increment the request counter
+                total_requests += 1  
+                
+                if total_requests >= 990:
+                    print("Approaching rate limit. Pausing for 1 hour.")
+                    time.sleep(3600)  # sleep for 1 hour (3600 seconds)
+                    total_requests = 0  # Reset the counter
+
             else:
                 break  # Break out of the loop if 'results' key is not present
 
@@ -66,18 +80,38 @@ def fetch_all_bills_by_keyword(keyword):
     return all_data
 
 def fetch_bill_actions(bill_id):
+    global total_requests
+    if total_requests >= 990:
+        print("Approaching rate limit. Pausing for 1 hour.")
+        time.sleep(3600)
+        total_requests = 0
     endpoint = f"bill/{bill_id}/actions"
+    total_requests += 1
     return make_request(endpoint)
 
 def fetch_bill_amendments(bill_id):
+    global total_requests
+    if total_requests >= 990:
+        print("Approaching rate limit. Pausing for 1 hour.")
+        time.sleep(3600)
+        total_requests = 0
     endpoint = f"bill/{bill_id}/amendments"
+    total_requests += 1
     return make_request(endpoint)
 
 def fetch_bill_committees(bill_id):
+    global total_requests
+    if total_requests >= 990:
+        print("Approaching rate limit. Pausing for 1 hour.")
+        time.sleep(3600)
+        total_requests = 0
     endpoint = f"bill/{bill_id}/committees"
+    total_requests += 1
     return make_request(endpoint)
 
-def store_bill(data):
+def store_bill(data, batch_size=50):
+    global total_items_saved
+    counter = 0
     for item in data:
         bill = Bill(
             title=item.get('title', ''),
@@ -128,11 +162,35 @@ def store_bill(data):
                 )
                 db.session.add(committee_record)
         
-        # ... Add more data storage logic for other endpoints ...
+        counter += 1
+        total_items_saved += 1
 
-    db.session.commit()
+        if counter >= batch_size:
+            try:
+                db.session.commit()
+            except Exception as e:
+                db.session.rollback()
+                print(f"An error occurred: {e}")
+            counter = 0  # Reset the counter
 
-def main():
+    # Commit any remaining items
+        try:
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            print(f"An error occurred while saving to database: {e}")
+        total_items_saved += 1  # Increment the items saved counter for each item saved
+
+def main(mode='populate'):
+    global total_items_fetched
+    if mode == 'populate':
+        delay_time = 3.6  # 1000 requests/hour
+    elif mode == 'maintain':
+        delay_time = 300  # Run every 5 minutes when in maintenance mode
+    else:
+        print("Invalid mode")
+        return
+    
     keywords = [
     "LGBTQ", "LGBT", "gay rights", "transgender rights", "bisexual", "lesbian", "gay men", "transgender people", "queer", "gender identity", "sexual orientation", "homophobia", "transphobia", "gender nonconforming", "non-binary", "genderqueer", "intersex", "same-sex marriage", "civil union", "domestic partnership", "coming out", "closeted", "top surgery", "bottom surgery", "facial feminization surgery", "sexual minorities", "gender minorities", "transitioning", "hormone therapy", 
     "gender-affirming surgery", "gender dysphoria", "two-spirit", "LGBTQ youth", 
@@ -165,18 +223,49 @@ def main():
     for keyword in keywords:
         print(f"Fetching bills for keyword: {keyword}")
         bills_data = fetch_all_bills_by_keyword(keyword)
+        total_items_fetched += len(bills_data)  # Increment the items fetched counter
         print(f"Storing {len(bills_data)} bills in the database.")
         store_bill(bills_data)
+        
+        # Print summary stats after each keyword
+        print(f"Total Requests Made: {total_requests}")
+        print(f"Total Items Fetched: {total_items_fetched}")
+        print(f"Total Items Saved: {total_items_saved}")
+
+        time.sleep(delay_time)  # Adjusted delay based on mode
 
 # Summaries Endpoint
 def get_bill_summary(congress, bill_type):
+    global total_requests
+    if total_requests >= 990:
+        print("Approaching rate limit. Pausing for 1 hour.")
+        time.sleep(3600)
+        total_requests = 0
     endpoint = f"v3/summaries/{congress}/{bill_type}"
+    total_requests += 1
     return make_request(endpoint)
 
 # Committee Endpoint
 def get_committee_details(congress, chamber):
+    global total_requests
+    if total_requests >= 990:
+        print("Approaching rate limit. Pausing for 1 hour.")
+        time.sleep(3600)
+        total_requests = 0
     endpoint = f"v3/committee/{congress}/{chamber}"
+    total_requests += 1
     return make_request(endpoint)
+
+# Add a function to switch modes
+def run_script():
+    first_run = True  # Set this to False once the initial population is done
+
+    if first_run:
+        print("Populating database...")
+        main('populate')
+    else:
+        print("Maintaining database...")
+        main('maintain')
 
 if __name__ == "__main__":
     main()
