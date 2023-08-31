@@ -1,4 +1,3 @@
-from datetime import datetime
 from policyapp import db
 
 class Politician(db.Model):
@@ -9,5 +8,6 @@ class Politician(db.Model):
     role = db.Column(db.String(100), nullable=True)
     profile_link = db.Column(db.String(500), nullable=True)
 
-    # Foreign Key for sponsored bills
-    sponsored_bill_id = db.Column(db.Integer, db.ForeignKey('legislation.id'), nullable=True)
+    # Relationships
+    sponsored_bills = db.relationship('Legislation', backref='sponsor', lazy=True)
+    co_sponsored_bills = db.relationship('CoSponsor', backref='politician', lazy=True)
