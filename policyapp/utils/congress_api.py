@@ -37,30 +37,23 @@ api_state = ApiState()
 
 def manage_api_state(api_state, batch_size, commit_threshold=500):
     if api_state is None:
-        return
+        return False  # Indicates that no commit is needed
 
     api_state.total_requests += 1
     api_state.batch_counter += 1
     api_state.total_items_saved += 1
 
+    # Check if a commit is needed based on batch size
     if api_state.batch_counter >= batch_size:
-        try:
-            db.session.commit()
-            api_state.batch_counter = 0  # Reset the counter
-            return True  # Indicates that a commit was performed
-        except Exception as e:
-            db.session.rollback()
-            logging.error(f"Database error occurred: {e}")
-            return False  # Indicates that no commit was performed due to an exception
+        api_state.batch_counter = 0  # Reset the counter
+        return True  # Indicates that a commit is needed
+
+    # Check if a commit is needed based on total items saved
     elif api_state.total_items_saved >= commit_threshold:
-        try:
-            db.session.commit()
-            api_state.total_items_saved = 0  # Reset the counter
-            return True  # Indicates that a commit was performed
-        except Exception as e:
-            db.session.rollback()
-            logging.error(f"An error occurred: {e}")
-            return False  # Indicates that no commit was performed due to an exception
+        api_state.total_items_saved = 0  # Reset the counter
+        return True  # Indicates that a commit is needed
+
+    return False  # Indicates that no commit is needed
 
 API_BASE_URL = "https://api.congress.gov/"
 MAX_RETRIES = 3
@@ -79,6 +72,9 @@ def make_request(endpoint, params={}, api_state=None):
         
         for retry in range(MAX_RETRIES):
             try:
+                # Check and reset rate limit here
+                api_state.check_and_reset_rate_limit()
+
                 response = requests.get(f"{API_BASE_URL}{endpoint}", headers=HEADERS, params=params)
                 response.raise_for_status()
                 data = response.json()
@@ -94,9 +90,6 @@ def make_request(endpoint, params={}, api_state=None):
 
                     if api_state is not None:
                         api_state.total_requests += 1
-                        if api_state.total_requests >= 990:
-                            logging.error("Approaching rate limit. Pausing for 1 hour.")
-                            time.sleep(3600)
                             
                 else:
                     logging.error("No 'results' key present in the data.")
@@ -107,6 +100,10 @@ def make_request(endpoint, params={}, api_state=None):
             except requests.RequestException as e:
                 logging.error(f"Error fetching data from {endpoint}: {e}. Retrying {retry+1}/{MAX_RETRIES}.")
                 time.sleep(2)  # Introducing a small delay
+
+        else:
+            logging.error(f"Reached maximum retries ({MAX_RETRIES}) for endpoint {endpoint}. Moving on.")
+            return all_data
 
 
 # Bill Endpoint
@@ -221,19 +218,25 @@ def store_bill(data, batch_size=50, api_state=None):
         store_committees(bill, item.get('bill_id'))
 
         # Manage API state and transactions
-        commit_performed = manage_api_state(api_state, batch_size)
+        commit_needed = manage_api_state(api_state, batch_size)
         
-        if commit_performed:
-            processed_bill_ids.add(bill_id)
+        if commit_needed:
+            try:
+                db.session.commit()
+                logging.info("Database commit successful.")
+                processed_bill_ids.add(bill_id)
+            except Exception as e:
+                db.session.rollback()
+                logging.error(f"Database commit failed: {e}")
 
     # Commit any remaining items (if any)
     try:
         db.session.commit()
+        logging.info("Database commit successful.")
         processed_bill_ids.add(bill_id)  # Add here after successful commit
     except Exception as e:
         db.session.rollback()
         logging.error(f"An error occurred while saving to database: {e}")
-
 
 
 def main(mode='populate'):
