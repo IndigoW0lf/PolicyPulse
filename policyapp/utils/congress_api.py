@@ -106,11 +106,8 @@ def make_request(endpoint, params={}, api_state=None):
                 
             except requests.RequestException as e:
                 logging.error(f"Error fetching data from {endpoint}: {e}. Retrying {retry+1}/{MAX_RETRIES}.")
-                time.sleep(2)  # Introducing a small delay before retrying
+                time.sleep(2)  # Introducing a small delay
 
-        else:
-            logging.error(f"Reached maximum retries ({MAX_RETRIES}) for endpoint {endpoint}. Moving on.")
-            return all_data
 
 # Bill Endpoint
 def fetch_all_bills_by_keyword(keyword):
