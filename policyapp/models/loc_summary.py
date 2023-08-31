@@ -6,7 +6,7 @@ class LOCSummary(db.Model):
     chamber = db.Column(db.String(50), nullable=True)  # Chamber where the bill is introduced or currently resides (House or Senate)
     action_description = db.Column(db.String(200), nullable=False)  # Description of the action taken on this version of the bill
     summary_text = db.Column(db.Text, nullable=True)  # The actual summary text from the LOC
-    Bill_id = db.Column(db.Integer, db.ForeignKey('Bill.id'), nullable=False)  # Linking to the Bill this summary pertains to
+    bill_id = db.Column(db.Integer, db.ForeignKey('bill.id'), nullable=False)  # Linking to the Bill this summary pertains to
 
     # Relationship
     bill = db.relationship('Bill', back_populates='loc_summaries')
