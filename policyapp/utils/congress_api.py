@@ -28,7 +28,7 @@ class ApiState:
         if self.total_requests >= 1000:
             reset_time = self.first_request_time + timedelta(hours=1)
             sleep_time = (reset_time - current_time).seconds
-            logging.error(f"Approaching rate limit. Pausing for {sleep_time} seconds.")
+            logging.warning(f"Approaching rate limit. Pausing for {sleep_time} seconds.")
             time.sleep(sleep_time)
             self.total_requests = 0
             self.first_request_time = datetime.now()
@@ -97,7 +97,7 @@ def make_request(endpoint, params={}, api_state=None):
                         if api_state.total_requests >= 990:
                             reset_time = int(response.headers.get('X-RateLimit-Reset', 0))
                             sleep_time = reset_time - int(datetime.datetime.now().timestamp())
-                            logging.error(f"Approaching rate limit. Pausing for {sleep_time} seconds.")
+                            logging.warning(f"Approaching rate limit. Pausing for {sleep_time} seconds.")
                             time.sleep(sleep_time)
                             
                 else:
@@ -285,17 +285,17 @@ def main(mode='populate'):
     "trans youth mental health", "trans youth support services", "trans youth resources"
     ]
     for keyword in KEYWORDS:
-        logging.error(f"Fetching bills for keyword: {keyword}")
+        logging.info(f"Fetching bills for keyword: {keyword}")
         bills_data = fetch_all_bills_by_keyword(keyword)
         api_state.total_items_fetched += len(bills_data)
         
-        logging.error(f"Storing {len(bills_data)} bills in the database.")
+        logging.info(f"Storing {len(bills_data)} bills in the database.")
         store_bill(bills_data, api_state=api_state)
         
         # logging summary stats after each keyword
-        logging.error(f"Total Requests Made: {api_state.total_requests}")
-        logging.error(f"Total Items Fetched: {api_state.total_items_fetched}")
-        logging.error(f"Total Items Saved: {api_state.total_items_saved}")
+        logging.info(f"Total Requests Made: {api_state.total_requests}")
+        logging.info(f"Total Items Fetched: {api_state.total_items_fetched}")
+        logging.info(f"Total Items Saved: {api_state.total_items_saved}")
         
         time.sleep(delay_time)
 
@@ -341,10 +341,10 @@ def run_script():
     first_run = True  # Set this to False once the initial population is done
 
     if first_run:
-        logging.error("Populating database...")
+        logging.info("Populating database...")
         main('populate')
     else:
-        logging.error("Maintaining database...")
+        logging.info("Maintaining database...")
         main('maintain')
 
 if __name__ == "__main__":
