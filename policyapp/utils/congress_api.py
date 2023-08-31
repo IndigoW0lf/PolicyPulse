@@ -45,12 +45,13 @@ def manage_api_state(api_state, batch_size, commit_threshold=500):
 
     # Check if a commit is needed based on batch size
     if api_state.batch_counter >= batch_size:
+        try:
+            db.session.commit()
+            logging.info("Database commit successful.")
+        except Exception as e:
+            db.session.rollback()
+            logging.error(f"Database commit failed: {e}")
         api_state.batch_counter = 0  # Reset the counter
-        return True  # Indicates that a commit is needed
-
-    # Check if a commit is needed based on total items saved
-    elif api_state.total_items_saved >= commit_threshold:
-        api_state.total_items_saved = 0  # Reset the counter
         return True  # Indicates that a commit is needed
 
     return False  # Indicates that no commit is needed
@@ -64,6 +65,9 @@ HEADERS = {
 }
 
 def make_request(endpoint, params={}, api_state=None):
+    if api_state:
+        api_state.check_and_reset_rate_limit()
+
     offset = 0  
     all_data = []
 
