@@ -7,13 +7,13 @@ class Action(db.Model):
     chamber = db.Column(db.String(50), nullable=True)  # e.g., "House", "Senate"
     
      # Foreign Key to Bill
-    Bill_id = db.Column(db.Integer, db.ForeignKey('Bill.id'), nullable=False)
+    bill_id = db.Column(db.Integer, db.ForeignKey('bill.id'), nullable=False)
     
     # Foreign Key to ActionType
     action_type_id = db.Column(db.Integer, db.ForeignKey('action_type.id'), nullable=True)
     
     # Relationship with Bill
-    Bill = db.relationship('Bill', backref=db.backref('actions', lazy=True))
+    bill = db.relationship('Bill', backref=db.backref('actions', lazy=True))
     
     # Relationship with ActionType
     action_type = db.relationship('ActionType', backref=db.backref('actions', lazy=True))

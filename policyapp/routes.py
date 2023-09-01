@@ -5,12 +5,12 @@ from policyapp.models import Action, ActionType, Amendment, Committee, CoSponsor
 bp = Blueprint('routes', __name__)
     
 #Bill Routes
-@bp.route('/Bills')
+@bp.route('/bills')
 def get_Bills():
   Bills = Bill.query.all()
   return jsonify([Bill.to_dict() for Bill in Bills])
 
-@bp.route('/Bill/<int:id>', methods=['GET'])
+@bp.route('/bill/<int:id>', methods=['GET'])
 def Bill_detail(id):
     Bill = Bill.query.get(id)
     if not Bill:
@@ -23,7 +23,7 @@ def search():
     Bills = Bill.query.filter(Bill.title.contains(query)).all()
     return jsonify([Bill.to_dict() for Bill in Bills])
 
-@bp.route('/filter-Bills', methods=['GET'])
+@bp.route('/filter-bills', methods=['GET'])
 def filter_Bills():
     status = request.args.get('status')
     if status:
@@ -46,7 +46,7 @@ def politician_detail(id):
     return jsonify(politician.to_dict())
 
 # CoSponsor Routes
-@bp.route('/Bill/<int:id>/co-sponsors')
+@bp.route('/bill/<int:id>/co-sponsors')
 def get_cosponsors(id):
     Bill = Bill.query.get(id)
     if not Bill:
@@ -62,7 +62,7 @@ def cosponsor_detail(id):
     return jsonify(cosponsor.to_dict())
 
 # RelatedBill Routes
-@bp.route('/Bill/<int:id>/related-bills')
+@bp.route('/bill/<int:id>/related-bills')
 def get_related_bills(id):
     Bill = Bill.query.get(id)
     if not Bill:

@@ -18,7 +18,7 @@ class Bill(db.Model):
     last_action_description = db.Column(db.Text, nullable=True)
     congress = db.Column(db.String(50), nullable=True)  # New column to capture which Congress the bill belongs to
     bill_type = db.Column(db.String(50), nullable=True)  # New column to capture the type of the bill (e.g., HR, S, etc.)
-    
+ 
     action_type_id = db.Column(db.Integer, db.ForeignKey('action_type.id'), nullable=True)
     loc_summary_id = db.Column(db.Integer, db.ForeignKey('loc_summary.id'), nullable=True)
     
