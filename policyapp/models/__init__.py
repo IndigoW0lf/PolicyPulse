@@ -8,3 +8,4 @@ from .title_type import TitleType
 from .action import Action
 from .amendment import Amendment
 from .committee import Committee
+from .subject import Subject

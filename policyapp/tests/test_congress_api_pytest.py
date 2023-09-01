@@ -1,6 +1,11 @@
 import pytest
 from unittest.mock import patch
 from policyapp.utils.congress_api import ApiState, make_request, manage_api_state
+from policyapp import create_app
+
+app = create_app()
+app.app_context().push()
+
 
 @pytest.fixture
 def api_state_fixture():
