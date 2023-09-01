@@ -12,6 +12,12 @@ We are in an era of unprecedented bills being introduced to limit or restrict th
 - Expand the scope to cover a broader range of policy domains.
 - Introduce a comparison tool for side-by-side policy analysis.
 - Integrate with real-time news sources for a holistic view of policies.
-- Impact Analysis: Utilize machine learning algorithms and expert-reviewed data to provide an estimated impact score for each policy.
+- **Impact Analysis**: Utilize machine learning algorithms and expert-reviewed data to provide an estimated impact score for each policy.
+- **User Dashboard**: Allow users to track specific bills and receive notifications when there's a status change or new action.
+- **Voting Mechanism**: Let users upvote or downvote policies based on their impact, giving a community-driven impact score.
+- **Policy Trends**: Use data analytics to show trends in policy changes over time, which could be beneficial for researchers and activists.
+
+## License:
+This project is licensed under the MIT License.
 
 Join us in making policies accessible and understandable for everyone. Your insights, feedback, and contributions are invaluable in shaping the future of **Policy Pulse**.
