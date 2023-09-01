@@ -13,3 +13,4 @@ venv/
 
 #Env Variable
 config.py
+.env

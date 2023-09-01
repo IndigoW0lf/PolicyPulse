@@ -3,8 +3,16 @@ import time
 import logging
 from sqlalchemy.exc import SQLAlchemyError
 from datetime import datetime, timedelta
-from policyapp.models import Bill, Action, Amendment, Committee, db  # Updated Bill to Bill
-from config import API_KEY
+from policyapp.models.bill import Bill
+from policyapp.models.action import Action
+from policyapp.models.amendment import Amendment
+from policyapp.models.committee import Committee
+from policyapp import db
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+API_KEY = os.environ.get('API_KEY')
 
 logging.basicConfig(filename='app.log', level=logging.ERROR)
 

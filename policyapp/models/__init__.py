@@ -5,3 +5,6 @@ from .co_sponsor import CoSponsor
 from .politician import Politician
 from .related_bill import RelatedBill
 from .title_type import TitleType
+from .action import Action
+from .amendment import Amendment
+from .committee import Committee
