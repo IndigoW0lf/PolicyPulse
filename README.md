@@ -7,6 +7,7 @@
 - **Key Points Extraction**: Understand the primary objectives and implications of any policy at a glance.
 - **Historical Context**: Gain insights into the background and evolution of specific policies.
 - **User Feedback Mechanism**: Contribute to the accuracy and relevance of summaries with your feedback.
+- - **Impact Analysis**: Utilizing machine learning algorithms and expert-reviewed data, Policy Pulse provides an estimated impact score for each policy. Understand not just what a policy proposes, but also its potential societal, economic, and environmental implications.
 
 ## Future Goals:
 - Expand the scope to cover a broader range of policy domains.
