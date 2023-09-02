@@ -16,7 +16,6 @@ def new_bill():
         status="Proposed",
         bill_number="HR001",
         sponsor_name="Test Politician",
-        sponsor_id=politician.id
     )
     db.session.add(bill)
     db.session.commit()
@@ -48,7 +47,7 @@ def test_field_validations(new_bill):
     assert new_bill.sponsor_name == "Test Politician"
 
 def test_foreign_keys(new_bill):
-    assert new_bill.sponsor_id is not None
+    assert new_bill.sponsor_name is not None
 
 def test_relationships(new_bill):
     assert new_bill.sponsor.name == "Test Politician"

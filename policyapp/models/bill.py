@@ -1,6 +1,9 @@
 from datetime import datetime
 from policyapp import db
+from .politician import Politician  
 from .committee import bill_committee # Import assoc. table
+from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.orm import aliased
 
 class Bill(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -20,10 +23,11 @@ class Bill(db.Model):
     bill_type = db.Column(db.String(50), nullable=True)  # New column to capture the type of the bill (e.g., HR, S, etc.)
  
     action_type_id = db.Column(db.Integer, db.ForeignKey('action_type.id'), nullable=True)
-    loc_summary_id = db.Column(db.Integer, db.ForeignKey('loc_summary.id'), nullable=True)
+    sponsor_id = db.Column(db.Integer, db.ForeignKey('politician.id'), nullable=False)
     
     # Relationships
-    sponsor = db.relationship('Politician', backref='sponsored_bills', lazy=True)
+    sponsor = db.relationship('Politician', back_populates='sponsored_bills', lazy=True)
+    loc_summary = db.relationship('LOCSummary', backref='bill', lazy='joined')
     co_sponsors = db.relationship('CoSponsor', backref='bill', lazy=True)
     related_bills = db.relationship('RelatedBill', backref='main_bill', lazy=True)
-    committees = db.relationship('Committee', secondary=bill_committee, backref=db.backref('bills', lazy='dynamic'))
+    committees = db.relationship('Committee', secondary=bill_committee, back_populates='bills')

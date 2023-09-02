@@ -7,6 +7,7 @@ from policyapp.models.bill import Bill
 from policyapp.models.action import Action
 from policyapp.models.amendment import Amendment
 from policyapp.models.committee import Committee
+from policyapp.models.politician import Politician
 from policyapp import db
 import os
 from dotenv import load_dotenv
@@ -157,13 +158,19 @@ def fetch_bill_committees(bill_id, api_state=None):
     endpoint = f"bill/{bill_id}/committees"
     return make_request(endpoint, api_state=api_state)
 
+def fetch_sponsor_id(sponsor_name):
+    sponsor = Politician.query.filter_by(name=sponsor_name).first()
+    return sponsor.id if sponsor else None
+
 # Create a single bill from an item dictionary
 def create_bill(item):
+    sponsor_id = fetch_sponsor_id(item.get('sponsor', ''))
     return Bill(
         title=item.get('title', ''),
         summary=item.get('summary', ''),
         bill_number=item.get('billNumber', ''),
         sponsor_name=item.get('sponsor', ''),
+        sponsor_id=sponsor_id,
         date_introduced=item.get('introducedDate', None),
         status=item.get('status', ''),
         committee=",".join(item.get('committees', [])),

@@ -9,4 +9,4 @@ class LOCSummary(db.Model):
     bill_id = db.Column(db.Integer, db.ForeignKey('bill.id'), nullable=False)  # Linking to the Bill this summary pertains to
 
     # Relationship
-    bill = db.relationship('Bill', back_populates='loc_summaries')
+    bill_id = db.Column(db.Integer, db.ForeignKey('bill.id'), nullable=False)

@@ -13,4 +13,4 @@ class Committee(db.Model):
     committee_code = db.Column(db.String(50), nullable=False, unique=True)
     
     # Relationships
-    bills = db.relationship('Bill', secondary=bill_committee, backref=db.backref('committees', lazy='dynamic'))
+    bills = db.relationship('Bill', secondary=bill_committee, back_populates='committees')
