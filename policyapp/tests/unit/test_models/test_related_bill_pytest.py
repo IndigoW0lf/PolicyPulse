@@ -1,4 +1,5 @@
 import pytest
+from datetime import date
 from policyapp import create_app, db
 from policyapp.models import RelatedBill, Bill
 

@@ -1,22 +1,42 @@
 import pytest
 from unittest.mock import patch
 from policyapp.utils.congress_api import ApiState, make_request, manage_api_state
-from policyapp import create_app
+from policyapp import create_app, db
+from flask import current_app
 
-app = create_app()
-app.app_context().push()
-
+@pytest.fixture
+def app():
+    app = create_app(config_name='testing')  # Use 'testing' configuration
+    app.app_context().push()
+    return app
 
 @pytest.fixture
 def api_state_fixture():
     return ApiState()
 
-# Test for manage_api_state
-def test_manage_api_state(api_state_fixture):
+def my_manage_api_state(api_state, batch_size):
+    api_state.batch_counter += 1
+
+    if api_state.batch_counter >= batch_size:
+        api_state.batch_counter = 0
+        return True
+
+    return False
+
+def test_manage_api_state(app, api_state_fixture):  # Pass the 'app' fixture as an argument
     api_state_fixture.batch_counter = 49
     commit_needed = manage_api_state(api_state_fixture, 50)
     assert commit_needed == True
     assert api_state_fixture.batch_counter == 0
+
+    with app.test_request_context():  # Manually manage the application context
+        if commit_needed:
+            try:
+                db.session.commit()  # Commit the session if needed
+                current_app.logger.info("Database commit successful.")
+            except Exception as e:
+                db.session.rollback()
+                current_app.logger.error(f"Database commit failed: {e}")
 
 # Test for make_request with successful API call
 @patch('requests.get')

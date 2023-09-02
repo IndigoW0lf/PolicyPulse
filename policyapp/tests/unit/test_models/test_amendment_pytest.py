@@ -4,8 +4,24 @@ from policyapp import create_app, db
 from policyapp.models import Amendment, Bill
 
 @pytest.fixture(scope='module')
-def new_amendment():
-    bill = Bill(title="Test Bill")
+def new_amendment(init_database):
+    bill = Bill(
+        title="Test Bill",
+        summary="This is a test summary",
+        date_introduced=date.today(),
+        status="Proposed",
+        bill_number="HR001",
+        sponsor_name="Test Sponsor",
+        committee="Test Committee",
+        voting_record="Yea: 10, Nay: 5",
+        full_text_link="http://example.com/full_text",
+        tags="Test, Bill",
+        last_action_date=date.today(),
+        last_action_description="Introduced in House",
+        congress="117th",
+        bill_type="House Bill",
+        sponsor_id=1
+    )
     db.session.add(bill)
     db.session.commit()
 

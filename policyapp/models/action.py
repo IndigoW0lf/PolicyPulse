@@ -14,6 +14,3 @@ class Action(db.Model):
     
     # Relationship with Bill
     bill = db.relationship('Bill', backref=db.backref('actions', lazy=True))
-    
-    # Relationship with ActionType
-    action_type = db.relationship('ActionType', backref=db.backref('actions', lazy=True))

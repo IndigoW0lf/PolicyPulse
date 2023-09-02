@@ -1,7 +1,6 @@
 import requests
 import time
 import logging
-from sqlalchemy.exc import SQLAlchemyError
 from datetime import datetime, timedelta
 from policyapp.models.bill import Bill
 from policyapp.models.action import Action
@@ -348,8 +347,6 @@ def get_committee_details(congress, chamber, api_state=None, batch_size=100):
     else:
         logging.error("No response received.")
         return None
-
-
 
 # Add a function to switch modes
 def run_script():

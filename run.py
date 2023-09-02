@@ -3,10 +3,10 @@ from policyapp import app
 from config import DevelopmentConfig, TestingConfig
 
 # For development
-app.config.from_object(DevelopmentConfig)
+# app.config.from_object(DevelopmentConfig)
 
 # For testing
-# app.config.from_object(TestingConfig)
+app.config.from_object(TestingConfig)
 
 @app.route('/')
 def homepage():
