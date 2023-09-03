@@ -1,5 +1,7 @@
 import pytest
 from policyapp.models.action_type import ActionType
+from policyapp.models.action import Action
+from policyapp.models.bill import Bill
 
 def test_create_action_type(init_database):
     session = init_database.session
@@ -22,10 +24,25 @@ def test_update_action_type(init_database):
     updated_action_type = session.get(ActionType, 1)  
     assert updated_action_type.description == 'Bill is reintroduced'
 
-@pytest.mark.xfail(reason="Known issue with foreign key constraint")
 def test_delete_action_type(init_database):
     session = init_database.session
+
+    # Update Actions associated with ActionType id=1
+    actions = session.query(Action).filter_by(action_type_id=1).all()
+    for action in actions:
+        action.action_type_id = None
+    session.commit()
+
+    # Update Bills associated with ActionType id=1
+    bills = session.query(Bill).filter_by(action_type_id=1).all()
+    for bill in bills:
+        bill.action_type_id = None
+    session.commit()
+
+    # Delete ActionType
     session.query(ActionType).filter_by(id=1).delete()
     session.commit()
-    action_type = session.get(ActionType, 1) 
+
+    # Assert ActionType is deleted
+    action_type = session.query(ActionType).filter_by(id=1).first()
     assert action_type is None
