@@ -11,12 +11,13 @@ print(os.environ.get('DATABASE_URI'))  # Debugging line
 db = SQLAlchemy()
 migrate = Migrate()
 
-def create_app(config_name):
+def create_app(config_name=None):
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    config_name = os.environ.get('FLASK_CONFIG', 'testing')
+    if config_name is None:
+        config_name = os.environ.get('FLASK_CONFIG', 'testing')
 
     if config_name == 'testing':
         app.config.from_object(TestingConfig)

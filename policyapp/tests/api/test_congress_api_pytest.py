@@ -1,4 +1,5 @@
 import pytest
+import os
 from unittest.mock import patch
 from policyapp.utils.congress_api import ApiState, make_request, manage_api_state
 from policyapp import create_app, db
@@ -6,8 +7,8 @@ from flask import current_app
 
 @pytest.fixture
 def app():
-    app = create_app(config_name='testing')  # Use 'testing' configuration
-    app.app_context().push()
+    os.environ['FLASK_CONFIG'] = 'testing'
+    app = create_app()
     return app
 
 @pytest.fixture

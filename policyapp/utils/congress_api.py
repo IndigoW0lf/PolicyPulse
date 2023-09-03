@@ -14,7 +14,10 @@ from dotenv import load_dotenv
 load_dotenv()
 API_KEY = os.environ.get('API_KEY')
 
-logging.basicConfig(filename='app.log', level=logging.ERROR)
+logging.basicConfig(filename='app.log', level=logging.INFO)  # Change level to INFO for more detailed logs
+console = logging.StreamHandler()
+logging.getLogger().addHandler(console)
+
 
 class ApiState:
     def __init__(self):
