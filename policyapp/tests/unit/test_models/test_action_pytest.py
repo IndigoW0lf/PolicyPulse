@@ -22,8 +22,8 @@ def test_foreign_keys(init_database):
 def test_relationships(init_database):
     session = init_database.session
     action = session.get(Action, 1) 
-    action_type = session.query(ActionType).get(action.action_type_id) 
-    bill = session.query(Bill).get(action.bill_id)
+    action_type = session.get(ActionType, action.action_type_id) 
+    bill = session.get(Bill, action.bill_id)
 
     assert action.bill.title == bill.title
     assert action_type.description == "Bill is introduced"
