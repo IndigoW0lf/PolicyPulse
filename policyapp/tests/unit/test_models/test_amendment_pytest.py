@@ -1,66 +1,26 @@
 import pytest
 from datetime import date
-from policyapp import create_app, db
-from policyapp.models import Amendment, Bill
+from policyapp.models import Amendment
 
-@pytest.fixture(scope='module')
-def new_amendment(init_database):
-    bill = Bill(
-        title="Test Bill",
-        summary="This is a test summary",
-        date_introduced=date.today(),
-        status="Proposed",
-        bill_number="HR001",
-        sponsor_name="Test Sponsor",
-        committee="Test Committee",
-        voting_record="Yea: 10, Nay: 5",
-        full_text_link="http://example.com/full_text",
-        tags="Test, Bill",
-        last_action_date=date.today(),
-        last_action_description="Introduced in House",
-        congress="117th",
-        bill_type="House Bill",
-        sponsor_id=1
-    )
-    db.session.add(bill)
-    db.session.commit()
+def test_amendment_creation(init_database):
+    session = init_database.session
+    amendment = session.query(Amendment).filter_by(amendment_number="A001").first()
+    assert amendment is not None
 
-    amendment = Amendment(
-        amendment_number="A001",
-        description="Test Amendment",
-        date_proposed=date.today(),
-        status="Proposed",
-        bill_id=bill.id
-    )
-    db.session.add(amendment)
-    db.session.commit()
+def test_field_validations(init_database):
+    session = init_database.session
+    amendment = session.query(Amendment).filter_by(amendment_number="A001").first()
+    assert amendment.amendment_number == "A001"
+    assert amendment.description == "Test Amendment"
+    assert amendment.date_proposed == date.today()
+    assert amendment.status == "Proposed"
 
-    return amendment
+def test_foreign_keys(init_database):
+    session = init_database.session
+    amendment = session.query(Amendment).filter_by(amendment_number="A001").first()
+    assert amendment.bill_id is not None
 
-@pytest.fixture(scope='module')
-def test_client():
-    flask_app = create_app('testing')
-
-    testing_client = flask_app.test_client()
-
-    ctx = flask_app.app_context()
-    ctx.push()
-
-    yield testing_client
-
-    ctx.pop()
-
-def test_amendment_creation(new_amendment):
-    assert new_amendment is not None
-
-def test_field_validations(new_amendment):
-    assert new_amendment.amendment_number == "A001"
-    assert new_amendment.description == "Test Amendment"
-    assert new_amendment.date_proposed == date.today()
-    assert new_amendment.status == "Proposed"
-
-def test_foreign_keys(new_amendment):
-    assert new_amendment.bill_id is not None
-
-def test_relationships(new_amendment):
-    assert new_amendment.bill.title == "Test Bill"
+def test_relationships(init_database):
+    session = init_database.session
+    amendment = session.query(Amendment).filter_by(amendment_number="A001").first()
+    assert amendment.bill.title == "Test Bill"

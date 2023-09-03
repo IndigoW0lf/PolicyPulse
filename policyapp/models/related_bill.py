@@ -6,5 +6,5 @@ class RelatedBill(db.Model):
     related_bill_id = db.Column(db.Integer, db.ForeignKey('bill.id'), nullable=False)
 
     # Relationships
-    main_bill = db.relationship('Bill', foreign_keys=[bill_id], lazy=True)
-    related = db.relationship('Bill', foreign_keys=[related_bill_id], lazy=True)
+    main_bill = db.relationship('Bill', foreign_keys=[bill_id], lazy=True, backref='related_bills')
+    related = db.relationship('Bill', foreign_keys=[related_bill_id], lazy=True, backref='main_bills')
