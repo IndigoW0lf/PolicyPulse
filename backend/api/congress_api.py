@@ -1,18 +1,17 @@
-import logging
 import os
 import requests
 import time
 from lxml import etree
 from backend import create_app
-from datetime import datetime, timedelta
 from dotenv import load_dotenv
-from flask import current_app
+from api.rate_limiter import api_state, logging
 from backend import db
 from backend.database.models.action import Action
 from backend.database.models.amendment import Amendment
 from backend.database.models.bill import Bill
 from backend.database.models.committee import Committee
 from backend.database.models.politician import Politician
+from backend.database.models.bill_full_text import BillFullText
 
 # Load environment variables from .env file
 load_dotenv()
@@ -25,45 +24,12 @@ LIMIT = int(os.environ.get('LIMIT', 250))
 LOG_LEVEL = os.environ.get('LOG_LEVEL', 'INFO')
 BATCH_SIZE = int(os.environ.get('BATCH_SIZE', 50))
 COMMIT_THRESHOLD = int(os.environ.get('COMMIT_THRESHOLD', 500))
-RATE_LIMIT = int(os.environ.get('RATE_LIMIT', 1000))
-RATE_LIMIT_RESET_TIME = int(os.environ.get('RATE_LIMIT_RESET_TIME', 3600))
 MODE = os.environ.get('MODE', 'populate')
 DELAY_TIME_POPULATE = float(os.environ.get('DELAY_TIME_POPULATE', 3.6))
 DELAY_TIME_MAINTAIN = float(os.environ.get('DELAY_TIME_MAINTAIN', 300))
 
-#Initialize logging
-logging.basicConfig(filename='app.log', level=logging.INFO)  # Change level to INFO for more detailed logs
-console = logging.StreamHandler()
-logging.getLogger().addHandler(console)
-
-# Class to manage API state during runtime
-class ApiState:
-    def __init__(self):
-        self.total_requests = 0
-        self.total_items_fetched = 0
-        self.total_items_saved = 0
-        self.batch_counter = 0
-        self.first_request_time = None 
-
-    def check_and_reset_rate_limit(self):
-        current_time = datetime.now()
-        if self.first_request_time is None:
-            self.first_request_time = current_time
-
-        if current_time - self.first_request_time >= timedelta(hours=1):
-            self.total_requests = 0
-            self.first_request_time = current_time
-
-        if self.total_requests >= 990:  # Adjusted the limit to 990 as per your standalone function
-            logging.warning("Approaching rate limit. Pausing for 1 hour.")
-            time.sleep(3600)  # 1 hour
-            self.total_requests = 0  # Reset the counter
-
-# Instantiate ApiState class to manage API state globally
-api_state = ApiState()
-
 # Function to manage API state and database transactions
-def manage_api_state(api_state, batch_size):
+def manage_api_state(batch_size):
     if api_state is None:
         return False  # Indicates that no commit is needed
 
@@ -91,7 +57,7 @@ HEADERS = {
 }
 
 # Function to make API requests with error handling and rate limit management
-def make_request(endpoint, params={}, api_state=None, response_format='application/json'):
+def make_request(endpoint, params={}, response_format='application/json'):
 
     HEADERS = {
         "X-API-Key": API_KEY,
@@ -127,13 +93,6 @@ def make_request(endpoint, params={}, api_state=None, response_format='applicati
                     offset += LIMIT
                     time.sleep(5)
 
-                    if api_state is not None:
-                        api_state.total_requests += 1
-                        if api_state.total_requests >= 990:
-                            reset_time = int(response.headers.get('X-RateLimit-Reset', 0))
-                            sleep_time = reset_time - int(datetime.datetime.now().timestamp())
-                            logging.warning(f"Approaching rate limit. Pausing for {sleep_time} seconds.")
-                            time.sleep(sleep_time)
                             
                 else:
                     logging.error("No 'results' key present in the data.")
@@ -168,54 +127,6 @@ def create_bill(item):
     )
 # NEW SECTION FOR GETTING FULL BILL DETAILS IN NESTED API CALLS
 # Function to fetch bill data from API
-def fetch_bills(offset=0, limit=LIMIT, from_date=None, to_date=None):
-    endpoint = "v3/bill"
-    params = {
-        "offset": offset,
-        "limit": limit,
-        "format": "json"
-    }
-    if from_date:
-        params["fromDateTime"] = from_date
-    if to_date:
-        params["toDateTime"] = to_date
-
-    bills_data = make_request(endpoint, params=params)
-    if bills_data:
-        for bill in bills_data:
-            bill_url = bill.get('url')
-            if bill_url:
-                fetch_bill_details(bill_url)
-    else:
-        logging.error("Failed to fetch bills data.")
-
-# Function to fetch detailed information of a specific bill
-def fetch_bill_details(bill_url):
-    response = requests.get(bill_url)
-    if response.status_code == 200:
-        bill_details = response.json()
-        text_versions_url = bill_details.get('bill', {}).get('textVersions', {}).get('url')
-        if text_versions_url:
-            fetch_text_versions(text_versions_url)
-    else:
-        logging.error(f"Failed to fetch bill details from {bill_url}. Status code: {response.status_code}")
-
-# Function to fetch different text versions of a bill
-def fetch_text_versions(text_versions_url):
-    response = requests.get(text_versions_url)
-    if response.status_code == 200:
-        text_versions_data = response.json()
-        text_versions = text_versions_data.get('textVersions', [])
-        for text_version in text_versions:
-            formats = text_version.get('formats', [])
-            for format in formats:
-                if format.get('type') == 'Formatted XML':
-                    xml_url = format.get('url')
-                    if xml_url:
-                        fetch_xml_data(xml_url)
-    else:
-        logging.error(f"Failed to fetch text versions from {text_versions_url}. Status code: {response.status_code}")
-
 def fetch_xml_data(xml_url, bill_id):
     response = requests.get(xml_url)
     if response.status_code == 200:
@@ -223,21 +134,61 @@ def fetch_xml_data(xml_url, bill_id):
         # Now you can parse the XML data as needed
         root = etree.fromstring(xml_data)
         
-        # Find all <p> elements and extract their text content
-        p_elements = root.findall('.//p')
-        p_texts = [p_element.text for p_element in p_elements if p_element.text]
+        # Extract metadata
+        metadata = root.find('metadata/dublinCore', namespaces={'dc': 'http://purl.org/dc/elements/1.1/'})
+        metadata_dict = {}
+        if metadata:
+            title = metadata.find('dc:title', namespaces={'dc': 'http://purl.org/dc/elements/1.1/'})
+            metadata_dict['title'] = title.text if title is not None else 'N/A'
 
-        # Find the bill with the given bill_id and update its xml_content field
-        bill = Bill.query.get(bill_id)
-        if bill:
-            bill.xml_content = p_texts
+        # Extract actions
+        actions_list = []
+        actions = root.findall('form/action', namespaces={})
+        for action in actions:
+            action_date = action.find('action-date')
+            action_desc = action.find('action-desc')
+            actions_list.append({
+                "action_date": action_date.get('date') if action_date is not None else 'N/A',
+                "action_description": etree.tostring(action_desc).decode('utf-8') if action_desc is not None else 'N/A'
+            })
+
+        # Extract bill details
+        sections_list = []
+        legis_body = root.find('legis-body', namespaces={})
+        if legis_body:
+            sections = legis_body.findall('section', namespaces={})
+            for section in sections:
+                header = section.find('header')
+                text = section.find('text')
+                sections_list.append({
+                    "section_header": header.text if header is not None else 'N/A',
+                    "section_text": etree.tostring(text).decode('utf-8') if text is not None else 'N/A'
+                })
+
+        # Create a new BillFullText object and store the parsed data
+        bill_full_text = BillFullText(
+            bill_id=bill_id,
+            title=metadata_dict.get('title'),
+            metadata=metadata_dict,
+            actions=actions_list,
+            sections=sections_list
+        )
+        
+        # Add the new BillFullText object to the session
+        db.session.add(bill_full_text)
+
+        # Commit the session to save the BillFullText object to the database
+        try:
             db.session.commit()
+            logging.info(f"Successfully stored full text for bill ID {bill_id} in the database.")
+        except Exception as e:
+            db.session.rollback()
+            logging.error(f"An error occurred while saving to database: {e}")
 
-        return p_texts
+        return xml_data  # You might want to return parsed data instead of raw XML
     else:
         logging.error(f"Failed to fetch XML data from {xml_url}. Status code: {response.status_code}")
         return None
-
 
 
 def fetch_full_bill_text(url):
@@ -250,19 +201,19 @@ def fetch_full_bill_text(url):
 # END NEW SECTION FOR GETTING FULL BILL DETAILS IN NESTED API CALLS
 
 
-def fetch_bill_actions(bill_id, api_state=None):
+def fetch_bill_actions(bill_id):
     manage_api_state(api_state, 1)
     endpoint = f"v3/bill/{bill_id}/actions"
     logging.debug(f"Fetching actions for bill_id: {bill_id}")
     return make_request(endpoint, api_state=api_state)
 
-def fetch_bill_amendments(bill_id, api_state=None):
+def fetch_bill_amendments(bill_id):
     manage_api_state(api_state, 1)
     endpoint = f"v3/bill/{bill_id}/amendments"
     logging.debug(f"Fetching amendments for bill_id: {bill_id}")
     return make_request(endpoint, api_state=api_state)
 
-def fetch_bill_committees(bill_id, api_state=None):
+def fetch_bill_committees(bill_id):
     manage_api_state(api_state, 1)
     endpoint = f"v3/bill/{bill_id}/committees"
     logging.debug(f"Fetching committees for bill_id: {bill_id}")
@@ -315,7 +266,7 @@ def store_committees(bill, bill_id):
 processed_bill_ids = set()
 
 # Function to process and store bill data in the database
-def store_bill(data, batch_size=50, api_state=None):
+def store_bill(data, batch_size=50):
     if not data:
         logging.error("No data to process.")
         return
@@ -365,7 +316,7 @@ def store_bill(data, batch_size=50, api_state=None):
             logging.error(f"An error occurred while saving to database: {e}")
 
 # Function to get summary data for a specific bill
-def get_bill_summary(congress, bill_type, api_state=None):
+def get_bill_summary(congress, bill_type):
     if api_state:
         api_state.check_and_reset_rate_limit()
 
@@ -377,7 +328,7 @@ def get_bill_summary(congress, bill_type, api_state=None):
 
     return summary_data
 
-def get_committee_details(congress, chamber, api_state=None, batch_size=100):
+def get_committee_details(congress, chamber, batch_size=100):
     manage_api_state(api_state, batch_size)
     
     endpoint = f"v3/committee/{congress}/{chamber}"
