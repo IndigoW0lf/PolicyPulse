@@ -1,24 +1,42 @@
+import logging
+import os
 import requests
 import time
-import logging
+from lxml import etree
+from policyapp import create_app
 from datetime import datetime, timedelta
-from policyapp.models.bill import Bill
+from dotenv import load_dotenv
+from flask import current_app
+from policyapp import db
 from policyapp.models.action import Action
 from policyapp.models.amendment import Amendment
+from policyapp.models.bill import Bill
 from policyapp.models.committee import Committee
 from policyapp.models.politician import Politician
-from policyapp import db
-import os
-from dotenv import load_dotenv
 
+# Load environment variables from .env file
 load_dotenv()
-API_KEY = os.environ.get('API_KEY')
 
+# Set up global variables with default values from environment variables
+API_KEY = os.environ.get('API_KEY')
+API_BASE_URL = os.environ.get('API_BASE_URL', "https://api.congress.gov/")
+MAX_RETRIES = int(os.environ.get('MAX_RETRIES', 3))
+LIMIT = int(os.environ.get('LIMIT', 250))
+LOG_LEVEL = os.environ.get('LOG_LEVEL', 'INFO')
+BATCH_SIZE = int(os.environ.get('BATCH_SIZE', 50))
+COMMIT_THRESHOLD = int(os.environ.get('COMMIT_THRESHOLD', 500))
+RATE_LIMIT = int(os.environ.get('RATE_LIMIT', 1000))
+RATE_LIMIT_RESET_TIME = int(os.environ.get('RATE_LIMIT_RESET_TIME', 3600))
+MODE = os.environ.get('MODE', 'populate')
+DELAY_TIME_POPULATE = float(os.environ.get('DELAY_TIME_POPULATE', 3.6))
+DELAY_TIME_MAINTAIN = float(os.environ.get('DELAY_TIME_MAINTAIN', 300))
+
+#Initialize logging
 logging.basicConfig(filename='app.log', level=logging.INFO)  # Change level to INFO for more detailed logs
 console = logging.StreamHandler()
 logging.getLogger().addHandler(console)
 
-
+# Class to manage API state during runtime
 class ApiState:
     def __init__(self):
         self.total_requests = 0
@@ -36,17 +54,16 @@ class ApiState:
             self.total_requests = 0
             self.first_request_time = current_time
 
-        if self.total_requests >= 1000:
-            reset_time = self.first_request_time + timedelta(hours=1)
-            sleep_time = (reset_time - current_time).seconds
-            logging.warning(f"Approaching rate limit. Pausing for {sleep_time} seconds.")
-            time.sleep(sleep_time)
-            self.total_requests = 0
-            self.first_request_time = datetime.now()
+        if self.total_requests >= 990:  # Adjusted the limit to 990 as per your standalone function
+            logging.warning("Approaching rate limit. Pausing for 1 hour.")
+            time.sleep(3600)  # 1 hour
+            self.total_requests = 0  # Reset the counter
 
+# Instantiate ApiState class to manage API state globally
 api_state = ApiState()
 
-def manage_api_state(api_state, batch_size, commit_threshold=500):
+# Function to manage API state and database transactions
+def manage_api_state(api_state, batch_size):
     if api_state is None:
         return False  # Indicates that no commit is needed
 
@@ -67,15 +84,20 @@ def manage_api_state(api_state, batch_size, commit_threshold=500):
 
     return False  # Indicates that no commit is needed
 
-API_BASE_URL = "https://api.congress.gov/"
-MAX_RETRIES = 3
-LIMIT = 250
+# Set up headers for API requests
 HEADERS = {
     "X-API-Key": API_KEY,
     "Accept": "application/json"
 }
 
-def make_request(endpoint, params={}, api_state=None):
+# Function to make API requests with error handling and rate limit management
+def make_request(endpoint, params={}, api_state=None, response_format='application/json'):
+
+    HEADERS = {
+        "X-API-Key": API_KEY,
+        "Accept": response_format
+    }
+
     if api_state:
         api_state.check_and_reset_rate_limit()
     
@@ -87,7 +109,9 @@ def make_request(endpoint, params={}, api_state=None):
         
         for retry in range(MAX_RETRIES):
             try:
+                logging.debug(f"Making request to endpoint: {endpoint}, params: {params}")
                 response = requests.get(f"{API_BASE_URL}{endpoint}", headers=HEADERS, params=params)
+                logging.debug(f"Response status code: {response.status_code}")
                 if response.status_code >= 400:
                     logging.error(f"Received {response.status_code} error for endpoint {endpoint}.")
                     return all_data
@@ -125,46 +149,7 @@ def make_request(endpoint, params={}, api_state=None):
             logging.error(f"Reached maximum retries ({MAX_RETRIES}) for endpoint {endpoint}. Moving on.")
             return all_data
 
-# Bill Endpoint
-def fetch_all_bills_by_keyword(keyword):
-    endpoint = "bill"
-    all_data = []
-    page = 1
-
-    while True:
-        data = make_request(endpoint, params={"search": keyword, "page": page}, api_state=api_state)
-        if not data:
-            break
-
-        all_data.extend(data.get('bills', []))
-
-        if "next" not in data.get('Pagination', {}):
-            break
-
-        page += 1
-
-    return all_data
-
-def fetch_bill_actions(bill_id, api_state=None):
-    manage_api_state(api_state, 1)
-    endpoint = f"bill/{bill_id}/actions"
-    return make_request(endpoint, api_state=api_state)
-
-def fetch_bill_amendments(bill_id, api_state=None):
-    manage_api_state(api_state, 1)
-    endpoint = f"bill/{bill_id}/amendments"
-    return make_request(endpoint, api_state=api_state)
-
-def fetch_bill_committees(bill_id, api_state=None):
-    manage_api_state(api_state, 1)
-    endpoint = f"bill/{bill_id}/committees"
-    return make_request(endpoint, api_state=api_state)
-
-def fetch_sponsor_id(sponsor_name):
-    sponsor = Politician.query.filter_by(name=sponsor_name).first()
-    return sponsor.id if sponsor else None
-
-# Create a single bill from an item dictionary
+# Function to create a Bill object from API data
 def create_bill(item):
     sponsor_id = fetch_sponsor_id(item.get('sponsor', ''))
     return Bill(
@@ -181,8 +166,113 @@ def create_bill(item):
         last_action_date=item.get('latestActionDate', None),
         last_action_description=item.get('latestAction', ''),
     )
+# NEW SECTION FOR GETTING FULL BILL DETAILS IN NESTED API CALLS
+# Function to fetch bill data from API
+def fetch_bills(offset=0, limit=LIMIT, from_date=None, to_date=None):
+    endpoint = "v3/bill"
+    params = {
+        "offset": offset,
+        "limit": limit,
+        "format": "json"
+    }
+    if from_date:
+        params["fromDateTime"] = from_date
+    if to_date:
+        params["toDateTime"] = to_date
 
-# Store related actions for a bill
+    bills_data = make_request(endpoint, params=params)
+    if bills_data:
+        for bill in bills_data:
+            bill_url = bill.get('url')
+            if bill_url:
+                fetch_bill_details(bill_url)
+    else:
+        logging.error("Failed to fetch bills data.")
+
+# Function to fetch detailed information of a specific bill
+def fetch_bill_details(bill_url):
+    response = requests.get(bill_url)
+    if response.status_code == 200:
+        bill_details = response.json()
+        text_versions_url = bill_details.get('bill', {}).get('textVersions', {}).get('url')
+        if text_versions_url:
+            fetch_text_versions(text_versions_url)
+    else:
+        logging.error(f"Failed to fetch bill details from {bill_url}. Status code: {response.status_code}")
+
+# Function to fetch different text versions of a bill
+def fetch_text_versions(text_versions_url):
+    response = requests.get(text_versions_url)
+    if response.status_code == 200:
+        text_versions_data = response.json()
+        text_versions = text_versions_data.get('textVersions', [])
+        for text_version in text_versions:
+            formats = text_version.get('formats', [])
+            for format in formats:
+                if format.get('type') == 'Formatted XML':
+                    xml_url = format.get('url')
+                    if xml_url:
+                        fetch_xml_data(xml_url)
+    else:
+        logging.error(f"Failed to fetch text versions from {text_versions_url}. Status code: {response.status_code}")
+
+def fetch_xml_data(xml_url, bill_id):
+    response = requests.get(xml_url)
+    if response.status_code == 200:
+        xml_data = response.content  # This will be the XML data as bytes
+        # Now you can parse the XML data as needed
+        root = etree.fromstring(xml_data)
+        
+        # Find all <p> elements and extract their text content
+        p_elements = root.findall('.//p')
+        p_texts = [p_element.text for p_element in p_elements if p_element.text]
+
+        # Find the bill with the given bill_id and update its xml_content field
+        bill = Bill.query.get(bill_id)
+        if bill:
+            bill.xml_content = p_texts
+            db.session.commit()
+
+        return p_texts
+    else:
+        logging.error(f"Failed to fetch XML data from {xml_url}. Status code: {response.status_code}")
+        return None
+
+
+
+def fetch_full_bill_text(url):
+    response = requests.get(url, headers={"Accept": "application/xml"})
+    if response.status_code == 200:
+        return response.text  # This will return the XML as a string
+    else:
+        logging.error(f"Failed to fetch full bill details from {url}. Status code: {response.status_code}")
+        return None
+# END NEW SECTION FOR GETTING FULL BILL DETAILS IN NESTED API CALLS
+
+
+def fetch_bill_actions(bill_id, api_state=None):
+    manage_api_state(api_state, 1)
+    endpoint = f"v3/bill/{bill_id}/actions"
+    logging.debug(f"Fetching actions for bill_id: {bill_id}")
+    return make_request(endpoint, api_state=api_state)
+
+def fetch_bill_amendments(bill_id, api_state=None):
+    manage_api_state(api_state, 1)
+    endpoint = f"v3/bill/{bill_id}/amendments"
+    logging.debug(f"Fetching amendments for bill_id: {bill_id}")
+    return make_request(endpoint, api_state=api_state)
+
+def fetch_bill_committees(bill_id, api_state=None):
+    manage_api_state(api_state, 1)
+    endpoint = f"v3/bill/{bill_id}/committees"
+    logging.debug(f"Fetching committees for bill_id: {bill_id}")
+    return make_request(endpoint, api_state=api_state)
+
+def fetch_sponsor_id(sponsor_name):
+    sponsor = Politician.query.filter_by(name=sponsor_name).first()
+    return sponsor.id if sponsor else None
+
+# Function to store actions related to a bill in the database
 def store_actions(bill, bill_id):
     actions = fetch_bill_actions(bill_id)
     if actions:
@@ -224,13 +314,20 @@ def store_committees(bill, bill_id):
 # Store a bill and its related records, manage API state and transactions
 processed_bill_ids = set()
 
-# Store a bill and its related records, manage API state and transactions
-processed_bill_ids = set()
-
+# Function to process and store bill data in the database
 def store_bill(data, batch_size=50, api_state=None):
+    if not data:
+        logging.error("No data to process.")
+        return
+
+    batch = []
     for item in data:
         bill_id = item.get('bill_id')
         
+        if not bill_id:
+            logging.error("bill_id is missing in the data.")
+            continue
+
         if bill_id in processed_bill_ids:
             continue
 
@@ -238,9 +335,11 @@ def store_bill(data, batch_size=50, api_state=None):
         db.session.add(bill)
 
         # Store related records
-        store_actions(bill, item.get('bill_id'))
-        store_amendments(bill, item.get('bill_id'))
-        store_committees(bill, item.get('bill_id'))
+        store_actions(bill, bill_id)
+        store_amendments(bill, bill_id)
+        store_committees(bill, bill_id)
+
+        batch.append(item)
 
         # Manage API state and transactions
         commit_needed = manage_api_state(api_state, batch_size)
@@ -248,78 +347,27 @@ def store_bill(data, batch_size=50, api_state=None):
         if commit_needed:
             try:
                 db.session.commit()
-                logging.info("Database commit successful.")
-                processed_bill_ids.add(bill_id)
+                logging.info(f"Successfully stored {batch_size} bills in the database.")
+                processed_bill_ids.update([x.get('bill_id') for x in batch])
+                batch.clear()
             except Exception as e:
                 db.session.rollback()
-                logging.error(f"Database commit failed: {e}")
+                logging.error(f"An error occurred while saving to database: {e}")
 
     # Commit any remaining items (if any)
-    try:
-        db.session.commit()
-        logging.info("Database commit successful.")
-        processed_bill_ids.add(bill_id)  # Add here after successful commit
-    except Exception as e:
-        db.session.rollback()
-        logging.error(f"An error occurred while saving to database: {e}")
+    if batch:
+        try:
+            db.session.commit()
+            logging.info(f"Successfully stored {len(batch)} bills in the database.")
+            processed_bill_ids.update([x.get('bill_id') for x in batch])
+        except Exception as e:
+            db.session.rollback()
+            logging.error(f"An error occurred while saving to database: {e}")
 
-def main(mode='populate'):
-    if mode == 'populate':
-        delay_time = 3.6  # 1000 requests/hour
-    elif mode == 'maintain':
-        delay_time = 300  # Run every 5 minutes when in maintenance mode
-    else:
-        logging.error("Invalid mode")
-        return
-    
-    KEYWORDS = [
-    "LGBTQ", "LGBT", "gay rights", "transgender rights", "bisexual", "lesbian", "gay men", "transgender people", "queer", "gender identity", "sexual orientation", "homophobia", "transphobia", "gender nonconforming", "non-binary", "genderqueer", "intersex", "same-sex marriage", "civil union", "domestic partnership", "coming out", "closeted", "top surgery", "bottom surgery", "facial feminization surgery", "sexual minorities", "gender minorities", "transitioning", "hormone therapy", 
-    "gender-affirming surgery", "gender dysphoria", "two-spirit", "LGBTQ youth", 
-    "LGBTQ elders", "LGBTQ health", "LGBTQ families", "LGBTQ adoption", "LGBTQ military service", 
-    "LGBTQ veterans", "LGBTQ employment", "LGBTQ discrimination", "LGBTQ immigration", 
-    "LGBTQ asylum seekers", "LGBTQ refugees", "LGBTQ homelessness", "LGBTQ housing", 
-    "LGBTQ education", "LGBTQ students", "LGBTQ bullying", "LGBTQ suicide", "LGBTQ mental health", 
-    "LGBTQ substance abuse", "LGBTQ HIV/AIDS", "LGBTQ community", "LGBTQ culture", 
-    "LGBTQ history", "LGBTQ pride", "LGBTQ activism", "LGBTQ representation", "LGBTQ media", 
-    "LGBTQ literature", "LGBTQ arts", "LGBTQ film", "LGBTQ television", "LGBTQ music", 
-    "LGBTQ sports", "LGBTQ religion", "LGBTQ spirituality", "LGBTQ churches", "LGBTQ synagogues", 
-    "LGBTQ mosques", "LGBTQ temples", "LGBTQ clergy", "LGBTQ theology", "LGBTQ religious texts", 
-    "LGBTQ religious leaders", "LGBTQ saints", "LGBTQ religious history", "LGBTQ religious rites", 
-    "LGBTQ religious discrimination", "LGBTQ religious acceptance", "LGBTQ religious inclusion", "trans medical care", "gender-affirming care", "trans healthcare", "trans youth healthcare",
-    "puberty blockers", "hormone blockers", "medical transition", "youth transition",
-    "transgender athletes", "trans sports participation", "trans youth sports",
-    "restroom access", "bathroom bill", "trans restroom rights", "gender-neutral restroom",
-    "trans youth rights", "trans youth protection", "trans youth therapy", "conversion therapy",
-    "gender counseling", "trans youth counseling", "gender marker", "gender on ID", "gender recognition",
-    "legal gender change", "trans rights", "trans discrimination", "gender identity protection",
-    "gender expression protection", "trans employment rights", "trans hate crimes", "trans protections",
-    "trans military ban", "trans military service", "trans inclusive policies", 
-    "trans education rights", "trans student rights", "gender-affirming procedures", "trans surgeries",
-     "voice therapy", "trans voice therapy", "trans exclusion policies",
-    "trans youth support", "trans youth groups", "trans youth organizations", "trans youth legal rights",
-    "trans youth medical rights", "trans youth parental rights", "trans youth legal protection",
-    "trans youth medical protection", "trans youth education rights", "trans youth school rights",
-    "trans youth mental health", "trans youth support services", "trans youth resources"
-    ]
-    for keyword in KEYWORDS:
-        logging.info(f"Fetching bills for keyword: {keyword}")
-        bills_data = fetch_all_bills_by_keyword(keyword)
-        api_state.total_items_fetched += len(bills_data)
-        
-        logging.info(f"Storing {len(bills_data)} bills in the database.")
-        store_bill(bills_data, api_state=api_state)
-        
-        # logging summary stats after each keyword
-        logging.info(f"Total Requests Made: {api_state.total_requests}")
-        logging.info(f"Total Items Fetched: {api_state.total_items_fetched}")
-        logging.info(f"Total Items Saved: {api_state.total_items_saved}")
-        
-        time.sleep(delay_time)
-
+# Function to get summary data for a specific bill
 def get_bill_summary(congress, bill_type, api_state=None):
-    # Check if we're nearing the rate limit, if so, reset.
     if api_state:
-        check_and_reset_rate_limit(api_state)
+        api_state.check_and_reset_rate_limit()
 
     # Create the API endpoint for this specific bill summary
     endpoint = f"v3/summaries/{congress}/{bill_type}"
@@ -328,12 +376,6 @@ def get_bill_summary(congress, bill_type, api_state=None):
     summary_data = make_request(endpoint, api_state=api_state)
 
     return summary_data
-
-def check_and_reset_rate_limit(api_state):
-    if api_state.total_requests >= 990:
-        logging.warning("Approaching rate limit. Pausing for 1 hour.")
-        time.sleep(3600)  # 1 hour
-        api_state.total_requests = 0  # Reset the counter
 
 def get_committee_details(congress, chamber, api_state=None, batch_size=100):
     manage_api_state(api_state, batch_size)
@@ -351,7 +393,66 @@ def get_committee_details(congress, chamber, api_state=None, batch_size=100):
         logging.error("No response received.")
         return None
 
-# Add a function to switch modes
+# Main function to orchestrate data fetching and storing
+def main():
+    offset = 0
+    while True:
+        bills_data = fetch_bills(offset=offset, limit=LIMIT)
+        if not bills_data or not bills_data.get('bills'):
+            break
+
+        for bill_data in bills_data['bills']:
+            bill_url = bill_data.get('url')
+            if bill_url:
+                full_bill_text = fetch_full_bill_text(bill_url)
+                if full_bill_text:
+                    # Parse the full bill text to extract relevant information
+                    # (this depends on the structure of the full bill text JSON)
+                    parsed_data = parse_full_bill_text(full_bill_text)
+
+                    # Create a new Bill object and set its attributes based on the parsed data
+                    bill = Bill(
+                        title=parsed_data.get('title', ''),
+                        summary=parsed_data.get('summary', ''),
+                        # ... (set other attributes as needed)
+                    )
+
+                    # Add the new Bill object to the session
+                    db.session.add(bill)
+
+                    # Commit the session to save the Bill object to the database
+                    try:
+                        db.session.commit()
+                        logging.info(f"Successfully stored bill {bill.title} in the database.")
+                    except Exception as e:
+                        db.session.rollback()
+                        logging.error(f"An error occurred while saving to database: {e}")
+
+        offset += LIMIT
+
+
+def parse_full_bill_text(full_bill_details):
+    # This function should parse the full bill details JSON to extract the relevant information
+    # The exact implementation depends on the structure of the full bill details JSON
+    # Here's a placeholder implementation that just returns the full bill details JSON as is
+    
+    bill_text_url = full_bill_details.get('bill', {}).get('textVersions', {}).get('url')
+    if bill_text_url:
+        response = requests.get(bill_text_url)
+        if response.status_code == 200:
+            bill_text = response.json()
+            # Now bill_text should contain the full text of the bill
+            # You would need to extract the relevant information from bill_text and return it
+            # The exact implementation depends on the structure of the bill_text JSON
+            return bill_text
+        else:
+            logging.error(f"Failed to fetch full bill text from {bill_text_url}. Status code: {response.status_code}")
+            return None
+    else:
+        logging.error("No URL found to fetch the full bill text.")
+        return None
+
+# Function to run the script in different modes (populate or maintain)s
 def run_script():
     first_run = True  # Set this to False once the initial population is done
 
@@ -363,4 +464,6 @@ def run_script():
         main('maintain')
 
 if __name__ == "__main__":
-    main()
+    app = create_app()  # Create the app instance
+    with app.app_context():
+        main()

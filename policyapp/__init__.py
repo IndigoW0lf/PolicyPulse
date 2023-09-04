@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 from config import DevelopmentConfig, TestingConfig, ProductionConfig
 
 load_dotenv()
-print(os.environ.get('DATABASE_URI'))  # Debugging line
 
 db = SQLAlchemy()
 migrate = Migrate()

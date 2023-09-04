@@ -5,7 +5,7 @@ from policyapp.models import Action, ActionType, Amendment, Committee, CoSponsor
 bp = Blueprint('routes', __name__)
     
 #Bill Routes
-@bp.route('/bills')
+@bp.route('/bill')
 def get_Bills():
   Bills = Bill.query.all()
   return jsonify([Bill.to_dict() for Bill in Bills])
