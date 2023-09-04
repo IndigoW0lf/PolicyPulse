@@ -1,5 +1,5 @@
 from flask import render_template
-from policyapp import app
+from backend import app
 from config import DevelopmentConfig, TestingConfig
 
 # For development
