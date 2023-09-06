@@ -1,4 +1,5 @@
 from .bill import Bill
+from .bill_full_text import BillFullText
 from .committee import Committee
 from .related_bill import RelatedBill
 from .loc_summary import LOCSummary

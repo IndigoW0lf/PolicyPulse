@@ -210,29 +210,16 @@ def store_full_bill_text(bill, xml_url):
     
     if xml_data:
         # Create a BillFullText record
-        bill_full_bill_record = BillFullText(
+        bill_full_text_record = BillFullText(
             bill_id=bill.id,
             title=xml_data.get('title'),
             bill_metadata=xml_data,  # Storing the parsed metadata
         )
         
-        db.session.add(bill_full_bill_record)
-        db.session.commit()  # Commit the transaction
-    else:
-        print("Failed to retrieve or parse XML data from the URL")
+        db.session.add(bill_full_text_record)
 
-    # Create a new BillFullText object
-    bill_full_text = BillFullText(
-        bill_id=bill.id,
-        title=xml_data['title'],
-        # ... (set other attributes)
-    )
-
-    # Add the new object to the session
-    db.session.add(bill_full_text)
-
-    # Print the new object to check if it's created correctly
-    print(bill_full_text)
+        # Print the new object to check if it's created correctly
+        print(bill_full_text_record)
 
     # Commit the transaction
     db.session.commit()

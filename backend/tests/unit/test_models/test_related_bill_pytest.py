@@ -1,29 +1,25 @@
 import pytest
-from datetime import date
 from backend.database.models import RelatedBill, Bill
+from .conftest import create_related_bill, create_bill
 
-def test_related_bill_creation(init_database):
-    session = init_database.session
-    related_bill = RelatedBill(bill_id=1, related_bill_id=2)
-    session.add(related_bill)
-    session.commit()
-    related_bill_from_db = session.query(RelatedBill).first()
-    assert related_bill_from_db is not None
+def test_related_bill_creation(session):
+    bill1 = create_bill(session)
+    bill2 = create_bill(session, bill_number="HR002", title="Related Test Bill")
+    related_bill = create_related_bill(session, bill_id=bill1.id, related_bill_id=bill2.id)
+    assert related_bill is not None
 
-def test_related_bill_fields(init_database):
-    session = init_database.session
-    related_bill = session.query(RelatedBill).first()
-    main_bill = session.get(Bill, related_bill.bill_id)
-    related = session.get(Bill, related_bill.related_bill_id)
+def test_related_bill_fields(session):
+    bill1 = create_bill(session)
+    bill2 = create_bill(session, bill_number="HR002", title="Related Test Bill")
+    related_bill = create_related_bill(session, bill_id=bill1.id, related_bill_id=bill2.id)
     
-    assert main_bill.title == "Test Bill"
-    assert related.title == "Related Test Bill"
+    assert related_bill.main_bill.title == bill1.title
+    assert related_bill.related.title == bill2.title
 
-def test_related_bill_relationship(init_database):
-    session = init_database.session
-    related_bill = session.query(RelatedBill).first()
-    main_bill = session.get(Bill, related_bill.bill_id)
-    related = session.get(Bill, related_bill.related_bill_id)
+def test_related_bill_relationship(session):
+    bill1 = create_bill(session)
+    bill2 = create_bill(session, bill_number="HR002", title="Related Test Bill")
+    related_bill = create_related_bill(session, bill_id=bill1.id, related_bill_id=bill2.id)
     
-    assert related_bill.main_bill.title == main_bill.title
-    assert related_bill.related.title == related.title
+    assert related_bill.main_bill.title == bill1.title
+    assert related_bill.related.title == bill2.title

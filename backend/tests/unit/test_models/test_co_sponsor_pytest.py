@@ -1,14 +1,14 @@
 import pytest
 from backend.database.models import CoSponsor
+from .conftest import create_cosponsor, create_bill, create_politician
 
-# Use init_database fixture from conftest.py
-def test_cosponsor_creation(init_database):
-    session = init_database.session  # Access the session from the init_database fixture
-    cosponsor = session.query(CoSponsor).first()
+def test_cosponsor_creation(session):
+    cosponsor = create_cosponsor(session)
     assert cosponsor is not None
 
-def test_cosponsor_fields(init_database):
-    session = init_database.session
-    cosponsor = session.query(CoSponsor).first()
-    assert cosponsor.bill_id is not None
-    assert cosponsor.politician_id is not None
+def test_cosponsor_fields(session):
+    bill = create_bill(session)
+    politician = create_politician(session)
+    cosponsor = create_cosponsor(session, bill_id=bill.id, politician_id=politician.id)
+    assert cosponsor.bill_id == bill.id
+    assert cosponsor.politician_id == politician.id
