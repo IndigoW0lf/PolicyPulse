@@ -67,7 +67,7 @@ def init_database():
                 bill = Bill(
                     id=1,
                     title="Test Bill",
-                    summary="This is a test summary",
+                    summary="This is a test bill",
                     date_introduced=date.today(),
                     status="Proposed",
                     bill_number="HR001",
@@ -75,9 +75,9 @@ def init_database():
                     sponsor_id=politician.id,
                     action_type_id=action_type.id,
                     title_type_id=title_type.id,
-                    committee="Test Committee",
+                    committee="Committee1",
                     voting_record="Yea: 10, Nay: 5",
-                    full_text_link="http://example.com/full_text_1",
+                    full_bill_link="http://example.com/full_bill_1",
                     tags="Test Bill",
                     last_action_date=date.today(),
                     last_action_description="Introduced in House"
@@ -104,7 +104,7 @@ def init_database():
                     title_type_id=title_type.id,
                     committee="Test Committee",
                     voting_record="Yea: 8, Nay: 7",
-                    full_text_link="http://example.com/full_text_2",
+                    full_bill_link="http://example.com/full_text_2",
                     tags="Test Bill 2",
                     last_action_date=date.today(),
                     last_action_description="Introduced in House"

@@ -12,7 +12,7 @@ def test_field_validations(init_database):
     bill = session.query(Bill).filter_by(bill_number="HR001").first()
     assert bill is not None
     assert bill.title == "Test Bill"
-    assert bill.summary == "This is a test summary"
+    assert bill.summary == "This is a test bill"
     assert bill.date_introduced is not None
     assert bill.status == "Proposed"
     assert bill.bill_number == "HR001"

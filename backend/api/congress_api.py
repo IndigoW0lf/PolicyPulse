@@ -4,7 +4,7 @@ import time
 from lxml import etree
 from backend import create_app
 from dotenv import load_dotenv
-from api.rate_limiter import api_state, logging
+from .rate_limiter import api_state, logging
 from backend import db
 from backend.database.models.action import Action
 from backend.database.models.amendment import Amendment
@@ -29,7 +29,7 @@ DELAY_TIME_POPULATE = float(os.environ.get('DELAY_TIME_POPULATE', 3.6))
 DELAY_TIME_MAINTAIN = float(os.environ.get('DELAY_TIME_MAINTAIN', 300))
 
 # Function to manage API state and database transactions
-def manage_api_state(batch_size):
+def manage_api_state(api_state, batch_size):
     if api_state is None:
         return False  # Indicates that no commit is needed
 
@@ -57,12 +57,7 @@ HEADERS = {
 }
 
 # Function to make API requests with error handling and rate limit management
-def make_request(endpoint, params={}, response_format='application/json'):
-
-    HEADERS = {
-        "X-API-Key": API_KEY,
-        "Accept": response_format
-    }
+def make_request(endpoint, api_state, params={}, response_format='application/json'):
 
     if api_state:
         api_state.check_and_reset_rate_limit()
@@ -114,92 +109,133 @@ def create_bill(item):
     return Bill(
         title=item.get('title', ''),
         summary=item.get('summary', ''),
-        bill_number=item.get('billNumber', ''),
+        bill_number=item.get('bill_number', ''),
         sponsor_name=item.get('sponsor', ''),
         sponsor_id=sponsor_id,
-        date_introduced=item.get('introducedDate', None),
+        date_introduced=item.get('date_introduced', None),
         status=item.get('status', ''),
         committee=",".join(item.get('committees', [])),
-        full_text_link=item.get('textUrl', ''),
+        full_bill_link=item.get('full_bill_link', ''),
         tags=",".join(item.get('subjects', [])),
-        last_action_date=item.get('latestActionDate', None),
-        last_action_description=item.get('latestAction', ''),
+        last_action_date=item.get('last_action_date', None),
+        last_action_description=item.get('last_action_description', ''),
     )
-# NEW SECTION FOR GETTING FULL BILL DETAILS IN NESTED API CALLS
-# Function to fetch bill data from API
-def fetch_xml_data(xml_url, bill_id):
+# Step 1 nested function to get XML data
+def fetch_list_of_bills():
+    response = requests.get(f"{API_BASE_URL}v3/bill?limit={LIMIT}&format=json")
+    if response.status_code == 200:
+        data = response.json()
+        if data.get('bills') and len(data['bills']) > 0:
+            bill_url = data['bills'][0]['url']
+            return bill_url
+        else:
+            print('No bills found or invalid response structure')
+            return None
+    else:
+        print(f"Failed to fetch list of bills. Status code: {response.status_code}")
+        return None
+    
+# Step 2 nested function to get XML data    
+def fetch_individual_bill_details(bill_url):
+    response = requests.get(bill_url)
+    if response.status_code == 200:
+        bill_details = response.json()
+        # Here you can add code to parse the JSON data and extract the information you need
+        # ...
+        return bill_details
+    else:
+        print(f"Failed to fetch individual bill details from {bill_url}. Status code: {response.status_code}")
+        return None
+
+# Step 3 nested function to get XML data   
+def fetch_text_versions_of_bill(text_versions_url):
+    response = requests.get(text_versions_url)
+    if response.status_code == 200:
+        data = response.json()
+        if data.get('textVersions') and len(data['textVersions']) > 0:
+            formatted_xml_version = next((format for format in data['textVersions'][0]['formats'] if format['type'] == 'Formatted XML'), None)
+            if formatted_xml_version:
+                xml_url = formatted_xml_version['url']
+                return xml_url
+            else:
+                print('No Formatted XML version found')
+                return None
+        else:
+            print('No text versions found or invalid response structure')
+            return None
+    else:
+        print(f"Failed to fetch text versions of bill from {text_versions_url}. Status code: {response.status_code}")
+        return None
+
+# Step 4 nested function to get XML data
+def fetch_individual_text_version(xml_url):
     response = requests.get(xml_url)
     if response.status_code == 200:
-        xml_data = response.content  # This will be the XML data as bytes
-        # Now you can parse the XML data as needed
-        root = etree.fromstring(xml_data)
+        xml_data = response.content
+        tree = etree.fromstring(xml_data)
         
-        # Extract metadata
-        metadata = root.find('metadata/dublinCore', namespaces={'dc': 'http://purl.org/dc/elements/1.1/'})
-        metadata_dict = {}
-        if metadata:
-            title = metadata.find('dc:title', namespaces={'dc': 'http://purl.org/dc/elements/1.1/'})
-            metadata_dict['title'] = title.text if title is not None else 'N/A'
+        # Parse the XML data and extract relevant information
+        namespace_map = {'dc': 'http://purl.org/dc/elements/1.1/'}
+        bill_metadata = tree.find('metadata')
+        if bill_metadata is not None:
+            dublin_core = bill_metadata.find('dublinCore')
+            if dublin_core is not None:
+                title = dublin_core.find('dc:title', namespaces=namespace_map).text
+                publisher = dublin_core.find('dc:publisher', namespaces=namespace_map).text
+                date = dublin_core.find('dc:date', namespaces=namespace_map).text
+                format = dublin_core.find('dc:format', namespaces=namespace_map).text
+                language = dublin_core.find('dc:language', namespaces=namespace_map).text
+                rights = dublin_core.find('dc:rights', namespaces=namespace_map).text
 
-        # Extract actions
-        actions_list = []
-        actions = root.findall('form/action', namespaces={})
-        for action in actions:
-            action_date = action.find('action-date')
-            action_desc = action.find('action-desc')
-            actions_list.append({
-                "action_date": action_date.get('date') if action_date is not None else 'N/A',
-                "action_description": etree.tostring(action_desc).decode('utf-8') if action_desc is not None else 'N/A'
-            })
+                parsed_data = {
+                    "title": title,
+                    "publisher": publisher,
+                    "date": date,
+                    "format": format,
+                    "language": language,
+                    "rights": rights
+                }
 
-        # Extract bill details
-        sections_list = []
-        legis_body = root.find('legis-body', namespaces={})
-        if legis_body:
-            sections = legis_body.findall('section', namespaces={})
-            for section in sections:
-                header = section.find('header')
-                text = section.find('text')
-                sections_list.append({
-                    "section_header": header.text if header is not None else 'N/A',
-                    "section_text": etree.tostring(text).decode('utf-8') if text is not None else 'N/A'
-                })
+                return parsed_data
+            else:
+                print("Dublin Core not found in the XML data")
+        else:
+            print("Metadata not found in the XML data")
+    else:
+        print(f"Failed to fetch individual text version from {xml_url}. Status code: {response.status_code}")
 
-        # Create a new BillFullText object and store the parsed data
-        bill_full_text = BillFullText(
-            bill_id=bill_id,
-            title=metadata_dict.get('title'),
-            metadata=metadata_dict,
-            actions=actions_list,
-            sections=sections_list
+def store_full_bill_text(bill, xml_url):
+    # Get the parsed data from the fetch_individual_text_version function
+    xml_data = fetch_individual_text_version(xml_url)
+    
+    if xml_data:
+        # Create a BillFullText record
+        bill_full_bill_record = BillFullText(
+            bill_id=bill.id,
+            title=xml_data.get('title'),
+            bill_metadata=xml_data,  # Storing the parsed metadata
         )
         
-        # Add the new BillFullText object to the session
-        db.session.add(bill_full_text)
-
-        # Commit the session to save the BillFullText object to the database
-        try:
-            db.session.commit()
-            logging.info(f"Successfully stored full text for bill ID {bill_id} in the database.")
-        except Exception as e:
-            db.session.rollback()
-            logging.error(f"An error occurred while saving to database: {e}")
-
-        return xml_data  # You might want to return parsed data instead of raw XML
+        db.session.add(bill_full_bill_record)
+        db.session.commit()  # Commit the transaction
     else:
-        logging.error(f"Failed to fetch XML data from {xml_url}. Status code: {response.status_code}")
-        return None
+        print("Failed to retrieve or parse XML data from the URL")
 
+    # Create a new BillFullText object
+    bill_full_text = BillFullText(
+        bill_id=bill.id,
+        title=xml_data['title'],
+        # ... (set other attributes)
+    )
 
-def fetch_full_bill_text(url):
-    response = requests.get(url, headers={"Accept": "application/xml"})
-    if response.status_code == 200:
-        return response.text  # This will return the XML as a string
-    else:
-        logging.error(f"Failed to fetch full bill details from {url}. Status code: {response.status_code}")
-        return None
-# END NEW SECTION FOR GETTING FULL BILL DETAILS IN NESTED API CALLS
+    # Add the new object to the session
+    db.session.add(bill_full_text)
 
+    # Print the new object to check if it's created correctly
+    print(bill_full_text)
+
+    # Commit the transaction
+    db.session.commit()
 
 def fetch_bill_actions(bill_id):
     manage_api_state(api_state, 1)
@@ -262,59 +298,6 @@ def store_committees(bill, bill_id):
             )
             db.session.add(committee_record)
 
-# Store a bill and its related records, manage API state and transactions
-processed_bill_ids = set()
-
-# Function to process and store bill data in the database
-def store_bill(data, batch_size=50):
-    if not data:
-        logging.error("No data to process.")
-        return
-
-    batch = []
-    for item in data:
-        bill_id = item.get('bill_id')
-        
-        if not bill_id:
-            logging.error("bill_id is missing in the data.")
-            continue
-
-        if bill_id in processed_bill_ids:
-            continue
-
-        bill = create_bill(item)
-        db.session.add(bill)
-
-        # Store related records
-        store_actions(bill, bill_id)
-        store_amendments(bill, bill_id)
-        store_committees(bill, bill_id)
-
-        batch.append(item)
-
-        # Manage API state and transactions
-        commit_needed = manage_api_state(api_state, batch_size)
-        
-        if commit_needed:
-            try:
-                db.session.commit()
-                logging.info(f"Successfully stored {batch_size} bills in the database.")
-                processed_bill_ids.update([x.get('bill_id') for x in batch])
-                batch.clear()
-            except Exception as e:
-                db.session.rollback()
-                logging.error(f"An error occurred while saving to database: {e}")
-
-    # Commit any remaining items (if any)
-    if batch:
-        try:
-            db.session.commit()
-            logging.info(f"Successfully stored {len(batch)} bills in the database.")
-            processed_bill_ids.update([x.get('bill_id') for x in batch])
-        except Exception as e:
-            db.session.rollback()
-            logging.error(f"An error occurred while saving to database: {e}")
-
 # Function to get summary data for a specific bill
 def get_bill_summary(congress, bill_type):
     if api_state:
@@ -343,65 +326,106 @@ def get_committee_details(congress, chamber, batch_size=100):
     else:
         logging.error("No response received.")
         return None
+    
+def fetch_bills(offset=0, limit=50):
+    # This function should fetch a list of bills and their details
+    # The exact implementation depends on the API endpoints and parameters
+    # Here's a placeholder implementation:
+
+    bills_data = []
+    for i in range(offset, offset+limit):
+        bill_url = fetch_list_of_bills()  # Step 1: Get list of bills
+        if bill_url:
+            bill_details = fetch_individual_bill_details(bill_url)  # Step 2: Get individual bill details
+            if bill_details:
+                text_versions_url = bill_details.get('textVersions', {}).get('url')
+                if text_versions_url:
+                    xml_url = fetch_text_versions_of_bill(text_versions_url)  # Step 3: Get text versions of bill
+                    if xml_url:
+                        xml_data = fetch_individual_text_version(xml_url)  # Step 4: Get individual text version
+                        if xml_data:
+                            bill_details['full_text'] = xml_data
+                            bills_data.append(bill_details)
+    return {'bills': bills_data}
+
+
+# Store a bill and its related records, manage API state and transactions
+processed_bill_ids = set()
+
+def store_bill(data, batch_size=50):
+    if not data:
+        logging.error("No data to process.")
+        return
+
+    batch = []
+    for item in data:
+        bill_id = item.get('bill_id')
+        
+        if not bill_id:
+            logging.error("bill_id is missing in the data.")
+            continue
+
+        if bill_id in processed_bill_ids:
+            continue
+
+        bill = create_bill(item)
+        db.session.add(bill)
+
+        # Store related records
+        store_actions(bill, bill_id)
+        store_amendments(bill, bill_id)
+        store_committees(bill, bill_id)
+
+        # Fetch and store full bill text
+        bill_url = fetch_list_of_bills()
+        if bill_url:
+            bill_details = fetch_individual_bill_details(bill_url)
+            if bill_details:
+                text_versions_url = bill_details.get('textVersionsUrl')
+                if text_versions_url:
+                    xml_url = fetch_text_versions_of_bill(text_versions_url)
+                    if xml_url:
+                        xml_data = fetch_individual_text_version(xml_url)
+                        if xml_data:
+                            store_full_bill_text(bill, xml_data)
+
+        batch.append(item)
+
+        # Manage API state and transactions
+        commit_needed = manage_api_state(api_state, batch_size)
+        
+        if commit_needed:
+            try:
+                db.session.commit()
+                logging.info(f"Successfully stored {batch_size} bills in the database.")
+                processed_bill_ids.update([x.get('bill_id') for x in batch])
+                batch.clear()
+            except Exception as e:
+                db.session.rollback()
+                logging.error(f"An error occurred while saving to database: {e}")
+
+    # Commit any remaining items (if any)
+    if batch:
+        try:
+            db.session.commit()
+            logging.info(f"Successfully stored {len(batch)} bills in the database.")
+            processed_bill_ids.update([x.get('bill_id') for x in batch])
+        except Exception as e:
+            db.session.rollback()
+            logging.error(f"An error occurred while saving to database: {e}")
 
 # Main function to orchestrate data fetching and storing
-def main():
+def main(mode='populate'):
     offset = 0
     while True:
         bills_data = fetch_bills(offset=offset, limit=LIMIT)
         if not bills_data or not bills_data.get('bills'):
             break
 
-        for bill_data in bills_data['bills']:
-            bill_url = bill_data.get('url')
-            if bill_url:
-                full_bill_text = fetch_full_bill_text(bill_url)
-                if full_bill_text:
-                    # Parse the full bill text to extract relevant information
-                    # (this depends on the structure of the full bill text JSON)
-                    parsed_data = parse_full_bill_text(full_bill_text)
-
-                    # Create a new Bill object and set its attributes based on the parsed data
-                    bill = Bill(
-                        title=parsed_data.get('title', ''),
-                        summary=parsed_data.get('summary', ''),
-                        # ... (set other attributes as needed)
-                    )
-
-                    # Add the new Bill object to the session
-                    db.session.add(bill)
-
-                    # Commit the session to save the Bill object to the database
-                    try:
-                        db.session.commit()
-                        logging.info(f"Successfully stored bill {bill.title} in the database.")
-                    except Exception as e:
-                        db.session.rollback()
-                        logging.error(f"An error occurred while saving to database: {e}")
+        # Call store_bill function to store the bill data
+        store_bill(bills_data['bills'])
 
         offset += LIMIT
-
-
-def parse_full_bill_text(full_bill_details):
-    # This function should parse the full bill details JSON to extract the relevant information
-    # The exact implementation depends on the structure of the full bill details JSON
-    # Here's a placeholder implementation that just returns the full bill details JSON as is
-    
-    bill_text_url = full_bill_details.get('bill', {}).get('textVersions', {}).get('url')
-    if bill_text_url:
-        response = requests.get(bill_text_url)
-        if response.status_code == 200:
-            bill_text = response.json()
-            # Now bill_text should contain the full text of the bill
-            # You would need to extract the relevant information from bill_text and return it
-            # The exact implementation depends on the structure of the bill_text JSON
-            return bill_text
-        else:
-            logging.error(f"Failed to fetch full bill text from {bill_text_url}. Status code: {response.status_code}")
-            return None
-    else:
-        logging.error("No URL found to fetch the full bill text.")
-        return None
 
 # Function to run the script in different modes (populate or maintain)s
 def run_script():
@@ -417,4 +441,4 @@ def run_script():
 if __name__ == "__main__":
     app = create_app()  # Create the app instance
     with app.app_context():
-        main()
+        run_script()

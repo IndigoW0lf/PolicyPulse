@@ -12,7 +12,7 @@ class Bill(db.Model):
     sponsor_name = db.Column(db.String(200), nullable=False)  
     committee = db.Column(db.String(200), nullable=True)
     voting_record = db.Column(db.Text, nullable=True) 
-    full_text_link = db.Column(db.String(500), nullable=True)
+    full_bill_link = db.Column(db.String(500), nullable=True)
     tags = db.Column(db.String(300), nullable=True)  
     last_action_date = db.Column(db.Date, nullable=True)
     last_action_description = db.Column(db.Text, nullable=True)
