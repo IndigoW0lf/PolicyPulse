@@ -1,13 +1,23 @@
+from factory import Sequence, SubFactory
 import factory
-from datetime import date
-from backend.database.models import Action
+from factories.base_factory import BaseFactory
+from backend.database.models import Action, ActionType, Bill
+from backend import db
 
-class ActionFactory(factory.Factory):
+class ActionFactory(BaseFactory):
     class Meta:
         model = Action
 
-    action_date = date.today()
-    description = factory.Sequence(lambda n: f"Test Action Description {n}")
-    chamber = "House"
-    bill_id = factory.SubFactory('backend.tests.factories.BillFactory')
-    action_type_id = factory.SubFactory('backend.tests.factories.ActionTypeFactory')
+    id = Sequence(lambda n: n)
+    action_date = factory.Faker('date')
+    description = Sequence(lambda n: f'Action Description {n}')
+    chamber = factory.Iterator(['House', 'Senate'])
+    bill = SubFactory('factories.bill_factory.BillFactory')
+    action_type = SubFactory('factories.action_type_factory.ActionTypeFactory')
+
+    @classmethod
+    def _create(cls, model_class, *args, **kwargs):
+        instance = super()._create(model_class, *args, **kwargs)
+        db.session.add(instance)
+        db.session.commit()
+        return instance

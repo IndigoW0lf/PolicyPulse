@@ -1,12 +1,22 @@
-import factory
+from factory import Sequence, Faker
+from factories.base_factory import BaseFactory
 from backend.database.models import Politician
+from backend import db
 
-class PoliticianFactory(factory.Factory):
+class PoliticianFactory(BaseFactory):
     class Meta:
         model = Politician
 
-    name = factory.Sequence(lambda n: f"Test Politician {n}")
-    state = factory.Sequence(lambda n: f"Test State {n}")
-    party = factory.Sequence(lambda n: f"Test Party {n}")
-    role = factory.Sequence(lambda n: f"Test Role {n}")
-    profile_link = factory.Sequence(lambda n: f"http://example.com/profile{n}")
+    id = Sequence(lambda n: n)
+    name = Sequence(lambda n: f'Politician Name {n}')
+    state = Faker('state_abbr')
+    party = Faker('random_element', elements=['Democrat', 'Republican', 'Independent'])
+    role = Sequence(lambda n: f'Role {n}')
+    profile_link = Sequence(lambda n: f'http://profilelink.com/{n}')
+
+    @classmethod
+    def _create(cls, model_class, *args, **kwargs):
+        instance = super()._create(model_class, *args, **kwargs)
+        db.session.add(instance)
+        db.session.commit()
+        return instance

@@ -26,6 +26,7 @@ class Bill(db.Model):
     title_type_id = db.Column(db.Integer, db.ForeignKey('title_type.id'), nullable=True)
 
     # Relationships
+    action_type = db.relationship('ActionType', back_populates='bills', lazy=True)
     sponsor = db.relationship('Politician', back_populates='sponsored_bills', lazy=True)
     loc_summary = db.relationship('LOCSummary', back_populates='bill', lazy='joined')
     co_sponsors = db.relationship('CoSponsor', back_populates='bill', lazy=True)

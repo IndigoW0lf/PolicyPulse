@@ -1,27 +1,36 @@
-import factory
-from datetime import date
-from backend.database.models import Bill
+from factory import Sequence, SubFactory, Faker
+from factories.base_factory import BaseFactory
+from backend.database.models import Bill, ActionType, Politician, TitleType
+from backend import db
 
-class BillFactory(factory.Factory):
+class BillFactory(BaseFactory):
     class Meta:
         model = Bill
 
-    title = factory.Sequence(lambda n: f"Test Bill {n}")
-    summary = factory.Sequence(lambda n: f"This is a test bill {n}")
-    date_introduced = date.today()
-    status = "Proposed"
-    bill_number = factory.Sequence(lambda n: f"HR{100+n}")
-    sponsor_name = factory.Sequence(lambda n: f"Test Politician {n}")
-    committee = factory.Sequence(lambda n: f"Committee {n}")
-    voting_record = "Yea: 10, Nay: 5"
-    full_bill_link = factory.Sequence(lambda n: f"http://example.com/full_bill_{n}")
-    tags = factory.Sequence(lambda n: f"Test Bill {n}")
-    last_action_date = date.today()
-    last_action_description = "Introduced in House"
-    congress = "117th"
-    bill_type = "HR"
-    update_date = date.today()
-    xml_content = None
-    action_type_id = factory.SubFactory('backend.tests.factories.ActionTypeFactory')
-    sponsor_id = factory.Sequence(lambda n: n+1)
-    title_type_id = factory.Sequence(lambda n: n+1)
+    id = Sequence(lambda n: n)
+    title = Sequence(lambda n: f'Bill Title {n}')
+    summary = Sequence(lambda n: f'Bill Summary {n}')
+    date_introduced = Faker('date')
+    status = Sequence(lambda n: f'Status {n}')
+    bill_number = Sequence(lambda n: f'BILL_{n}')
+    sponsor_name = Sequence(lambda n: f'Sponsor Name {n}')
+    committee = Sequence(lambda n: f'Committee {n}')
+    voting_record = Sequence(lambda n: f'Voting Record {n}')
+    full_bill_link = Sequence(lambda n: f'http://fullbilllink.com/{n}')
+    tags = Sequence(lambda n: f'Tag {n}')
+    last_action_date = Faker('date')
+    last_action_description = Sequence(lambda n: f'Last Action Description {n}')
+    congress = Sequence(lambda n: f'Congress {n}')
+    bill_type = Sequence(lambda n: f'Bill Type {n}')
+    update_date = Faker('date')
+    xml_content = Sequence(lambda n: f'<xml>Content {n}</xml>')
+    action_type = SubFactory('factories.action_type_factory.ActionTypeFactory')
+    sponsor = SubFactory('factories.politician_factory.PoliticianFactory')
+    title_type = SubFactory('factories.title_type_factory.TitleTypeFactory')
+
+    @classmethod
+    def _create(cls, model_class, *args, **kwargs):
+        instance = super()._create(model_class, *args, **kwargs)
+        db.session.add(instance)
+        db.session.commit()
+        return instance

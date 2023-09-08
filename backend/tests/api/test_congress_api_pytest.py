@@ -105,47 +105,36 @@ def test_make_request_error(mock_get):
 
 def test_create_bill():
     item = {
-        'title': 'Test Bill',
-        'summary': 'This is a test bill',
-        'bill_number': '123',
-        'sponsor': 'Test Sponsor',
-        'date_introduced': date(2023, 1, 1),
+        'title': 'Test Bill 555',
+        'summary': 'This is a test bill again',
+        'bill_number': '555',
+        'sponsor': 'Test Sponsor 555',
+        'date_introduced': date(2025, 1, 1),
         'status': 'Active',
-        'committees': ['Committee1', 'Committee2'],
-        'full_bill_link': 'http://test.com',
-        'subjects': ['Subject1', 'Subject2'],
-        'last_action_date': date(2023, 1, 2),
-        'last_action_description': 'Test Action'
+        'committees': ['Committee5', 'Committee55'],
+        'full_bill_link': 'http://test555.com',
+        'subjects': ['Subject5', 'Subject55'],
+        'last_action_date': date(2025, 1, 2),
+        'last_action_description': 'Test Action 555'
     }
     
     with patch('backend.api.congress_api.fetch_sponsor_id', return_value=1):
         bill = create_bill(item)
     
-    assert bill.title == 'Test Bill'
-    assert bill.summary == 'This is a test bill'
-    assert bill.bill_number == '123'
-    assert bill.sponsor_name == 'Test Sponsor'
+    assert bill.title == 'Test Bill 555'
+    assert bill.summary == 'This is a test bill again'
+    assert bill.bill_number == '555'
+    assert bill.sponsor_name == 'Test Sponsor 555'
     assert bill.sponsor_id == 1
-    assert bill.date_introduced.strftime('%Y-%m-%d') == '2023-01-01'
+    assert bill.date_introduced.strftime('%Y-%m-%d') == '2025-01-01'
     assert bill.status == 'Active'
-    assert bill.committee == 'Committee1,Committee2'
-    assert bill.full_bill_link == 'http://test.com'
-    assert bill.tags == 'Subject1,Subject2'
-    assert bill.last_action_date.strftime('%Y-%m-%d') == '2023-01-02'
-    assert bill.last_action_description == 'Test Action'
+    assert bill.committee == 'Committee5,Committee55'
+    assert bill.full_bill_link == 'http://test555.com'
+    assert bill.tags == 'Subject5,Subject55'
+    assert bill.last_action_date.strftime('%Y-%m-%d') == '2025-01-02'
+    assert bill.last_action_description == 'Test Action 555'
 
 def test_store_full_bill_text(app, session, politician, bill, bill_full_text):
-    session = session
-
-    xml_data = {
-        'title': 'XML Title',
-        'publisher': 'XML Publisher',
-        'date': '2023-01-03',
-        'format': 'XML Format',
-        'language': 'XML Language',
-        'rights': 'XML Rights'
-    }
-
     with app.app_context():
         session.add(politician)
         session.commit()
@@ -153,20 +142,13 @@ def test_store_full_bill_text(app, session, politician, bill, bill_full_text):
         session.add(bill)
         session.commit()
         
-        new_bill_full_text = BillFullText(
-            bill_id=bill.id, 
-            title='XML Title', 
-            bill_metadata=xml_data
-        )
-        
-        session.add(new_bill_full_text)
+        session.add(bill_full_text)
         session.commit()
 
         saved_bill_full_text = BillFullText.query.filter_by(bill_id=bill.id).first()
         assert saved_bill_full_text is not None
         assert saved_bill_full_text.title == 'XML Title'
-        assert saved_bill_full_text.bill_metadata == xml_data
-
+        assert saved_bill_full_text.bill_metadata == bill_full_text.bill_metadata
 
 @patch('requests.get')
 def test_fetch_individual_text_version(mock_get):

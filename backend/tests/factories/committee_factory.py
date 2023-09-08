@@ -1,10 +1,21 @@
 import factory
+from factory import Sequence
+from factories.base_factory import BaseFactory
 from backend.database.models import Committee
+from backend import db
 
-class CommitteeFactory(factory.Factory):
+class CommitteeFactory(BaseFactory):
     class Meta:
         model = Committee
 
-    name = factory.Sequence(lambda n: f"Test Committee {n}")
-    chamber = "House"
-    committee_code = factory.Sequence(lambda n: f"TC{100+n}")
+    id = Sequence(lambda n: n)
+    name = Sequence(lambda n: f'Committee Name {n}')
+    chamber = factory.Iterator(['House', 'Senate'])
+    committee_code = Sequence(lambda n: f'COM_CODE_{n}')
+
+    @classmethod
+    def _create(cls, model_class, *args, **kwargs):
+        instance = super()._create(model_class, *args, **kwargs)
+        db.session.add(instance)
+        db.session.commit()
+        return instance

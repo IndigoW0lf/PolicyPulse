@@ -1,42 +1,74 @@
 import pytest
-from datetime import date
+import logging
+from sqlalchemy.exc import IntegrityError
 from backend.database.models import Amendment, Bill, AmendmentStatusEnum
 from backend.tests.factories.amendment_factory import AmendmentFactory
 from backend.tests.factories.bill_factory import BillFactory
 
-@pytest.fixture
-def bill(session):
-    bill = BillFactory()
-    session.add(bill)
-    session.commit()
-    return bill
+logger = logging.getLogger(__name__)
 
 @pytest.fixture
-def amendment(session, bill):
-    amendment = AmendmentFactory(bill_id=bill.id, amendment_number="A001", description="Test Amendment", date_proposed=date.today(), status=AmendmentStatusEnum.PROPOSED)
-    session.add(amendment)
-    session.commit()
-    return amendment
+def bill_factory(session):
+    def _bill_factory(**kwargs):
+        bill = BillFactory(**kwargs)
+        session.add(bill)
+        session.commit()
+        return bill
+    return _bill_factory
 
 @pytest.fixture
-def setup_amendment(amendment, bill):
-    return amendment, bill
+def amendment_factory(session):
+    def _amendment_factory(**kwargs):
+        amendment = AmendmentFactory(**kwargs)
+        session.add(amendment)
+        session.commit()
+        return amendment
+    return _amendment_factory
 
-def test_create_amendment(setup_amendment):
-    amendment, _ = setup_amendment
+def test_amendment_creation(amendment_factory, bill_factory):
+    logger.info("Starting test_amendment_creation")
+    bill = bill_factory()
+    amendment = amendment_factory(bill=bill)
+
     assert amendment is not None
+    assert amendment.id is not None
+    assert amendment.amendment_number.startswith('AMEND_')
+    assert amendment.description.startswith('Amendment Description')
+    assert amendment.date_proposed is not None
+    assert isinstance(amendment.status, AmendmentStatusEnum)
 
-def test_field_validations(setup_amendment):
-    amendment, _ = setup_amendment
-    assert amendment.amendment_number == "A001"
-    assert amendment.description == "Test Amendment"
-    assert amendment.date_proposed == date.today()
-    assert amendment.status == AmendmentStatusEnum.PROPOSED
+    # Fetch the amendment from the database and check the relationships
+    fetched_amendment = Amendment.query.get(amendment.id)
+    assert fetched_amendment.bill.id == bill.id
+    logger.info("Completed test_amendment_creation")
 
-def test_foreign_keys(setup_amendment):
-    amendment, _ = setup_amendment
-    assert amendment.bill_id is not None
+def test_amendment_field_validations(session, amendment_factory):
+    logger.info("Starting test_amendment_field_validations")
+    # Test that amendment_number cannot be null
+    with pytest.raises(IntegrityError):
+        amendment = amendment_factory(amendment_number=None)
+        session.add(amendment)
+        session.commit()
 
-def test_relationships(setup_amendment):
-    amendment, bill = setup_amendment
-    assert amendment.bill.title == bill.title
+    session.rollback()
+    # Add other field validation tests as necessary
+    logger.info("Completed test_amendment_field_validations")
+
+def test_amendment_foreign_keys(session, amendment_factory):
+    logger.info("Starting test_amendment_foreign_keys")
+    # Test that amendment cannot be created with non-existent bill_id
+    with pytest.raises(IntegrityError):
+        amendment = amendment_factory(bill_id=9999)
+        session.add(amendment)
+        session.commit()
+
+    session.rollback()
+    logger.info("Completed test_amendment_foreign_keys")
+
+def test_amendment_relationships(amendment_factory, bill_factory):
+    logger.info("Starting test_amendment_relationships")
+    bill = bill_factory()
+    amendment = amendment_factory(bill=bill)
+
+    assert amendment.bill == bill
+    logger.info("Completed test_amendment_relationships")

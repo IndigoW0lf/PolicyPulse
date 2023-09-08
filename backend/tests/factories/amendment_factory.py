@@ -1,13 +1,23 @@
 import factory
-from datetime import date
-from backend.database.models import Amendment, AmendmentStatusEnum
+from factory import Sequence, SubFactory
+from factories.base_factory import BaseFactory
+from backend.database.models import Amendment, Bill, AmendmentStatusEnum
+from backend import db
 
-class AmendmentFactory(factory.Factory):
+class AmendmentFactory(BaseFactory):
     class Meta:
         model = Amendment
 
-    amendment_number = factory.Sequence(lambda n: f"A{100+n}")
-    description = factory.Sequence(lambda n: f"Test Amendment {n}")
-    date_proposed = date.today()
-    bill_id = factory.SubFactory('backend.tests.factories.BillFactory')
-    status = AmendmentStatusEnum.PROPOSED
+    id = Sequence(lambda n: n)
+    amendment_number = Sequence(lambda n: f'AMEND_{n}')
+    description = Sequence(lambda n: f'Amendment Description {n}')
+    date_proposed = factory.Faker('date')
+    status = factory.Iterator(AmendmentStatusEnum)
+    bill = SubFactory('factories.bill_factory.BillFactory')
+
+    @classmethod
+    def _create(cls, model_class, *args, **kwargs):
+        instance = super()._create(model_class, *args, **kwargs)
+        db.session.add(instance)
+        db.session.commit()
+        return instance

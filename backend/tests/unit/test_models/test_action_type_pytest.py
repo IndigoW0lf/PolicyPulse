@@ -1,51 +1,103 @@
 import pytest
+import logging
+from sqlalchemy.exc import IntegrityError
 from backend.database.models import Action, Bill, ActionType
 from backend.tests.factories.action_type_factory import ActionTypeFactory 
 from backend.tests.factories.action_factory import ActionFactory
 from backend.tests.factories.bill_factory import BillFactory
 
-@pytest.fixture
-def action_type(session):
-    action_type = ActionTypeFactory(description='Bill is introduced')
-    session.add(action_type)
-    session.commit()
-    return action_type
+logger = logging.getLogger(__name__)
 
 @pytest.fixture
-def bill(session, action_type):
-    bill = BillFactory(action_type_id=action_type.id)
-    session.add(bill)
-    session.commit()
-    return bill
+def action_factory(session):
+    def _action_factory(**kwargs):
+        action = ActionFactory(**kwargs)
+        session.add(action)
+        session.commit()
+        return action
+    return _action_factory
 
 @pytest.fixture
-def action(session, action_type, bill):
-    action = ActionFactory(action_type_id=action_type.id, bill_id=bill.id)
-    session.add(action)
-    session.commit()
-    return action
+def bill_factory(session):
+    def _bill_factory(**kwargs):
+        bill = BillFactory(**kwargs)
+        session.add(bill)
+        session.commit()
+        return bill
+    return _bill_factory
 
 @pytest.fixture
-def setup_action_type(action_type, action, bill):
-    return action_type, action, bill
+def action_type_factory(session):
+    def _action_type_factory(**kwargs):
+        action_type = ActionTypeFactory(**kwargs)
+        session.add(action_type)
+        session.commit()
+        return action_type
+    return _action_type_factory
 
-def test_create_action_type(setup_action_type):
-    action_type, _, _ = setup_action_type
+def test_action_type_creation(action_type_factory):
+    logger.info("Starting test_action_type_creation")
+    action_type = action_type_factory()
+    
     assert action_type is not None
+    assert action_type.id is not None
+    assert action_type.description.startswith('Action Type Description')
+    
+    # Fetch the action_type from the database and check the attributes
+    fetched_action_type = ActionType.query.get(action_type.id)
+    assert fetched_action_type.description == action_type.description
+    logger.info("Completed test_action_type_creation")
 
-def test_read_action_type(setup_action_type):
-    action_type, _, _ = setup_action_type
-    assert action_type.description == 'Bill is introduced'
+def test_action_type_relationships(action_type_factory, action_factory, bill_factory):
+    logger.info("Starting test_action_type_relationships")
+    action_type = action_type_factory()
+    action = action_factory(action_type=action_type)
+    bill = bill_factory(action_type=action_type)
+    
+    assert action in action_type.actions
+    assert bill in action_type.bills
+    logger.info("Completed test_action_type_relationships")
 
-def test_update_action_type(setup_action_type, session):
-    action_type, _, _ = setup_action_type
+def test_action_type_field_validations(session, action_type_factory):
+    logger.info("Starting test_action_type_field_validations")
+    # Test that description cannot be null
+    with pytest.raises(IntegrityError):
+        action_type = action_type_factory(description=None)
+        session.add(action_type)
+        session.commit()
+
+    session.rollback()
+    logger.info("Completed test_action_type_field_validations")
+
+def test_read_action_type(action_type_factory):
+    logger.info("Starting test_read_action_type")
+    action_type = action_type_factory(description='Bill is introduced')
+    
+    # Fetch the action_type from the database and check the description
+    fetched_action_type = ActionType.query.get(action_type.id)
+    assert fetched_action_type.description == 'Bill is introduced'
+    logger.info("Completed test_read_action_type")
+
+
+def test_update_action_type(session, action_type_factory):
+    logger.info("Starting test_update_action_type")
+    action_type = action_type_factory(description='Bill is introduced')
+    
+    # Update the description of the action_type
     action_type.description = 'Bill is reintroduced'
     session.commit()
-    updated_action_type = session.get(ActionType, action_type.id)  
+    
+    # Fetch the updated action_type from the database and check the new description
+    updated_action_type = session.query(ActionType).get(action_type.id)
     assert updated_action_type.description == 'Bill is reintroduced'
+    logger.info("Completed test_update_action_type")
 
-def test_delete_action_type(setup_action_type, session):
-    action_type, action, bill = setup_action_type
+
+def test_delete_action_type(session, action_type_factory, action_factory, bill_factory):
+    logger.info("Starting test_delete_action_type")
+    action_type = action_type_factory(description='Bill is introduced')
+    action = action_factory(action_type=action_type)
+    bill = bill_factory(action_type=action_type)
     
     # Update Actions associated with ActionType
     actions = session.query(Action).filter_by(action_type_id=action_type.id).all()
@@ -66,3 +118,4 @@ def test_delete_action_type(setup_action_type, session):
     # Assert ActionType is deleted
     deleted_action_type = session.query(ActionType).filter_by(id=action_type.id).first()
     assert deleted_action_type is None
+    logger.info("Completed test_delete_action_type")
