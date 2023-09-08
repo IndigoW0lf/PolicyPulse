@@ -1,6 +1,8 @@
 from factory import Sequence, SubFactory
 import factory
-from factories.base_factory import BaseFactory
+from backend.tests.factories.base_factory import BaseFactory
+from backend.tests.factories.bill_factory import BillFactory
+from backend.tests.factories.action_type_factory import ActionTypeFactory
 from backend.database.models import Action, ActionType, Bill
 from backend import db
 
@@ -12,8 +14,8 @@ class ActionFactory(BaseFactory):
     action_date = factory.Faker('date')
     description = Sequence(lambda n: f'Action Description {n}')
     chamber = factory.Iterator(['House', 'Senate'])
-    bill = SubFactory('factories.bill_factory.BillFactory')
-    action_type = SubFactory('factories.action_type_factory.ActionTypeFactory')
+    bill = SubFactory('backend.tests.factories.bill_factory.BillFactory')
+    action_type = SubFactory('backend.tests.factories.action_type_factory.ActionTypeFactory')
 
     @classmethod
     def _create(cls, model_class, *args, **kwargs):

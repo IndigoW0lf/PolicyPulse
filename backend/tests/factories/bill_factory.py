@@ -1,5 +1,5 @@
 from factory import Sequence, SubFactory, Faker
-from factories.base_factory import BaseFactory
+from backend.tests.factories.base_factory import BaseFactory
 from backend.database.models import Bill, ActionType, Politician, TitleType
 from backend import db
 
@@ -24,13 +24,18 @@ class BillFactory(BaseFactory):
     bill_type = Sequence(lambda n: f'Bill Type {n}')
     update_date = Faker('date')
     xml_content = Sequence(lambda n: f'<xml>Content {n}</xml>')
-    action_type = SubFactory('factories.action_type_factory.ActionTypeFactory')
-    sponsor = SubFactory('factories.politician_factory.PoliticianFactory')
-    title_type = SubFactory('factories.title_type_factory.TitleTypeFactory')
+    action_type = SubFactory('backend.tests.factories.action_type_factory.ActionTypeFactory')
+    sponsor = SubFactory('backend.tests.factories.politician_factory.PoliticianFactory')
+    title_type = SubFactory('backend.tests.factories.title_type_factory.TitleTypeFactory')
 
     @classmethod
     def _create(cls, model_class, *args, **kwargs):
+        if 'sponsor' in kwargs:
+            kwargs['sponsor_name'] = kwargs['sponsor'].name
+
         instance = super()._create(model_class, *args, **kwargs)
         db.session.add(instance)
         db.session.commit()
         return instance
+
+

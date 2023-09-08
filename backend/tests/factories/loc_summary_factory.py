@@ -1,5 +1,5 @@
 from factory import Sequence, SubFactory, Faker
-from factories.base_factory import BaseFactory
+from backend.tests.factories.base_factory import BaseFactory
 from backend.database.models import LOCSummary, Bill
 from backend import db
 
@@ -12,7 +12,7 @@ class LOCSummaryFactory(BaseFactory):
     chamber = Faker('random_element', elements=['House', 'Senate'])
     action_description = Sequence(lambda n: f'Action Description {n}')
     summary_text = Sequence(lambda n: f'Summary Text {n}')
-    bill = SubFactory('factories.bill_factory.BillFactory')
+    bill = SubFactory('backend.tests.factories.bill_factory.BillFactory')
 
     @classmethod
     def _create(cls, model_class, *args, **kwargs):

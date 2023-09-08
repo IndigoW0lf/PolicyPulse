@@ -1,5 +1,5 @@
 from factory import Sequence, SubFactory
-from factories.base_factory import BaseFactory
+from backend.tests.factories.base_factory import BaseFactory
 from backend.database.models import CoSponsor, Bill, Politician
 from backend import db
 
@@ -8,8 +8,8 @@ class CoSponsorFactory(BaseFactory):
         model = CoSponsor
 
     id = Sequence(lambda n: n)
-    bill = SubFactory('factories.bill_factory.BillFactory')
-    politician = SubFactory('factories.politician_factory.PoliticianFactory')
+    bill = SubFactory('backend.tests.factories.bill_factory.BillFactory')
+    politician = SubFactory('backend.tests.factories.politician_factory.PoliticianFactory')
 
     @classmethod
     def _create(cls, model_class, *args, **kwargs):

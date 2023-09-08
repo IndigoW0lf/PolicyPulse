@@ -1,5 +1,5 @@
 from factory import Sequence
-from factories.base_factory import BaseFactory
+from backend.tests.factories.base_factory import BaseFactory
 from backend.database.models import TitleType
 from backend import db
 

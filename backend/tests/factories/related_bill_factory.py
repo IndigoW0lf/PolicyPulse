@@ -1,5 +1,5 @@
 from factory import Sequence, SubFactory
-from factories.base_factory import BaseFactory
+from backend.tests.factories.base_factory import BaseFactory
 from backend.database.models import RelatedBill, Bill
 from backend import db
 
@@ -8,8 +8,8 @@ class RelatedBillFactory(BaseFactory):
         model = RelatedBill
 
     id = Sequence(lambda n: n)
-    main_bill = SubFactory('factories.bill_factory.BillFactory')
-    related_bill = SubFactory('factories.bill_factory.BillFactory')
+    main_bill = SubFactory('backend.tests.factories.bill_factory.BillFactory')
+    related_bill = SubFactory('backend.tests.factories.bill_factory.BillFactory')
 
     @classmethod
     def _create(cls, model_class, *args, **kwargs):

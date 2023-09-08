@@ -41,3 +41,27 @@ class Bill(db.Model):
 
     def __repr__(self):
         return f'<Bill {self.bill_number}>'
+    
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "summary": self.summary,
+            "date_introduced": self.date_introduced,
+            "status": self.status,
+            "bill_number": self.bill_number,
+            "sponsor_name": self.sponsor_name,
+            "committee": self.committee,
+            "voting_record": self.voting_record,
+            "full_bill_link": self.full_bill_link,
+            "tags": self.tags,
+            "last_action_date": self.last_action_date,
+            "last_action_description": self.last_action_description,
+            "congress": self.congress,
+            "bill_type": self.bill_type,
+            "update_date": self.update_date,
+            "xml_content": self.xml_content,
+            "action_type_id": self.action_type_id,
+            "sponsor_id": self.sponsor_id,
+            "title_type_id": self.title_type_id
+        }

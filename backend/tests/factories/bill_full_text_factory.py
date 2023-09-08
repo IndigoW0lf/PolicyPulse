@@ -1,5 +1,5 @@
 from factory import Sequence, SubFactory, Faker
-from factories.base_factory import BaseFactory
+from backend.tests.factories.base_factory import BaseFactory
 from backend.database.models import BillFullText, Bill
 from backend import db
 
@@ -12,7 +12,7 @@ class BillFullTextFactory(BaseFactory):
     bill_metadata = Sequence(lambda n: f'{{"metadata": "Metadata {n}"}}')
     actions = Sequence(lambda n: f'{{"actions": "Actions {n}"}}')
     sections = Sequence(lambda n: f'{{"sections": "Sections {n}"}}')
-    bill = SubFactory('factories.bill_factory.BillFactory')
+    bill = SubFactory('backend.tests.factories.bill_factory.BillFactory')
 
     @classmethod
     def _create(cls, model_class, *args, **kwargs):

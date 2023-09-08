@@ -2,9 +2,7 @@ import pytest
 import logging
 from sqlalchemy.exc import IntegrityError
 from backend.database.models import Action, Bill, ActionType
-from backend.tests.factories.action_type_factory import ActionTypeFactory 
-from backend.tests.factories.action_factory import ActionFactory
-from backend.tests.factories.bill_factory import BillFactory
+from backend.tests.factories import ActionFactory, BillFactory, ActionTypeFactory
 
 logger = logging.getLogger(__name__)
 

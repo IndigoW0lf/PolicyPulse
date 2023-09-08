@@ -1,6 +1,6 @@
 import factory
 from factory import Sequence, SubFactory
-from factories.base_factory import BaseFactory
+from backend.tests.factories.base_factory import BaseFactory
 from backend.database.models import Amendment, Bill, AmendmentStatusEnum
 from backend import db
 
@@ -13,7 +13,7 @@ class AmendmentFactory(BaseFactory):
     description = Sequence(lambda n: f'Amendment Description {n}')
     date_proposed = factory.Faker('date')
     status = factory.Iterator(AmendmentStatusEnum)
-    bill = SubFactory('factories.bill_factory.BillFactory')
+    bill = SubFactory('backend.tests.factories.bill_factory.BillFactory')
 
     @classmethod
     def _create(cls, model_class, *args, **kwargs):

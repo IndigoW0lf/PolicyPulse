@@ -1,5 +1,5 @@
 from factory import Sequence, Faker
-from factories.base_factory import BaseFactory
+from backend.tests.factories.base_factory import BaseFactory
 from backend.database.models import Politician
 from backend import db
 

@@ -46,7 +46,7 @@ def test_related_bill_field_validations(session, related_bill_factory):
     logger.info("Starting test_related_bill_field_validations")
     # Test that related_bill cannot be created with null fields
     with pytest.raises(IntegrityError):
-        related_bill = related_bill_factory(main_bill_id=None, related_bill_id=None)
+        related_bill = related_bill_factory(bill_id=None, related_bill_id=None)
         session.add(related_bill)
         session.commit()
 

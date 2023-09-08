@@ -1,4 +1,4 @@
-from factory import Factory, SQLAlchemyModelFactory
+from factory.alchemy import SQLAlchemyModelFactory
 from backend import db
 
 class BaseFactory(SQLAlchemyModelFactory):

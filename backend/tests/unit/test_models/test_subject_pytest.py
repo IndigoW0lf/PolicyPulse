@@ -1,5 +1,6 @@
 import pytest
 import logging
+from backend import db
 from sqlalchemy.exc import IntegrityError
 from backend.tests.factories.subject_factory import SubjectFactory
 from backend.tests.factories.bill_factory import BillFactory
@@ -35,7 +36,7 @@ def test_subject_creation(subject_factory):
     assert subject.description == "This is a test subject 1."
 
     # Fetch the subject from the database and check the fields
-    fetched_subject = Subject.query.get(subject.id)
+    fetched_subject = db.session.get(Subject, subject.id)
     assert fetched_subject.name == subject.name
     assert fetched_subject.description == subject.description
     logger.info("Completed test_subject_creation")

@@ -7,8 +7,10 @@ bp = Blueprint('routes', __name__)
 #Bill Routes
 @bp.route('/bill')
 def get_Bills():
-  Bills = Bill.query.all()
-  return jsonify([Bill.to_dict() for Bill in Bills])
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 20, type=int)
+    Bills = Bill.query.paginate(page, per_page, False).items
+    return jsonify([Bill.to_dict() for Bill in Bills])
 
 @bp.route('/bill/<int:id>', methods=['GET'])
 def Bill_detail(id):
@@ -16,6 +18,14 @@ def Bill_detail(id):
     if not Bill:
         return jsonify({"error": "Bill not found"}), 404
     return jsonify(Bill.to_dict())
+
+@bp.route('/bill', methods=['POST'])
+def create_bill():
+    bill_data = request.get_json()
+    new_bill = Bill(**bill_data)
+    db.session.add(new_bill)
+    db.session.commit()
+    return jsonify(new_bill.to_dict()), 201
 
 @bp.route('/search', methods=['POST'])
 def search():

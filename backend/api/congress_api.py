@@ -12,6 +12,9 @@ from backend.database.models.bill import Bill
 from backend.database.models.committee import Committee
 from backend.database.models.politician import Politician
 from backend.database.models.bill_full_text import BillFullText
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 # Load environment variables from .env file
 load_dotenv()
@@ -87,8 +90,7 @@ def make_request(endpoint, api_state, params={}, response_format='application/js
 
                     offset += LIMIT
                     time.sleep(5)
-
-                            
+      
                 else:
                     logging.error("No 'results' key present in the data.")
                     return all_data
