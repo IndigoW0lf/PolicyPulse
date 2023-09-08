@@ -16,8 +16,3 @@ We are in an era of unprecedented bills being introduced to limit or restrict th
 - **User Dashboard**: Allow users to track specific bills and receive notifications when there's a status change or new action.
 - **Voting Mechanism**: Let users upvote or downvote policies based on their impact, giving a community-driven impact score.
 - **Policy Trends**: Use data analytics to show trends in policy changes over time, which could be beneficial for researchers and activists.
-
-## License:
-This project is licensed under the MIT License.
-
-Join us in making policies accessible and understandable for everyone. Your insights, feedback, and contributions are invaluable in shaping the future of **Policy Pulse**.
