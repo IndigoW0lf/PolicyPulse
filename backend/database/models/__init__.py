@@ -8,5 +8,5 @@ from .co_sponsor import CoSponsor
 from .politician import Politician
 from .title_type import TitleType
 from .action import Action
-from .amendment import Amendment
+from .amendment import Amendment, AmendmentStatusEnum
 from .subject import Subject

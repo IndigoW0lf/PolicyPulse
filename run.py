@@ -1,12 +1,15 @@
 from flask import render_template
-from backend import app
-from config import DevelopmentConfig, TestingConfig
+from backend import create_app
+import os
+from dotenv import load_dotenv
 
-# For development
-# app.config.from_object(DevelopmentConfig)
+load_dotenv()
 
-# For testing
-app.config.from_object(TestingConfig)
+# Get the configuration name from the environment variable
+config_name = os.environ.get('FLASK_CONFIG', 'testing')
+
+# Create the Flask app with the specified configuration
+app = create_app(config_name)
 
 @app.route('/')
 def homepage():

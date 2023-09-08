@@ -8,6 +8,8 @@ class Politician(db.Model):
     role = db.Column(db.String(100), nullable=True)
     profile_link = db.Column(db.String(500), nullable=True)
 
-    # Relationships
     sponsored_bills = db.relationship('Bill', back_populates='sponsor', lazy=True)
-    co_sponsored_bills = db.relationship('CoSponsor', backref='politician', lazy=True)
+    co_sponsored_bills = db.relationship('CoSponsor', back_populates='politician', lazy=True)
+
+    def __repr__(self):
+        return f'<Politician {self.name}>'

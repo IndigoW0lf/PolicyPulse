@@ -1,20 +1,36 @@
 import pytest
-from backend.database.models import Subject
-from .conftest import create_subject, create_bill
+from backend.database.models.subject import Subject
+from backend.tests.factories.subject_factory import SubjectFactory
+from backend.tests.factories.bill_factory import BillFactory
+from backend import db
 
-def test_subject_creation(session):
-    subject = create_subject(session)
+@pytest.fixture
+def setup_subject(session):
+    subject = SubjectFactory()
+    session.add(subject)
+    session.commit()
+    return subject
+
+def test_subject_creation(setup_subject):
+    subject = setup_subject
     assert subject is not None
 
-def test_subject_fields(session):
-    subject = create_subject(session, name="Test Subject", description="This is a test subject.")
+def test_subject_fields(setup_subject):
+    subject = setup_subject
     assert subject.name == "Test Subject"
     assert subject.description == "This is a test subject."
 
 def test_subject_relationship(session):
-    subject = create_subject(session)
-    bill = create_bill(session, bill_number="HR002", title="Related Test Bill")
+    subject = SubjectFactory()
+    bill = BillFactory(bill_number="HR002", title="Related Test Bill")
     subject.bills.append(bill)
-    session.flush()
+    session.add(subject)
+    session.add(bill)
+    session.commit()
     
     assert subject.bills[0].title == bill.title
+
+@pytest.fixture
+def session(db_session):
+    yield db_session
+    db_session.rollback()

@@ -7,5 +7,8 @@ class LOCSummary(db.Model):
     action_description = db.Column(db.String(200), nullable=False)  # Description of the action taken on this version of the bill
     summary_text = db.Column(db.Text, nullable=True)  # The actual summary text from the LOC
 
-    # Relationship
-    bill_id = db.Column(db.Integer, db.ForeignKey('bill.id'), nullable=False)
+    bill_id = db.Column(db.Integer, db.ForeignKey('bill.id'), nullable=False, index=True)
+    bill = db.relationship('Bill', back_populates='loc_summary', lazy=True)
+
+    def __repr__(self):
+        return f'<LOCSummary {self.version_code} - {self.chamber}>'

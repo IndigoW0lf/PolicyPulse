@@ -5,5 +5,7 @@ class TitleType(db.Model):
     code = db.Column(db.String(50), nullable=False, unique=True)
     description = db.Column(db.String(200), nullable=False)
     
-    # Relationships
-    bills = db.relationship('Bill', backref='title_type', lazy=True)
+    bills = db.relationship('Bill', back_populates='title_type', lazy=True)
+
+    def __repr__(self):
+        return f'<TitleType {self.code} - {self.description}>'
