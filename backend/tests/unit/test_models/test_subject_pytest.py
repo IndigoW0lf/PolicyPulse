@@ -29,8 +29,3 @@ def test_subject_relationship(session):
     session.commit()
     
     assert subject.bills[0].title == bill.title
-
-@pytest.fixture
-def session(db_session):
-    yield db_session
-    db_session.rollback()

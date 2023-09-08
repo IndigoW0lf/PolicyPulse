@@ -39,8 +39,3 @@ def test_politician_co_sponsored_bills_relationship(session, setup_politician):
     session.add(cosponsor)
     session.commit()
     assert cosponsor.bill.title == bill.title
-
-@pytest.fixture
-def session(db_session):
-    yield db_session
-    db_session.rollback()

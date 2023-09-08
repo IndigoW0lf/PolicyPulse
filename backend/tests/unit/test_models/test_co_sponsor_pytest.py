@@ -37,8 +37,3 @@ def test_cosponsor_fields(setup_cosponsor):
     cosponsor, bill, politician = setup_cosponsor
     assert cosponsor.bill_id == bill.id
     assert cosponsor.politician_id == politician.id
-
-@pytest.fixture
-def session(db_session):
-    yield db_session
-    db_session.rollback()

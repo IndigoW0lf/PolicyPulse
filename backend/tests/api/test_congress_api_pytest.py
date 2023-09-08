@@ -22,18 +22,7 @@ def app():
         yield app
 
 @pytest.fixture
-def db_session(app):
-    with app.app_context():
-        db.create_all()
-        db.session.begin_nested()
-        try:
-            yield db.session
-        finally:
-            db.session.rollback()
-            db.drop_all()
-
-@pytest.fixture
-def bill(db_session):
+def bill(session):
     bill = Bill(
         title="Test Bill",
         summary="This is a test bill",
@@ -48,19 +37,19 @@ def bill(db_session):
         last_action_date=date(2023, 1, 2),
         last_action_description="Test Action"
     )
-    db_session.add(bill)
-    db_session.commit()
+    session.add(bill)
+    session.commit()
     return bill
 
 @pytest.fixture
-def politician(db_session):
+def politician(session):
     politician = Politician(name="Test Politician")
-    db_session.add(politician)
-    db_session.commit()
+    session.add(politician)
+    session.commit()
     return politician
 
 @pytest.fixture
-def bill_full_text(db_session, bill):
+def bill_full_text(session, bill):
     xml_data = {
         'title': 'XML Title',
         'publisher': 'XML Publisher',
@@ -70,27 +59,20 @@ def bill_full_text(db_session, bill):
         'rights': 'XML Rights'
     }
     bill_full_text = BillFullText(bill_id=bill.id, title='XML Title', bill_metadata=xml_data)
-    db_session.add(bill_full_text)
-    db_session.commit()
+    session.add(bill_full_text)
+    session.commit()
     return bill_full_text
 
 @pytest.fixture
 def api_state_fixture():
     return ApiState()
 
-def my_manage_api_state(api_state, batch_size):
-    api_state.batch_counter += 1
-
-    if api_state.batch_counter >= batch_size:
-        api_state.batch_counter = 0
-        return True
-
-    return False
-
-def test_manage_api_state():
+def test_manage_api_state(app):
     api_state = ApiState()
     api_state.batch_counter = 49
-    commit_needed = manage_api_state(api_state, 50)
+
+    with app.app_context():
+        commit_needed = manage_api_state(api_state, 50)
     
     assert commit_needed == True
     assert api_state.batch_counter == 0
@@ -152,8 +134,8 @@ def test_create_bill():
     assert bill.last_action_date.strftime('%Y-%m-%d') == '2023-01-02'
     assert bill.last_action_description == 'Test Action'
 
-def test_store_full_bill_text(app, db_session, politician, bill, bill_full_text):
-    session = db_session
+def test_store_full_bill_text(app, session, politician, bill, bill_full_text):
+    session = session
 
     xml_data = {
         'title': 'XML Title',

@@ -30,8 +30,3 @@ def test_related_bill_relationship(setup_related_bill):
     related_bill, bill1, bill2 = setup_related_bill
     assert related_bill.main_bill.title == bill1.title
     assert related_bill.related.title == bill2.title
-
-@pytest.fixture
-def session(db_session):
-    yield db_session
-    db_session.rollback()

@@ -40,8 +40,3 @@ def test_foreign_keys(setup_amendment):
 def test_relationships(setup_amendment):
     amendment, bill = setup_amendment
     assert amendment.bill.title == bill.title
-
-@pytest.fixture
-def session(db_session):
-    yield db_session
-    db_session.rollback()

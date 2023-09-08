@@ -30,8 +30,3 @@ def test_locsummary_fields(setup_locsummary):
     assert loc_summary.action_description == "Introduced in House"
     assert loc_summary.summary_text == "This is a test summary"
     assert loc_summary.bill_id == bill.id
-
-@pytest.fixture
-def session(db_session):
-    yield db_session
-    db_session.rollback()

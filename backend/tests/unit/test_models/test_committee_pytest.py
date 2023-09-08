@@ -37,8 +37,3 @@ def test_committee_relationship(setup_committee, bill, session):
     session.flush()
     
     assert committee.bills[0].title == bill.title
-
-@pytest.fixture
-def session(db_session):
-    yield db_session
-    db_session.rollback()

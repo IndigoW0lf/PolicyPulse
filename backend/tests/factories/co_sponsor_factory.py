@@ -5,5 +5,5 @@ class CoSponsorFactory(factory.Factory):
     class Meta:
         model = CoSponsor
 
-    bill_id = 1
-    politician_id = 1
+    bill_id = factory.SubFactory('backend.tests.factories.BillFactory')
+    politician_id = factory.SubFactory('backend.tests.factories.PoliticianFactory')

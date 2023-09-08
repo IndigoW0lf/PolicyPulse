@@ -1,8 +1,9 @@
 import factory
 from backend.database.models import ActionType
+from factory import Factory, Sequence
 
-class ActionTypeFactory(factory.Factory):
+class ActionTypeFactory(Factory):
     class Meta:
         model = ActionType
 
-    description = factory.Sequence(lambda n: f"Action Type {n}")
+    description = Sequence(lambda n: f'Action Type {n}')

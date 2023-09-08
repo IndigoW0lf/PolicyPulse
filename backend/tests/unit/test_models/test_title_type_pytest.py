@@ -34,8 +34,3 @@ def test_title_type_fields(setup_title_type):
 def test_title_type_relationship(setup_title_type, bill, session):
     title_type = setup_title_type
     assert title_type.bills[0].title == bill.title
-
-@pytest.fixture
-def session(db_session):
-    yield db_session
-    db_session.rollback()

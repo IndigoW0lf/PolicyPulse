@@ -5,5 +5,5 @@ class TitleTypeFactory(factory.Factory):
     class Meta:
         model = TitleType
 
-    code = "HR"
-    description = "House Resolution"
+    code = factory.Sequence(lambda n: f"HR{n}")
+    description = factory.Sequence(lambda n: f"House Resolution {n}")

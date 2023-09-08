@@ -66,8 +66,3 @@ def test_delete_action_type(setup_action_type, session):
     # Assert ActionType is deleted
     deleted_action_type = session.query(ActionType).filter_by(id=action_type.id).first()
     assert deleted_action_type is None
-
-@pytest.fixture
-def session(db_session):
-    yield db_session
-    db_session.rollback()

@@ -39,8 +39,3 @@ def test_foreign_keys(setup_bill_full_text):
 def test_relationships(setup_bill_full_text, bill):
     bill_full_text = setup_bill_full_text
     assert bill_full_text.bill.title == bill.title
-
-@pytest.fixture
-def session(db_session):
-    yield db_session
-    db_session.rollback()

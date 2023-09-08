@@ -5,7 +5,7 @@ class BillFullTextFactory(factory.Factory):
     class Meta:
         model = BillFullText
 
-    bill_id = 1
+    bill_id = factory.SubFactory('backend.tests.factories.BillFactory')
     title = None
     meta_data = None
     actions = None

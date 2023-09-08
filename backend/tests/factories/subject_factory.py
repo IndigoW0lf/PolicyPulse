@@ -5,5 +5,5 @@ class SubjectFactory(factory.Factory):
     class Meta:
         model = Subject
 
-    name = "Test Subject"
-    description = "This is a test subject."
+    name = factory.Sequence(lambda n: f"Test Subject {n}")
+    description = factory.Sequence(lambda n: f"This is a test subject {n}.")

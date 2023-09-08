@@ -42,8 +42,3 @@ def test_foreign_keys(setup_bill):
 def test_relationships(setup_bill):
     bill, politician = setup_bill
     assert bill.sponsor.name == politician.name
-
-@pytest.fixture
-def session(db_session):
-    yield db_session
-    db_session.rollback()

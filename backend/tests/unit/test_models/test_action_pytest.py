@@ -72,8 +72,3 @@ def test_relationships(setup_actions):
     action, bill, action_type = setup_actions
     assert action.bill.title == bill.title
     assert action.action_type.description == action_type.description
-
-@pytest.fixture
-def session(db_session):
-    yield db_session
-    db_session.rollback()

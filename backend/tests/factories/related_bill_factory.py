@@ -5,5 +5,5 @@ class RelatedBillFactory(factory.Factory):
     class Meta:
         model = RelatedBill
 
-    bill_id = 1
-    related_bill_id = 2
+    bill_id = factory.SubFactory('backend.tests.factories.BillFactory')
+    related_bill_id = factory.SubFactory('backend.tests.factories.BillFactory')

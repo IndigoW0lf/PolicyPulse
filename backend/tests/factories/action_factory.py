@@ -7,7 +7,7 @@ class ActionFactory(factory.Factory):
         model = Action
 
     action_date = date.today()
-    description = "Test Action Description"
+    description = factory.Sequence(lambda n: f"Test Action Description {n}")
     chamber = "House"
-    bill_id = 1
-    action_type_id = 1
+    bill_id = factory.SubFactory('backend.tests.factories.BillFactory')
+    action_type_id = factory.SubFactory('backend.tests.factories.ActionTypeFactory')

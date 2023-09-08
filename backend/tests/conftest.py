@@ -75,17 +75,19 @@ def subject(session):
 def title_type(session):
     return create_fixture(session, TitleTypeFactory)
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='function')
 def session():
-    try:
-        app = create_app('testing')
-        with app.app_context():
-            db.create_all()
-            db.session.begin_nested()
-            logger.info("Session started successfully")
-            yield db.session
+    app = create_app('testing')
+    with app.app_context():
+        db.create_all()
+        try:
+            with db.session.begin_nested():
+                logger.info("Session started successfully")
+                yield db.session
+        except Exception as e:
+            logger.error(f"Error during session: {e}")
+            raise
+        finally:
             db.session.rollback()
             logger.info("Session rolled back successfully")
-    except Exception as e:
-        logger.error(f"Error in session fixture: {e}")
-        raise
+            db.drop_all()

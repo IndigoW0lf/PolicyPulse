@@ -8,5 +8,5 @@ class LOCSummaryFactory(factory.Factory):
     version_code = "Introduced"
     chamber = "House"
     action_description = "Introduced in House"
-    summary_text = "This is a test summary"
-    bill_id = 1
+    summary_text = factory.Sequence(lambda n: f"This is a test summary {n}")
+    bill_id = factory.SubFactory('backend.tests.factories.BillFactory')
