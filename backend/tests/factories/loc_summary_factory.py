@@ -8,10 +8,22 @@ class LOCSummaryFactory(BaseFactory):
         model = LOCSummary
 
     id = Sequence(lambda n: n)
-    version_code = Sequence(lambda n: f'VER_{n}')
-    chamber = Faker('random_element', elements=['House', 'Senate'])
-    action_description = Sequence(lambda n: f'Action Description {n}')
-    summary_text = Sequence(lambda n: f'Summary Text {n}')
+    versions = Sequence(lambda n: [
+        {
+            "version_code": f"VER_{n}",
+            "chamber": Faker('random_element', elements=['House', 'Senate']),
+            "action_description": f"Action Description {n}",
+            "summary_text": f"Summary Text {n}",
+            "as_enacted": f"As Enacted {n}",
+            "as_introduced": f"As Introduced {n}",
+            "as_passed_house": f"As Passed House {n}",
+            "as_passed_senate": f"As Passed Senate {n}",
+            "as_reported_to_house": f"As Reported to House {n}",
+            "as_reported_to_senate": f"As Reported to Senate {n}",
+            "latest_major_action": f"Latest Major Action {n}",
+            "latest_summary": f"Latest Summary {n}"
+        }
+    ])
     bill = SubFactory('backend.tests.factories.bill_factory.BillFactory')
 
     @classmethod

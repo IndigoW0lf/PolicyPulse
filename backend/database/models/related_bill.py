@@ -10,3 +10,12 @@ class RelatedBill(db.Model):
 
     def __repr__(self):
         return f'<RelatedBill {self.id}>'
+    
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "bill_id": self.bill_id,
+            "related_bill_id": self.related_bill_id,
+            "main_bill": self.main_bill.to_dict() if self.main_bill else None,
+            "related_bill": self.related_bill.to_dict() if self.related_bill else None,
+        }

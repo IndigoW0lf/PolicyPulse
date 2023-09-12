@@ -8,6 +8,5 @@ from backend.tests.factories.co_sponsor_factory import CoSponsorFactory
 from backend.tests.factories.loc_summary_factory import LOCSummaryFactory
 from backend.tests.factories.related_bill_factory import RelatedBillFactory
 from backend.tests.factories.subject_factory import SubjectFactory
-from backend.tests.factories.title_type_factory import TitleTypeFactory
 from backend.tests.factories.politician_factory import PoliticianFactory
 from backend.tests.factories.bill_factory import BillFactory

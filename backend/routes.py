@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from backend import db
-from backend.database.models import Action, ActionType, Amendment, Committee, CoSponsor, Bill, LOCSummary, Politician, RelatedBill, Subject, TitleType
+from backend.database.models import Action, ActionType, Amendment, Committee, CoSponsor, Bill, LOCSummary, Politician, RelatedBill, Subject 
 
 bp = Blueprint('routes', __name__)
     
