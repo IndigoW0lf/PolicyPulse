@@ -1,15 +1,16 @@
 from factory import Sequence, SubFactory
 from backend.tests.factories.base_factory import BaseFactory
-from backend.database.models import RelatedBill, Bill
+from backend.database.models import AmendmentLink, Amendment
 from backend import db
 
-class RelatedBillFactory(BaseFactory):
+class AmendmentLinkFactory(BaseFactory):
     class Meta:
-        model = RelatedBill
+        model = AmendmentLink
 
     id = Sequence(lambda n: n)
-    main_bill = SubFactory('backend.tests.factories.bill_factory.BillFactory')
-    related_bill = SubFactory('backend.tests.factories.bill_factory.BillFactory')
+    name = Sequence(lambda n: f'Link Name {n}')
+    url = Sequence(lambda n: f'http://example.com/link{n}')
+    amendment = SubFactory('backend.tests.factories.amendment_factory.AmendmentFactory')
 
     @classmethod
     def _create(cls, model_class, *args, **kwargs):

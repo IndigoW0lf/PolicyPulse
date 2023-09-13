@@ -10,7 +10,6 @@ class Bill(db.Model):
     date_introduced = db.Column(db.Date, nullable=False)
     full_bill_link = db.Column(db.String(300), nullable=False)
     origin_chamber = db.Column(db.String(50), nullable=False)
-    sponsor_name = db.Column(db.String(100), nullable=False)
     status = db.Column(db.String(100), nullable=False)
     title = db.Column(db.String(200), nullable=False, index=True)
     bill_type = db.Column(db.String(50), nullable=True)
@@ -64,7 +63,6 @@ class Bill(db.Model):
             "date_introduced": self.date_introduced,
             "status": self.status,
             "bill_number": self.bill_number,
-            "sponsor_name": self.sponsor_name,
             "committee": self.committee,
             "voting_record": self.voting_record,
             "full_bill_link": self.full_bill_link,

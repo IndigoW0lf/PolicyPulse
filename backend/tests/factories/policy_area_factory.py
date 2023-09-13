@@ -1,15 +1,16 @@
-from factory import Sequence, SubFactory
+from factory import Sequence, Faker
 from backend.tests.factories.base_factory import BaseFactory
-from backend.database.models import RelatedBill, Bill
+from backend.database.models import PolicyArea
 from backend import db
 
-class RelatedBillFactory(BaseFactory):
+class PolicyAreaFactory(BaseFactory):
     class Meta:
-        model = RelatedBill
+        model = PolicyArea
 
     id = Sequence(lambda n: n)
-    main_bill = SubFactory('backend.tests.factories.bill_factory.BillFactory')
-    related_bill = SubFactory('backend.tests.factories.bill_factory.BillFactory')
+    name = Sequence(lambda n: f'Policy Area Name {n}')
+    description = Sequence(lambda n: f'Policy Area Description {n}')
+    bill_id = Sequence(lambda n: n)
 
     @classmethod
     def _create(cls, model_class, *args, **kwargs):

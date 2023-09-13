@@ -1,14 +1,17 @@
-from factory import Sequence
-from backend.tests.factories.base_factory import BaseFactory
-from backend.database.models import ActionType
+from factory import Factory, Sequence
+from backend.database.models import Law
+from datetime import datetime
 from backend import db
 
-class ActionTypeFactory(BaseFactory):
+class LawFactory(Factory):
     class Meta:
-        model = ActionType
+        model = Law
 
     id = Sequence(lambda n: n)
-    description = Sequence(lambda n: f'Action Type Description {n}')
+    number = Sequence(lambda n: f"Law Number {n}")
+    type = Sequence(lambda n: f"Law Type {n}")
+    created_at = datetime.utcnow()
+    updated_at = datetime.utcnow()
 
     @classmethod
     def _create(cls, model_class, *args, **kwargs):

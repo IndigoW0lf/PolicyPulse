@@ -72,7 +72,6 @@ def parse_bill(tree):
         'congress': get_text(tree, './/bill/congress'),
         'display_title': get_display_title(tree),
         'official_title': get_official_title(tree),
-        'sponsor': parse_sponsor(tree),
         'summaries': parse_summaries(tree),
         'fullBillTexts': parse_fullBillTexts(tree),
         'subjects': parse_subjects(tree),
@@ -338,6 +337,7 @@ def save_to_database(bill_data):
             display_title=bill_data['display_title'],
             official_title=bill_data['official_title'],
             sponsor_id=sponsor.id,
+            primary_subject_id=bill_data['primary_subject_id'],
         )
         db.session.add(bill)
 

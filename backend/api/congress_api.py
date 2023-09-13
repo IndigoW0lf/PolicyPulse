@@ -133,7 +133,7 @@
 #         title=item.get('title', ''),
 #         summary=item.get('summary', ''),
 #         bill_number=item.get('bill_number', ''),
-#         sponsor_name=item.get('sponsor', ''),
+#         name=item.get('name', ''),
 #         sponsor_id=sponsor_id,
 #         date_introduced=item.get('date_introduced', None),
 #         status=item.get('status', ''),

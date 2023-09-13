@@ -53,7 +53,3 @@ class ActionCode(db.Model):
             "description": self.description,
             "actions": [action.to_dict() for action in self.actions],
         }
-
-    
-
-    

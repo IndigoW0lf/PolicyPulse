@@ -59,6 +59,7 @@
 #         "title": "Test Bill",
 #         "summary": "This is a test bill",
 #         "bill_number": "123",
+#         "sponsor": "Test Sponsor",
 #         "sponsor_id": 1,
 #         "date_introduced": date(2023, 1, 2),
 #         "status": "Active",
@@ -80,7 +81,7 @@
 #     assert response.json['title'] == "Test Bill"
 #     assert response.json['summary'] == "This is a test bill"
 #     assert response.json['bill_number'] == "123"
-#     assert response.json['sponsor_name'] == "Test Sponsor"
+#     assert response.json['sponsor'] == "Test Sponsor"
 #     assert response.json['sponsor_id'] == 1
 #     assert response.json['date_introduced'] == date(2023, 1, 2)
 #     assert response.json['status'] == "Active"

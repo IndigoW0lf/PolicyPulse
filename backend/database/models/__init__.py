@@ -1,6 +1,6 @@
 from .action_type import ActionType
 from .action import Action
-from .amendment import Amendment, AmendmentStatusEnum
+from .amendment import Amendment
 from .bill_full_text import BillFullText
 from .bill import Bill
 from .co_sponsor import CoSponsor

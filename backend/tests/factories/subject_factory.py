@@ -14,6 +14,6 @@ class SubjectFactory(BaseFactory):
     @classmethod
     def _create(cls, model_class, *args, **kwargs):
         instance = super()._create(model_class, *args, **kwargs)
-        db.session.add(instance)
-        db.session.commit()
+        cls._meta.sqlalchemy_session.add(instance)
+        cls._meta.sqlalchemy_session.commit()
         return instance

@@ -1,3 +1,4 @@
+from datetime import datetime
 from factory import Sequence, SubFactory, Faker
 from backend.tests.factories.base_factory import BaseFactory
 from backend.database.models import LOCSummary, Bill
@@ -24,11 +25,13 @@ class LOCSummaryFactory(BaseFactory):
             "latest_summary": f"Latest Summary {n}"
         }
     ])
+    created_at = Faker('date_time')  # New field
+    updated_at = Faker('date_time')  # New field
     bill = SubFactory('backend.tests.factories.bill_factory.BillFactory')
 
     @classmethod
     def _create(cls, model_class, *args, **kwargs):
         instance = super()._create(model_class, *args, **kwargs)
-        db.session.add(instance)
-        db.session.commit()
+        cls._meta.sqlalchemy_session.add(instance)
+        cls._meta.sqlalchemy_session.commit()
         return instance

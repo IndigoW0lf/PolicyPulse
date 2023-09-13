@@ -1,15 +1,15 @@
 from factory import Sequence, SubFactory
 from backend.tests.factories.base_factory import BaseFactory
-from backend.database.models import RelatedBill, Bill
+from backend.database.models import Note, Bill
 from backend import db
 
-class RelatedBillFactory(BaseFactory):
+class NoteFactory(BaseFactory):
     class Meta:
-        model = RelatedBill
+        model = Note
 
     id = Sequence(lambda n: n)
-    main_bill = SubFactory('backend.tests.factories.bill_factory.BillFactory')
-    related_bill = SubFactory('backend.tests.factories.bill_factory.BillFactory')
+    text = Sequence(lambda n: f'Note Text {n}')
+    bill = SubFactory('backend.tests.factories.bill_factory.BillFactory')
 
     @classmethod
     def _create(cls, model_class, *args, **kwargs):

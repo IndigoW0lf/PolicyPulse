@@ -1,15 +1,16 @@
 from factory import Sequence, SubFactory
 from backend.tests.factories.base_factory import BaseFactory
-from backend.database.models import RelatedBill, Bill
+from backend.database.models import LOCSummaryCode
 from backend import db
 
-class RelatedBillFactory(BaseFactory):
+class LOCSummaryCodeFactory(BaseFactory):
     class Meta:
-        model = RelatedBill
+        model = LOCSummaryCode
 
     id = Sequence(lambda n: n)
-    main_bill = SubFactory('backend.tests.factories.bill_factory.BillFactory')
-    related_bill = SubFactory('backend.tests.factories.bill_factory.BillFactory')
+    version_code = Sequence(lambda n: f'VER_{n}')
+    chamber = Sequence(lambda n: f'Chamber {n}')
+    action_desc = Sequence(lambda n: f'Action Description {n}')
 
     @classmethod
     def _create(cls, model_class, *args, **kwargs):
