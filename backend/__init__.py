@@ -12,20 +12,19 @@ migrate = Migrate()
 
 def create_app(config_name=None):
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
+
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    config = {
+        "development": DevelopmentConfig,
+        "testing": TestingConfig,
+        "production": ProductionConfig
+    }
 
     if config_name is None:
         config_name = os.environ.get('FLASK_CONFIG', 'testing')
 
-    if config_name == 'testing':
-        app.config.from_object(TestingConfig)
-    elif config_name == 'development':
-        app.config.from_object(DevelopmentConfig)
-    elif config_name == 'production':
-        app.config.from_object(ProductionConfig)
-    else:
-        raise ValueError("Invalid configuration name")
+    app.config.from_object(config.get(config_name, "testing"))
 
     db.init_app(app)
     migrate.init_app(app, db)
@@ -34,6 +33,7 @@ def create_app(config_name=None):
     app.register_blueprint(routes.bp)
 
     return app
+
 
 
 '''

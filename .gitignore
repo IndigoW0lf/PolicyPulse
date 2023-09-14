@@ -16,3 +16,7 @@ venv/
 #Env Variable
 config.py
 .env
+
+# .gitignore
+backend/data/raw_xml_files/*
+backend/data/filtered_xml_files/*

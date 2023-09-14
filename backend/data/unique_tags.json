@@ -1,0 +1,361 @@
+{
+    "billStatus": {
+        "version": {},
+        "bill": {
+            "number": {},
+            "updateDate": {},
+            "updateDateIncludingText": {},
+            "originChamber": {},
+            "type": {},
+            "introducedDate": {},
+            "congress": {},
+            "committees": {
+                "item": {
+                    "systemCode": {},
+                    "name": {},
+                    "chamber": {},
+                    "type": {},
+                    "activities": {
+                        "item": {
+                            "name": {},
+                            "date": {}
+                        }
+                    },
+                    "subcommittees": {
+                        "item": {
+                            "systemCode": {},
+                            "name": {},
+                            "activities": {
+                                "item": {
+                                    "name": {},
+                                    "date": {}
+                                }
+                            }
+                        }
+                    }
+                },
+                "billCommittees": {}
+            },
+            "relatedBills": {
+                "item": {
+                    "title": {},
+                    "congress": {},
+                    "number": {},
+                    "type": {},
+                    "latestAction": {
+                        "actionDate": {},
+                        "text": {},
+                        "actionTime": {}
+                    },
+                    "relationshipDetails": {
+                        "item": {
+                            "type": {},
+                            "identifiedBy": {}
+                        }
+                    }
+                }
+            },
+            "actions": {
+                "item": {
+                    "actionDate": {},
+                    "committees": {
+                        "item": {
+                            "systemCode": {},
+                            "name": {}
+                        }
+                    },
+                    "sourceSystem": {
+                        "name": {},
+                        "code": {}
+                    },
+                    "text": {},
+                    "type": {},
+                    "actionCode": {},
+                    "actionTime": {},
+                    "recordedVotes": {
+                        "recordedVote": {
+                            "rollNumber": {},
+                            "url": {},
+                            "chamber": {},
+                            "congress": {},
+                            "date": {},
+                            "sessionNumber": {}
+                        }
+                    },
+                    "calendarNumber": {
+                        "calendar": {}
+                    },
+                    "links": {}
+                },
+                "actionTypeCounts": {
+                    "introducedInTheHouse": {},
+                    "introducedInHouse": {}
+                },
+                "actionByCounts": {
+                    "houseOfRepresentatives": {}
+                }
+            },
+            "sponsors": {
+                "item": {
+                    "bioguideId": {},
+                    "fullName": {},
+                    "firstName": {},
+                    "lastName": {},
+                    "party": {},
+                    "state": {},
+                    "identifiers": {
+                        "bioguideId": {}
+                    },
+                    "isByRequest": {},
+                    "middleName": {},
+                    "district": {}
+                }
+            },
+            "policyArea": {
+                "name": {}
+            },
+            "subjects": {
+                "legislativeSubjects": {
+                    "item": {
+                        "name": {}
+                    }
+                },
+                "policyArea": {
+                    "name": {}
+                },
+                "billSubjects": {
+                    "legislativeSubjects": {}
+                }
+            },
+            "summaries": {
+                "summary": {
+                    "versionCode": {},
+                    "actionDate": {},
+                    "actionDesc": {},
+                    "updateDate": {},
+                    "text": {}
+                },
+                "billSummaries": {}
+            },
+            "title": {},
+            "titles": {
+                "item": {
+                    "titleType": {},
+                    "title": {},
+                    "billTextVersionName": {},
+                    "billTextVersionCode": {},
+                    "chamberCode": {},
+                    "chamberName": {},
+                    "sourceSystem": {
+                        "code": {},
+                        "name": {}
+                    },
+                    "parentTitleType": {}
+                }
+            },
+            "textVersions": {
+                "item": {
+                    "type": {},
+                    "date": {},
+                    "formats": {
+                        "item": {
+                            "url": {}
+                        }
+                    }
+                }
+            },
+            "latestAction": {
+                "actionDate": {},
+                "text": {},
+                "actionTime": {},
+                "links": {}
+            },
+            "constitutionalAuthorityStatementText": {},
+            "cosponsors": {
+                "item": {
+                    "bioguideId": {},
+                    "fullName": {},
+                    "firstName": {},
+                    "lastName": {},
+                    "party": {},
+                    "state": {},
+                    "identifiers": {
+                        "bioguideId": {}
+                    },
+                    "middleName": {},
+                    "district": {},
+                    "sponsorshipDate": {},
+                    "isOriginalCosponsor": {},
+                    "sponsorshipWithdrawnDate": {}
+                }
+            },
+            "cdata": {},
+            "committeeReports": {
+                "committeeReport": {
+                    "citation": {}
+                }
+            },
+            "cboCostEstimates": {
+                "item": {
+                    "pubDate": {},
+                    "title": {},
+                    "url": {},
+                    "description": {}
+                }
+            },
+            "laws": {
+                "item": {
+                    "type": {},
+                    "number": {}
+                }
+            },
+            "amendments": {
+                "amendment": {
+                    "number": {},
+                    "congress": {},
+                    "type": {},
+                    "purpose": {},
+                    "updateDate": {},
+                    "latestAction": {
+                        "actionDate": {},
+                        "text": {},
+                        "links": {
+                            "link": {
+                                "name": {},
+                                "url": {}
+                            }
+                        },
+                        "actionTime": {}
+                    },
+                    "sponsors": {
+                        "item": {
+                            "bioguideId": {},
+                            "fullName": {},
+                            "firstName": {},
+                            "lastName": {},
+                            "party": {},
+                            "state": {},
+                            "identifiers": {
+                                "bioguideId": {}
+                            },
+                            "middleName": {},
+                            "name": {},
+                            "district": {}
+                        }
+                    },
+                    "proposedDate": {},
+                    "submittedDate": {},
+                    "chamber": {},
+                    "amendedBill": {
+                        "congress": {},
+                        "type": {},
+                        "originChamber": {},
+                        "originChamberCode": {},
+                        "number": {},
+                        "title": {},
+                        "updateDateIncludingText": {}
+                    },
+                    "amendmentsToAmendment": {
+                        "count": {}
+                    },
+                    "actions": {
+                        "count": {},
+                        "actions": {
+                            "item": {
+                                "actionDate": {},
+                                "sourceSystem": {
+                                    "code": {},
+                                    "name": {}
+                                },
+                                "text": {},
+                                "type": {},
+                                "actionCode": {},
+                                "recordedVotes": {
+                                    "recordedVote": {
+                                        "rollNumber": {},
+                                        "chamber": {},
+                                        "congress": {},
+                                        "date": {},
+                                        "sessionNumber": {},
+                                        "url": {}
+                                    }
+                                },
+                                "actionTime": {},
+                                "committees": {
+                                    "item": {
+                                        "systemCode": {},
+                                        "name": {}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "cosponsors": {
+                        "countIncludingWithdrawnCosponsors": {},
+                        "count": {},
+                        "item": {
+                            "bioguideId": {},
+                            "fullName": {},
+                            "firstName": {},
+                            "lastName": {},
+                            "party": {},
+                            "state": {},
+                            "identifiers": {
+                                "bioguideId": {}
+                            },
+                            "sponsorshipDate": {},
+                            "isOriginalCosponsor": {},
+                            "middleName": {},
+                            "sponsorshipWithdrawnDate": {}
+                        }
+                    },
+                    "amendedAmendment": {
+                        "number": {},
+                        "congress": {},
+                        "type": {},
+                        "purpose": {},
+                        "updateDate": {},
+                        "description": {}
+                    },
+                    "description": {},
+                    "links": {
+                        "link": {
+                            "name": {},
+                            "url": {}
+                        }
+                    },
+                    "notes": {
+                        "item": {
+                            "text": {},
+                            "links": {}
+                        }
+                    }
+                }
+            },
+            "notes": {
+                "item": {
+                    "text": {},
+                    "links": {
+                        "link": {
+                            "name": {},
+                            "url": {}
+                        }
+                    }
+                }
+            },
+            "billNumber": {},
+            "createDate": {},
+            "billType": {},
+            "recordedVotes": {},
+            "calendarNumbers": {},
+            "version": {}
+        },
+        "dublinCore": {
+            "{http://purl.org/dc/elements/1.1/}format": {},
+            "{http://purl.org/dc/elements/1.1/}language": {},
+            "{http://purl.org/dc/elements/1.1/}rights": {},
+            "{http://purl.org/dc/elements/1.1/}contributor": {},
+            "{http://purl.org/dc/elements/1.1/}description": {}
+        }
+    }
+}

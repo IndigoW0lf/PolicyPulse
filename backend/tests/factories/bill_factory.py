@@ -1,6 +1,6 @@
 from factory import Sequence, SubFactory, Faker
 from backend.tests.factories.base_factory import BaseFactory
-from backend.database.models import Bill, ActionType, Politician, TitleType, PolicyArea, Subject
+from backend.database.models import Bill, ActionType, Politician, PolicyArea, Subject
 from backend import db
 
 class BillFactory(BaseFactory):
