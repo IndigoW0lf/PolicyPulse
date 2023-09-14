@@ -1,7 +1,6 @@
 import logging
 import os
 from lxml import etree
-from shutil import copyfile
 from config import Config
 from backend.utils.keywords import keywords
 
@@ -10,15 +9,11 @@ logging.basicConfig(level=Config.LOG_LEVEL, format='%(asctime)s - %(levelname)s 
 
 def parse_xml_files(directory, keywords):
     print(f"Directory: {directory}, Keywords: {keywords}")
-
     xml_files = []
     for root, _, files in os.walk(directory):
         xml_files.extend([os.path.join(root, f) for f in files if f.endswith('.xml')])
 
     keyword_found_count = 0
-    
-    filtered_xml_directory = Config.XML_FILTERED_FILES_DIR
-    os.makedirs(filtered_xml_directory, exist_ok=True)
     
     for xml_file in xml_files:
         try:
@@ -40,24 +35,13 @@ def parse_xml_files(directory, keywords):
                 if keyword.lower() in combined_text.lower():
                     logging.info(f"Keyword '{keyword}' found in file: {xml_file}")
                     keyword_found_count += 1
-
-                    # Define the destination path
-                    dest_path = os.path.join(filtered_xml_directory, os.path.basename(xml_file))
-                    
-                    # Check if the file already exists in the destination directory
-                    if not os.path.exists(dest_path):
-                        # If not, copy the file to the filtered xml files directory
-                        copyfile(xml_file, dest_path)
-                    else:
-                        logging.info(f"File '{os.path.basename(xml_file)}' already exists in the destination directory. Skipping.")
-                    
                     break
 
         except Exception as e:
             logging.error(f"Error processing file {xml_file}: {e}", exc_info=True)
 
-    print(f"Total keywords found: '{keyword_found_count}'")
+    print(keyword_found_count)
         
-# Specify the directory containing XML files and the keywords to search for
+# Specify the directory containing your XML files and the keywords to search for
 if __name__ == "__main__":
-    parse_xml_files(Config.XML_RAW_FILES_DIR, keywords)  
+    parse_xml_files(Config.XML_FILES_DIRECTORY, keywords)  
