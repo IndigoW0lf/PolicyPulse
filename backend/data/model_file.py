@@ -36,6 +36,7 @@ class Action(db.Model):
     bill = db.relationship('Bill', back_populates='actions', lazy=True)
     action_codes = db.relationship('ActionCode', secondary=action_actioncode, back_populates='actions')
 
+
 class ActionCode(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     code = db.Column(db.String(10), nullable=False)
@@ -202,6 +203,8 @@ bill_committee = db.Table('bill_committee',
     db.Column('bill_id', db.Integer, db.ForeignKey('bill.id'), primary_key=True),
     db.Column('committee_id', db.Integer, db.ForeignKey('committee.id'), primary_key=True)
 )
+
+
 class Law(db.Model):
     __tablename__ = 'law'
     id = db.Column(db.Integer, primary_key=True)
@@ -214,7 +217,6 @@ class Law(db.Model):
     bill = db.relationship('Bill', back_populates='laws', lazy=True)
 
 
-
 class LOCSummaryCode(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     version_code = db.Column(db.String(50), nullable=False, unique=True)
@@ -222,6 +224,7 @@ class LOCSummaryCode(db.Model):
     action_desc = db.Column(db.String(200), nullable=False)
     
     loc_summaries = db.relationship('LOCSummary', back_populates='loc_summary_code', lazy=True)
+
 
 class LOCSummary(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -301,6 +304,8 @@ bill_subject = db.Table('bill_subject',
     db.Column('bill_id', db.Integer, db.ForeignKey('bill.id'), primary_key=True, index=True),
     db.Column('subject_id', db.Integer, db.ForeignKey('subject.id'), primary_key=True, index=True)
 )
+
+
 class VetoMessage(db.Model):
     """Model representing veto messages."""
     id = db.Column(db.Integer, primary_key=True)

@@ -27,9 +27,9 @@ def parse_xml_files(directory, unique_tags):
 
 def main():
     unique_tags = {}
-    parse_xml_files(Config.XML_RAW_FILES_DIR, unique_tags)
+    parse_xml_files(Config.RECORDED_VOTES_DIR, unique_tags)
 
-    with open(Config.UNIQUE_TAGS_FILE, "w") as f:
+    with open(Config.RECORDED_VOTES_FILE, "w") as f:
         json.dump(unique_tags, f, indent=4)
 
 if __name__ == "__main__":

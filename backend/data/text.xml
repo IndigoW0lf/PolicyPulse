@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<billStatus>
+  <version>3.0.0</version>
+  <bill>
+    <number>42</number>
+    <updateDate>2023-04-01T14:00:00Z</updateDate>
+    <updateDateIncludingText>2023-04-01T14:00:00Z</updateDateIncludingText>
+    <originChamber>House</originChamber>
+    <type>HR</type>
+    <introducedDate>2023-04-01</introducedDate>
+    <congress>123</congress>
+    <constitutionalAuthorityStatementText>
+      <![CDATA[<pre>The esteemed members of this high house have recognized the critical role that unicorns play in the ecological and economic wellbeing of our nation. As such, it is the duty and privilege of this congress to enact legislation to protect and preserve the unicorn habitats, and ensure the vibrant and sustainable growth of the unicorn population for generations to come. This bill rests on the never-before-used unicorn clause of the United States Constitution, discovered recently in a hidden compartment behind the known constitution. Truly a historic moment.</pre>]]>
+    </constitutionalAuthorityStatementText>
+    <committees>
+      <item>
+        <systemCode>hsun00</systemCode>
+        <name>House Unicorn Affairs Committee</name>
+        <chamber>House</chamber>
+        <type>Standing</type>
+        <subcommittees>
+          <item>
+            <systemCode>hsun10</systemCode>
+            <name>Subcommittee on Unicorn Habitat Conservation</name>
+            <activities>
+              <item>
+                <name>Referred to</name>
+                <date>2023-04-02T09:00:00Z</date>
+              </item>
+            </activities>
+          </item>
+        </subcommittees>
+        <activities>
+          <item>
+            <name>Referred to</name>
+            <date>2023-04-01T14:00:00Z</date>
+          </item>
+        </activities>
+      </item>
+    </committees>
+    <actions>
+      <item>
+        <actionDate>2023-04-01</actionDate>
+        <text>Introduced in the House of Unicorns</text>
+        <type>IntroReferral</type>
+        <actionCode>U1000</actionCode>
+        <sourceSystem>
+          <code>1</code>
+          <name>Unicorn Legislative Actions</name>
+        </sourceSystem>
+        <committees>
+          <item>
+            <systemCode>hscm00</systemCode>
+            <name>Committee on Magical Creatures</name>
+          </item>
+        </committees>
+      </item>
+    </actions>
+    <sponsors>
+      <item>
+        <bioguideId>U12345</bioguideId>
+        <fullName>Rep. Sparkle Glittermane</fullName>
+        <firstName>Sparkle</firstName>
+        <lastName>Glittermane</lastName>
+        <party>Magical Party</party>
+        <state>Enchanted Forest</state>
+        <identifiers>
+          <bioguideId>U12345</bioguideId>
+        </identifiers>
+        <district>1</district>
+        <isByRequest>N</isByRequest>
+      </item>
+    </sponsors>
+    <cosponsors>
+      <item>
+        <bioguideId>U000001</bioguideId>
+        <fullName>Rep. Glitter Sparkle [U-CA-1]</fullName>
+        <firstName>Glitter</firstName>
+        <lastName>Sparkle</lastName>
+        <party>U</party>
+        <state>CA</state>
+        <identifiers>
+          <bioguideId>U000001</bioguideId>
+        </identifiers>
+        <district>1</district>
+        <sponsorshipDate>2023-04-01</sponsorshipDate>
+        <isOriginalCosponsor>True</isOriginalCosponsor>
+      </item>
+    </cosponsors>
+    <policyArea>
+      <name>Unicorn Conservation and Welfare</name>
+    </policyArea>
+    <subjects>
+      <legislativeSubjects>
+        <item>
+          <name>Unicorn Habitat Protection</name>
+        </item>
+        <item>
+          <name>Rainbow Resources Management</name>
+        </item>
+        <item>
+          <name>Glitter Pollution Control</name>
+        </item>
+      </legislativeSubjects>
+      <policyArea>
+        <name>Unicorn Conservation and Welfare</name>
+      </policyArea>
+    </subjects>
+    <summaries>
+      <summary>
+        <versionCode>00</versionCode>
+        <actionDate>2023-04-01</actionDate>
+        <actionDesc>Introduced in House</actionDesc>
+        <updateDate>2023-04-01T16:00:00Z</updateDate>
+        <text>
+          <![CDATA[ <p><b>The Unicorn Harmony Act of 2023</b></p> <p>This groundbreaking act aims to promote the welfare and conservation of the unicorn population in the United States. It proposes the establishment of unicorn sanctuaries, the promotion of research on sustainable glitter production, and the institution of a National Unicorn Day on April 1st, where citizens are encouraged to wear unicorn horns to promote awareness about unicorn conservation. Furthermore, this act seeks to foster international cooperation for unicorn conservation and to facilitate the sharing of rainbow resources between nations.</p>]]>
+        </text>
+      </summary>
+    </summaries>
+    <title>The Unicorn Harmony Act of 2023</title>
+    <titles>
+      <item>
+        <titleType>Display Title</titleType>
+        <title>The Unicorn Harmony Act of 2023</title>
+      </item>
+      <item>
+        <titleType>Official Title as Introduced</titleType>
+        <title>To promote the conservation of unicorns and their habitats for the benefit of present and future generations of Americans.</title>
+        <billTextVersionName>Introduced in House</billTextVersionName>
+        <billTextVersionCode>IH</billTextVersionCode>
+      </item>
+      <item>
+        <titleType>Short Titles as Introduced</titleType>
+        <title>The Unicorn Harmony Act of 2023</title>
+      </item>
+    </titles>
+    <textVersions>
+      <item>
+        <type>Introduced in House</type>
+        <date>2023-04-01T14:00:00Z</date>
+        <formats>
+          <item>
+            <url>https://www.unicongress.gov/bills/123/hr42/ih</url>
+          </item>
+        </formats>
+      </item>
+    </textVersions>
+    <latestAction>
+      <actionDate>2023-04-02</actionDate>
+      <text>Referred to the Subcommittee on Unicorn Habitat Conservation.</text>
+    </latestAction>
+  </bill>
+  <dublinCore xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:format>text/xml</dc:format>
+    <dc:language>EN</dc:language>
+    <dc:rights>This document is intended for humor and unicorn awareness promotion. Not an official government document.</dc:rights>
+    <dc:contributor>Congressional Research Service, Library of Unicorn Congress</dc:contributor>
+    <dc:description>This fictional document is created to bring a smile to the faces of those working hard on serious projects. Remember, a little humor can go a long way in brightening your day!</dc:description>
+  </dublinCore>
+</billStatus>
