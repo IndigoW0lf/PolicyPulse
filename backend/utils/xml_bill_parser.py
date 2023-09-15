@@ -1,245 +1,396 @@
-def parse_bill(tree):
-    # Parse the bill data from the XML tree.
-    bill_data = {
-        'number': get_text(tree, './/bill/number'),
-        'updateDate': get_text(tree, './/bill/updateDate'),
-        'originChamber': get_text(tree, './/bill/originChamber'),
-        'type': get_text(tree, './/bill/type'),
-        'introducedDate': get_text(tree, './/bill/introducedDate'),
-        'congress': get_text(tree, './/bill/congress'),
-        'display_title': get_display_title(tree),
-        'official_title': get_official_title(tree),
-        'summaries': parse_summaries(tree),
-        'fullBillTexts': parse_fullBillTexts(tree),
-        'subjects': parse_subjects(tree),
-        "textVersions": parse_text_versions(tree),
-        "latestAction": parse_latest_action(tree),
-        "titles": parse_titles(tree),
-        "committees": parse_committees(tree),
-        "sponsors": parse_sponsors(tree),
-        "vetoMessages": parse_veto_messages(tree),
-        "policyAreas": parse_policyAreas(tree),
-        "relatedBills": parse_relatedBills(tree),
-        "coSponsors": parse_coSponsors(tree),
-        "fullBillTexts": parse_fullBillTexts(tree),
-        "actions": parse_actions(tree),
-        "amendments": parse_amendments(tree),
-    }
-    return bill_data
+from backend.database.models import Bill, Politician, ActionType, Committee, Amendment, Subject, Action, BillTitle, ActionCode, BillFullText, LOCSummary, LOCSummaryCode, PolicyArea, RelatedBill, CoSponsor, Law, Note, RecordedVote
+from config import TestingConfig as config
+from datetime import datetime
+import logging
+from contextlib import contextmanager
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from db_operations import save_to_database
+from xml_helper import xml_to_json , get_text, parse_date, version_code_mapping
 
-def get_text(tree, xpath):
-    elements = tree.xpath(xpath)
-    if elements:
-        if len(elements) == 1:
-            return elements[0].text
-        else:
-            return [element.text for element in elements]
-    else:
-        return None
+# Initialize the logger
+logging.basicConfig(filename='backend/database/logs/bill_parser.log', level=logging.INFO,
+                    format='%(asctime)s:%(levelname)s:%(message)s')
 
-def get_display_title(tree):
-    title_element = tree.find(".//bill/titles/item[titleType='Display Title']")
-    return title_element.text if title_element is not None else ""
+# Create logger instance
+logger = logging.getLogger(__name__)
 
-def get_official_title(tree):
-    title_element = tree.find(".//bill/titles/item[titleType='Official Title as Introduced']")
-    return title_element.text if title_element is not None else ""
+# Configure the database session to interact with the testing database.
+engine = create_engine(config.SQLALCHEMY_DATABASE_URI)
+Session = sessionmaker(bind=engine)
+session = Session()
 
-def get_text(element, tag):
-    """Helper function to get the text of a child element with the given tag."""
-    child = element.find(tag)
-    return child.text if child is not None else None
-
-def parse_actions(tree):
-    """Parse the actions section of the bill data."""
-    actions = tree.findall(".//bill/actions/item")
-    return [
-        {
-            "actionDate": get_text(action, "actionDate"),
-            "actionTime": get_text(action, "actionTime"),
-            "committee": {
-                "name": get_text(action, "committee/name"),
-            },
-            "text": get_text(action, "text"),
-            "type": get_text(action, "type"),
-            "actionCode": get_text(action, "actionCode"),
-            "sourceSystem": {
-                "code": get_text(action, "sourceSystem/code"),
-                "name": get_text(action, "sourceSystem/name"),
-            }
-        }
-        for action in actions
-    ]
-
-def parse_amendments(tree):
-    """Parse the amendments section of the bill data."""
-    amendments = tree.findall(".//bill/amendments/item")
-    return [
-        {
-            "amendment_number": get_text(amendment, "amendment_number"),
-            "description": get_text(amendment, "description"),
-            "date_proposed": get_text(amendment, "date_proposed"),
-            "status": get_text(amendment, "status"),
-        }
-        for amendment in amendments
-    ]
-
-def parse_committees(tree):
-    """Parse the committees section of the bill data."""
-    committees = tree.findall(".//bill/committees/item")
-    return [
-        {
-            "name": get_text(committee, "name"),
-            "chamber": get_text(committee, "chamber"),
-            "committee_code": get_text(committee, "committee_code"),
-        }
-        for committee in committees
-    ]
-
-def parse_coSponsors(tree):
-    """Parse the co-sponsors section of the bill data."""
-    co_sponsors = tree.findall(".//bill/coSponsors/item")
-    return [
-        {
-            "politician_id": get_text(co_sponsor, "politician_id"),
-            "bill_id": get_text(co_sponsor, "bill_id"),
-        }
-        for co_sponsor in co_sponsors
-    ]
-
-def parse_fullBillTexts(tree):
-    """Parse the full bill texts section of the bill data."""
-    full_bill_texts = tree.findall(".//bill/fullBillTexts/item")
-    return [
-        {
-            "title": get_text(full_bill_text, "title"),
-            "bill_metadata": get_text(full_bill_text, "bill_metadata"),
-            "actions": get_text(full_bill_text, "actions"),
-            "sections": get_text(full_bill_text, "sections"),
-        }
-        for full_bill_text in full_bill_texts
-    ]
-
-def parse_latest_action(tree):
-    """Parse the latest action section of the bill data."""
-    return {
-        "actionDate": get_text(tree, ".//bill/latestAction/actionDate"),
-        "text": get_text(tree, ".//bill/latestAction/text"),
-        "actionTime": get_text(tree, ".//bill/latestAction/actionTime"),
-    }
-
-def parse_policyAreas(tree):
-    """Parse the policy areas section of the bill data."""
-    policy_areas = tree.findall(".//bill/policyAreas/item")
-    return [
-        {
-            "name": get_text(policy_area, "name"),
-            "description": get_text(policy_area, "description"),
-        }
-        for policy_area in policy_areas
-    ]
-
-def parse_relatedBills(tree):
-    """Parse the related bills section of the bill data."""
-    related_bills = tree.findall(".//bill/relatedBills/item")
-    return [
-        {
-            "bill_id": get_text(related_bill, "bill_id"),
-            "related_bill_id": get_text(related_bill, "related_bill_id"),
-        }
-        for related_bill in related_bills
-    ]
-
-def parse_sponsors(tree):
-    """Parse the sponsors and cosponsors section of the bill data."""
-    sponsors = tree.findall(".//bill/sponsors/item") + tree.findall(".//bill/cosponsors/item")
-    return [
-        {
-            "bioguide_id": get_text(sponsor, "bioguideId"),
-            "first_name": get_text(sponsor, "firstName"),
-            "middle_name": get_text(sponsor, "middleName"),
-            "last_name": get_text(sponsor, "lastName"),
-            "name": " ".join(filter(None, [get_text(sponsor, "firstName"), get_text(sponsor, "middleName"), get_text(sponsor, "lastName")])),  # Combining first, middle and last names
-            "party": get_text(sponsor, "party"),
-            "state": get_text(sponsor, "state"),
-        }
-        for sponsor in sponsors
-    ]
+@contextmanager
+def session_scope():
+    """Provide a transactional scope around a series of operations."""
+    try:
+        yield session
+        session.commit()
+    except Exception:
+        session.rollback()
+        raise
+    finally:
+        session.close()
 
 
-def parse_subjects(tree):
-    """Parse the subjects section of the bill data."""
-    return {
-        'legislativeSubjects': [
-            {'name': get_text(subject, 'name')}
-            for subject in tree.xpath('.//bill/subjects/legislativeSubjects/item')
-        ],
-        'billSubjects': [
-            {'name': get_text(subject, 'name')}
-            for subject in tree.xpath('.//bill/subjects/billSubjects/item')
-        ],
-        'otherSubjects': [
-            {
-                'name': get_text(subject, 'name'),
-                'parentSubject': {'name': get_text(subject, 'parentSubject/name')}
-            }
-            for subject in tree.xpath('.//bill/subjects/otherSubjects/item')
-        ],
-        'primarySubjects': [
-            {
-                'name': get_text(subject, 'name'),
-                'parentSubject': {'name': get_text(subject, 'parentSubject/name')}
-            }
-            for subject in tree.xpath('.//bill/subjects/primarySubjects/item')
-        ]
-    }
-
-def parse_summaries(tree):
-    """Parse the summaries section of the bill data."""
-    summaries = tree.findall(".//bill/summaries/summary")
-    versions = [
-        {
-            "version_code": get_text(summary, "versionCode"),
-            "action_date": get_text(summary, "actionDate"),
-            "action_desc": get_text(summary, "actionDesc"),
-            "update_date": get_text(summary, "updateDate"),
-            "text": get_text(summary, "text"),
-        }
-        for summary in summaries
-    ]
-    return {"versions": versions}
+def parse_bill(xml_root):
+    with session_scope() as session:
+        """
+        Parse the bill details from the root element and return a Bill object.
+        """
+        try:
+            bill_details_list = xml_root.xpath('//billStatus/bill')
+            if bill_details_list:
+                bill_details = bill_details_list[0]
+            else:
+                logging.error("Error in parse_bill: No bill details found")
+                return None
+        except Exception as e:
+            logging.error(f"Error in parse_bill: {e}")
+            return None
+        
+        try:
+            sponsor_details = bill_details.xpath('sponsors/item')[0]
+            sponsor = Politician(
+                bioguide_id=get_text(sponsor_details, 'bioguideId'),
+                full_name=get_text(sponsor_details, 'fullName'),
+                first_name=get_text(sponsor_details, 'firstName'),
+                last_name=get_text(sponsor_details, 'lastName'),
+                state=get_text(sponsor_details, 'state'),
+                party=get_text(sponsor_details, 'party'),
+                district=get_text(sponsor_details, 'district')
+            )
+        except Exception as e:
+            logging.error(f"Error parsing sponsor details in parse_bill: {e}")
+            sponsor = None
 
 
-def parse_titles(tree):
-    """Parse the titles section of the bill data."""
-    titles = tree.findall(".//bill/titles/item")
-    for title in titles:
-        title_type = get_text(title, "titleType")
-        if title_type == "Official Title as Introduced":
-            return get_text(title, "title")
-    return ""  # Return an empty string if no matching title is found
+        # Parsing title details as per the new logic
+        official_title = None
+        display_title = None
+        try:
+            title_elements = bill_details.xpath('titles/item')
+            for title_element in title_elements:
+                title_type = get_text(title_element, 'titleType')
+                if title_type:
+                    if 'Official' in title_type:
+                        official_title = get_text(title_element, 'title')
+                    elif title_type == 'Display Title':
+                        display_title = get_text(title_element, 'title')
+        except Exception as e:
+            logging.error(f"Error parsing title details in parse_bill: {e}")
 
-def parse_text_versions(tree):
-    """Parse the text versions section of the bill data."""
-    text_versions = tree.findall(".//bill/textVersions/item")
-    return [
-        {
-            "type": get_text(version, "type"),
-            "date": get_text(version, "date"),
-            "url": get_text(version, "formats/item/url"),
-        }
-        for version in text_versions
-    ]
+        
+        try:
+            bill = Bill(
+                bill_number=get_text(bill_details, 'number'),
+                bill_type=get_text(bill_details, 'type'),
+                congress=get_text(bill_details, 'congress'),
+                date_introduced=parse_date(get_text(bill_details, 'introducedDate')),
+                full_bill_link=None,  # Placeholder, to be populated from the API data
+                last_action_date=parse_date(get_text(bill_details, 'latestAction/actionDate')),
+                last_action_description=get_text(bill_details, 'latestAction/text'),
+                loc_summary=parse_loc_summaries(bill_details),
+                official_title=official_title,
+                title=display_title,
+                origin_chamber=get_text(bill_details, 'originChamber'),
+                policy_area=get_text(bill_details, 'policyArea/name'),
+                sponsor=sponsor,
+                subjects=parse_subjects(bill_details),
+                summary=get_text(bill_details, 'summaries/summary/text'),
+                tags=None,  # Placeholder, to be populated later by Langchain
+                xml_content=xml_to_json(bill_details),
+            )
 
-def parse_veto_messages(tree):
-    """Parse the veto messages section of the bill data."""
-    veto_messages = tree.findall(".//bill/vetoMessages/item")
-    return [
-        {
-            "date": get_text(veto_message, "date"),
-            "message": get_text(veto_message, "message"),
-            "president": get_text(veto_message, "president"),
-            "text": get_text(veto_message, "text"),
-        }
-        for veto_message in veto_messages
-    ]
+        except Exception as e:
+            logging.error(f"Error creating Bill object in parse_bill: {e}")
+            return None
+
+        # Invoke functions to parse related entities and associate them with the bill
+        try:
+            bill.actions = parse_actions(bill_details)
+            bill.amendments = parse_amendments(bill_details)
+            bill.committees = parse_committees(bill_details)
+            bill.related_bills = parse_related_bills(bill_details)
+            bill.cosponsors = parse_cosponsors(bill_details)
+            bill.bill_titles = parse_bill_titles(bill_details)
+            loc_summaries, loc_summary_codes = parse_loc_summaries(bill_details)
+            bill.loc_summaries = loc_summaries
+            bill.loc_summary_codes = loc_summary_codes
+            bill.notes = parse_notes(bill_details)
+            bill.recorded_votes = parse_recorded_votes(bill_details)
+        
+            session.add(bill)
+        
+        except Exception as e:
+            logging.error(f"Error associating related entities with the Bill object in parse_bill: {e}")
+
+        return bill
+
+def parse_actions(bill_details):
+    """Function to parse action details and return a list of Action objects."""
+    actions = []
+    try:
+        for action in bill_details.xpath('actions/item'):
+            action_code_value = get_text(action, 'actionCode')
+
+            # Assuming that you have a function to get ActionCode object by its value
+            action_code_obj = get_action_code_object(session, action_code_value)
+
+
+            action_type = ActionType(
+                description=get_text(action, 'type'),
+                action_code=action_code_obj  # Here, we set the ActionCode object
+            )
+
+            action_obj = Action(
+                action_date=parse_date(get_text(action, 'actionDate')),
+                description=get_text(action, 'text'),
+                chamber=get_text(action, 'recordedVotes/recordedVote/chamber'),
+                action_type=action_type,
+                action_codes=[action_code_obj]  # Here, we associate the ActionCode object with the Action object
+            )
+            actions.append(action_obj)
+    except Exception as e:
+        logging.error(f"Error in parse_actions: {e}")
+
+    return actions
+    
+
+def get_action_code_object(session, value):
+    """Function to get an ActionCode object by its value.
+
+    This function should query the database to get the ActionCode object by its value.
+    If not found, it should create a new ActionCode object with the given value.
+    """
+    try:
+        action_code_obj = session.query(ActionCode).filter_by(code=value).first()
+        if not action_code_obj:
+            action_code_obj = ActionCode(code=value, description="Description for code " + value)
+            session.add(action_code_obj)
+            # No need to commit here, as the context manager will commit the transaction
+    except Exception as e:
+        logging.error(f"Error in get_action_code_object: {e}")
+        # You might want to re-raise the exception after logging it, to handle it at a higher level
+        raise
+
+    return action_code_obj
+
+
+def parse_amendments(bill_details):
+    """Function to parse amendment details and return a list of Amendment objects."""
+    amendments = []
+    try:
+        for amendment in bill_details.xpath('amendments/amendment'):
+            amendment_obj = Amendment(
+                amendment_number=get_text(amendment, 'number'),
+                congress=get_text(amendment, 'congress'),
+                description=get_text(amendment, 'description'),
+                latest_action_date=parse_date(get_text(amendment, 'latestAction/actionDate')),
+                latest_action_text=get_text(amendment, 'latestAction/text'),
+                purpose=get_text(amendment, 'purpose'),
+                type=get_text(amendment, 'type'),
+                status=get_text(amendment, 'status'),
+            )
+            amendments.append(amendment_obj)
+    except Exception as e:
+        logging.error(f"Error in parse_amendments: {e}")
+        # Optionally re-raise the exception
+        raise
+
+    return amendments
+    
+
+def parse_bill_titles(bill_details):
+    """Function to parse bill titles and return a list of BillTitle objects."""
+    bill_titles = []
+    try:
+        for title in bill_details.xpath('titles/item'):
+            bill_title_obj = BillTitle(
+                title_type=get_text(title, 'titleType'),
+                title_text=get_text(title, 'title'),
+                chamber_code=get_text(title, 'chamberCode'),
+                chamber_name=get_text(title, 'chamberName'),
+            )
+            bill_titles.append(bill_title_obj)
+    except Exception as e:
+        logging.error(f"Error in parse_bill_titles: {e}")
+        # Optionally re-raise the exception
+        raise
+
+    return bill_titles
+
+
+def parse_committees(bill_details):
+    """Function to parse committee details and return a list of Committee objects."""
+    committees = []
+    try:
+        for committee in bill_details.xpath('committees/item'):
+            committee_obj = Committee(
+                name=get_text(committee, 'name'),
+                chamber=get_text(committee, 'chamber'),
+                committee_code=get_text(committee, 'systemCode'),
+            )
+            committees.append(committee_obj)
+    except Exception as e:
+        logging.error(f"Error in parse_committees: {e}")
+        # Optionally re-raise the exception
+        raise
+    return committees
+
+
+def parse_cosponsors(bill_details):
+    """Function to parse cosponsor details and return a list of CoSponsor objects."""
+    cosponsors = []
+    try:
+        for cosponsor in bill_details.xpath('cosponsors/item'):
+            cosponsor_obj = CoSponsor(
+                bioguide_id=get_text(cosponsor, 'bioguideId'),
+                full_name=get_text(cosponsor, 'fullName'),
+                first_name=get_text(cosponsor, 'firstName'),
+                last_name=get_text(cosponsor, 'lastName'),
+                party=get_text(cosponsor, 'party'),
+                state=get_text(cosponsor, 'state'),
+                sponsorship_date=parse_date(get_text(cosponsor, 'sponsorshipDate')),
+                is_original_cosponsor=get_text(cosponsor, 'isOriginalCosponsor') == 'true',
+                sponsorship_withdrawn_date=parse_date(get_text(cosponsor, 'sponsorshipWithdrawnDate')),
+            )
+            cosponsors.append(cosponsor_obj)
+    except Exception as e:
+        logging.error(f"Error in parse_cosponsors: {e}")
+        # Optionally re-raise the exception
+        raise
+    return cosponsors
+
+
+def parse_laws(bill_details):
+    """Function to parse laws and return a list of Law objects."""
+    laws = []
+    try:
+        for item in bill_details.xpath('laws/item'):
+            law_type = get_text(item, 'type')
+            law_number = get_text(item, 'number')
+            if law_type and law_number:
+                law_obj = Law(type=law_type, number=law_number)
+                laws.append(law_obj)
+    except Exception as e:
+        logging.error(f"Error in parse_laws: {e}")
+        # Optionally re-raise the exception
+        raise
+    return laws
+
+
+def parse_loc_summaries(bill_details):
+    """Function to parse LOC summary details and return a list of LOCSummary and LOCSummaryCode objects."""
+    loc_summaries = []
+    loc_summary_codes = []
+    try:
+        for summary in bill_details.xpath('summaries/summary'):
+            version_code = get_text(summary, 'versionCode')
+            text = get_text(summary, 'text')
+            
+            # Get chamber and action description from version code mapping
+            chamber = version_code_mapping.get(version_code, {}).get('chamber', '')
+            action_desc = version_code_mapping.get(version_code, {}).get('action_desc', '')
+
+            # Create LOCSummaryCode object
+            loc_summary_code = LOCSummaryCode(
+                version_code=version_code,
+                chamber=chamber,
+                action_desc=action_desc
+            )
+            loc_summary_codes.append(loc_summary_code)
+            
+            # Create LOCSummary object
+            loc_summary = LOCSummary(
+                versions={'version_code': version_code, 'text': text},
+                loc_summary_code=loc_summary_code  # Linking with LOCSummaryCode
+            )
+            loc_summaries.append(loc_summary)
+    except Exception as e:
+        logging.error(f"Error in parse_loc_summaries: {e}")
+        # Optionally re-raise the exception
+        raise
+    return loc_summaries, loc_summary_codes
+
+def parse_notes(bill_details):
+    """Function to parse notes and return a list of Note objects."""
+    notes = []
+    try:
+        for item in bill_details.xpath('notes/item'):
+            note_text = get_text(item, 'text')
+            if note_text:
+                note_obj = Note(text=note_text)
+                notes.append(note_obj)
+    except Exception as e:
+        logging.error(f"Error in parse_notes: {e}")
+        # Optionally re-raise the exception
+        raise
+    return notes
+
+def parse_recorded_votes(bill_details):
+    """Function to parse recorded votes and return a list of RecordedVote objects."""
+    recorded_votes = []
+    try:
+        for item in bill_details.xpath('actions/item/recordedVotes/recordedVote'):
+            roll_number = get_text(item, 'rollNumber')
+            url = get_text(item, 'url')
+            chamber = get_text(item, 'chamber')
+            congress = get_text(item, 'congress')
+            date = parse_date(get_text(item, 'date'))
+            session_number = get_text(item, 'sessionNumber')
+            if roll_number and url and chamber and congress and date and session_number:
+                recorded_vote_obj = RecordedVote(
+                    roll_number=roll_number,
+                    url=url,
+                    chamber=chamber,
+                    congress=congress,
+                    date=date,
+                    session_number=session_number
+                )
+                recorded_votes.append(recorded_vote_obj)
+    except Exception as e:
+        logging.error(f"Error in parse_recorded_votes: {e}")
+        # Optionally re-raise the exception
+        raise
+    return recorded_votes
+
+
+def parse_related_bills(bill_details):
+    """Function to parse related bills and return a list of RelatedBill objects."""
+    related_bills = []
+    try:
+        for related_bill in bill_details.xpath('relatedBills/item'):
+            related_bill_obj = RelatedBill(
+                title=get_text(related_bill, 'title'),
+                congress=get_text(related_bill, 'congress'),
+                number=get_text(related_bill, 'number'),
+                type=get_text(related_bill, 'type'),
+                latest_action_date=parse_date(get_text(related_bill, 'latestAction/actionDate')),
+                latest_action_text=get_text(related_bill, 'latestAction/text'),
+            )
+            related_bills.append(related_bill_obj)
+    except Exception as e:
+        logging.error(f"Error in parse_related_bills: {e}")
+        # Optionally re-raise the exception
+        raise
+    return related_bills
+
+def parse_subjects(bill_details):
+    """Function to parse legislative subjects and return a list of Subject objects."""
+    subjects = []
+    try:
+        for item in bill_details.xpath('subjects/legislativeSubjects/item'):
+            subject_name = get_text(item, 'name')
+            if subject_name:
+                subject_obj = Subject(name=subject_name)
+                subjects.append(subject_obj)
+    except Exception as e:
+        logging.error(f"Error in parse_subjects: {e}")
+        # Optionally re-raise the exception
+        raise
+    return subjects
+
+    
+
+
