@@ -17,5 +17,4 @@ class PolicyArea(db.Model):
             "name": self.name,
             "description": self.description,
             "bill_id": self.bill_id,
-            "bill": self.bill.to_dict() if self.bill else None,
         }

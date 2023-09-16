@@ -3,7 +3,6 @@ from backend import db
 class Subject(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False, unique=True)
-    description = db.Column(db.Text, nullable=True)
     
     bills = db.relationship('Bill', secondary='bill_subject', back_populates='subjects', lazy=True)
     primary_bills = db.relationship('Bill', back_populates='primary_subject', lazy=True)
@@ -16,7 +15,6 @@ class Subject(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "description": self.description,
             "bills": [bill.to_dict() for bill in self.bills],
             "primary_bills": [bill.to_dict() for bill in self.primary_bills],
         }

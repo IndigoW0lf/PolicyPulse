@@ -17,8 +17,9 @@ class Action(db.Model):
     is_latest = db.Column(db.Boolean, default=False)
     
     action_type = db.relationship('ActionType', back_populates='actions', lazy=True)
-    bill = db.relationship('Bill', back_populates='actions', lazy=True)
-    action_codes = db.relationship('ActionCode', secondary=action_actioncode, back_populates='actions')
+    action_codes = db.relationship('ActionCode', secondary=action_actioncode, 
+    back_populates='action_code_relations')
+    bill = db.relationship('Bill', back_populates='actions')
 
     def __repr__(self):
         return f'<Action {self.id} on {self.action_date}>'
@@ -41,7 +42,7 @@ class ActionCode(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     code = db.Column(db.String(10), nullable=False)
     description = db.Column(db.String(200), nullable=True)
-    actions = db.relationship('Action', secondary=action_actioncode, back_populates='action_codes')
+    action_code_relations = db.relationship('Action', secondary=action_actioncode, back_populates='action_codes')
 
     def __repr__(self):
         return f'<ActionCode {self.code}: {self.description}>'

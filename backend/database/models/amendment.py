@@ -14,10 +14,10 @@ class Amendment(db.Model):
     status = db.Column(db.String(50), nullable=True)
 
     bill_id = db.Column(db.Integer, db.ForeignKey('bill.id'), nullable=False, index=True)
-    
+    sponsor_id = db.Column(db.Integer, db.ForeignKey('politician.id'), nullable=True)
+
+    sponsor = db.relationship('Politician', back_populates='sponsored_amendments', lazy=True)
     bill = db.relationship('Bill', back_populates='amendments', lazy=True)
-    sponsor = db.relationship('Politician', back_populates='amendments', lazy=True)
-    
     actions = db.relationship('AmendmentAction', back_populates='amendment', lazy=True)
     amended_bill = db.relationship('AmendedBill', uselist=False, back_populates='amendment', lazy=True)
     links = db.relationship('AmendmentLink', back_populates='amendment', lazy=True)
@@ -41,6 +41,7 @@ class Amendment(db.Model):
             "actions": [action.to_dict() for action in self.actions],
             "amended_bill": self.amended_bill.to_dict() if self.amended_bill else None,
             "links": [link.to_dict() for link in self.links],
+            "sponsor": self.sponsor.to_dict() if self.sponsor else None,
         }
 
 class AmendmentAction(db.Model):

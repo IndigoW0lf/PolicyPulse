@@ -6,6 +6,8 @@ class CoSponsor(db.Model):
     bill_id = db.Column(db.Integer, db.ForeignKey('bill.id'), nullable=False, index=True)
     politician_id = db.Column(db.Integer, db.ForeignKey('politician.id'), nullable=False, index=True)
     sponsorship_date = db.Column(db.Date, nullable=True)  # New field to track the date of co-sponsorship
+    sponsorship_withdrawn_date = db.Column(db.Date, nullable=True) 
+    is_original_cosponsor = db.Column(db.Boolean, nullable=True)  
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)  # Timestamp of record creation
     updated_at = db.Column(db.DateTime, nullable=True, onupdate=datetime.utcnow)  # Timestamp of last update
 

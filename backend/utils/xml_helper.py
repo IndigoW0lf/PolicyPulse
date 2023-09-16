@@ -1,6 +1,7 @@
 import json
 from datetime import datetime
 from lxml import etree
+import logging
 
 # Constants
 DATE_FORMAT = '%Y-%m-%d'
@@ -8,25 +9,34 @@ DATE_FORMAT = '%Y-%m-%d'
 def xml_to_json(xml_str):
     """Converts XML string to JSON."""
     xml_root = etree.fromstring(xml_str)
-    return json.dumps({xml_root.tag: xml_to_dict(xml_root)})
+    json_result = json.dumps({xml_root.tag: xml_to_dict(xml_root)})
+    return json_result
+
 
 def xml_to_dict(xml_root):
     """Recursively converts XML elements to dictionary."""
     result = {}
     for child in xml_root:
-        result[child.tag] = xml_to_dict(child) if child else child.text
+        result[child.tag] = xml_to_dict(child) if len(child) or child is not None else child.text
     return result
 
 def get_text(element, xpath):
     """Utility function to get text from an XML element using XPath."""
     result = element.xpath(f'{xpath}/text()')
-    return result[0] if result else None
+    return str(result[0]) if result else None
 
 def parse_date(date_str):
     """Utility function to parse a date string."""
-    if date_str:
-        return datetime.strptime(date_str, DATE_FORMAT).date()
-    return None
+    if date_str and isinstance(date_str, str):
+        try:
+            return datetime.strptime(date_str.strip(), DATE_FORMAT).date()
+        except ValueError as e:
+            logging.error(f"Error in parse_date - Failed to parse date_str: '{date_str}', Error: {e}")
+            return None
+    else:
+        return None
+
+
 
 # For LOC Summary, using codes to determine chamber.
 version_code_mapping = {

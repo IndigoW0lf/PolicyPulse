@@ -5,7 +5,7 @@ import logging
 from backend.utils.xml_bill_parser import parse_bill
 from backend.database.models import Action, ActionType, Amendment, Committee, CoSponsor, Bill, LOCSummary, Politician, RelatedBill, Subject 
 
-# bp = Blueprint('routes', __name__)
+bp = Blueprint('routes', __name__)
 
 # # Configure logging
 # logging.basicConfig(filename='app.log', level=logging.INFO, 

@@ -1,13 +1,20 @@
 from backend import db
-from backend.database.models.committee import bill_committee
-from enum import Enum
-from sqlalchemy.dialects.postgresql import JSON
-from datetime import datetime
 from sqlalchemy import Enum
+from enum import Enum
+from backend.database.models.committee import bill_committee
+from sqlalchemy.dialects.postgresql import JSON
+from backend import db 
+from datetime import datetime
 
 
 class ActionType(db.Model):
-    """Model representing action types."""
+    """Model representing action types.
+    
+    This model stores different types of actions that can occur 
+    with a bill, such as introduction, referral to committee, etc.
+    Each action type has a unique description and is associated with 
+    various actions and bills.
+    """
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(200), nullable=False, unique=True)
     is_latest = db.Column(db.Boolean, default=False)
@@ -23,7 +30,13 @@ action_actioncode = db.Table('action_actioncode',
     )
 
 class Action(db.Model):
-    """Model representing actions."""
+    """Model representing actions.
+    
+    This model stores individual actions taken on a bill. Each action 
+    has a date, a description, and is associated with a specific 
+    chamber (House or Senate). Actions are also linked to specific 
+    bills and action types, and can have multiple associated action codes.
+    """
     id = db.Column(db.Integer, primary_key=True)
     action_date = db.Column(db.Date, nullable=False)
     description = db.Column(db.Text, nullable=True)
@@ -36,8 +49,15 @@ class Action(db.Model):
     bill = db.relationship('Bill', back_populates='actions', lazy=True)
     action_codes = db.relationship('ActionCode', secondary=action_actioncode, back_populates='actions')
 
-
 class ActionCode(db.Model):
+    """Model representing action codes.
+    
+    This model stores codes representing different aspects or 
+    statuses of legislative actions. The codes are extracted from 
+    the XML data and can have associated descriptions, although 
+    the descriptions might not always be available or consistent 
+    due to the dynamic nature of the codes in the source data.
+    """
     id = db.Column(db.Integer, primary_key=True)
     code = db.Column(db.String(10), nullable=False)
     description = db.Column(db.String(200), nullable=True)
@@ -57,10 +77,10 @@ class Amendment(db.Model):
     status = db.Column(db.String(50), nullable=True)
 
     bill_id = db.Column(db.Integer, db.ForeignKey('bill.id'), nullable=False, index=True)
-    
+    sponsor_id = db.Column(db.Integer, db.ForeignKey('politician.id'), nullable=True)
+
+    sponsor = db.relationship('Politician', back_populates='sponsored_amendments', lazy=True)
     bill = db.relationship('Bill', back_populates='amendments', lazy=True)
-    sponsor = db.relationship('Politician', back_populates='amendments', lazy=True)
-    
     actions = db.relationship('AmendmentAction', back_populates='amendment', lazy=True)
     amended_bill = db.relationship('AmendedBill', uselist=False, back_populates='amendment', lazy=True)
     links = db.relationship('AmendmentLink', back_populates='amendment', lazy=True)
@@ -163,7 +183,7 @@ class Bill(db.Model):
     committees = db.relationship('Committee', secondary=bill_committee, back_populates='bills')
     full_texts = db.relationship('BillFullText', back_populates='bill', lazy=True)
     laws = db.relationship('Law', back_populates='bill', lazy=True)
-    loc_summary = db.relationship('LOCSummary', back_populates='bill', lazy='joined')
+    loc_summary = db.relationship('LOCSummary', back_populates='bill', uselist=False)  # One-to-one relationship
     main_bills = db.relationship('RelatedBill', foreign_keys='RelatedBill.related_bill_id', back_populates='related_bill', lazy=True)
     notes = db.relationship('Note', back_populates='bill', lazy=True)
     policy_areas = db.relationship('PolicyArea', back_populates='bill', lazy=True)
@@ -203,8 +223,6 @@ bill_committee = db.Table('bill_committee',
     db.Column('bill_id', db.Integer, db.ForeignKey('bill.id'), primary_key=True),
     db.Column('committee_id', db.Integer, db.ForeignKey('committee.id'), primary_key=True)
 )
-
-
 class Law(db.Model):
     __tablename__ = 'law'
     id = db.Column(db.Integer, primary_key=True)
@@ -217,21 +235,29 @@ class Law(db.Model):
     bill = db.relationship('Bill', back_populates='laws', lazy=True)
 
 
+loc_summary_association = db.Table(
+    'loc_summary_association',
+    db.Column('loc_summary_id', db.Integer, db.ForeignKey('loc_summary.id'), primary_key=True),
+    db.Column('loc_summary_code_id', db.Integer, db.ForeignKey('loc_summary_code.id'), primary_key=True)
+)
+
+class LOCSummary(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    versions = db.Column(db.JSON)
+    bill_id = db.Column(db.Integer, db.ForeignKey('bill.id'), nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, nullable=True, onupdate=datetime.utcnow)
+    
+    bill = db.relationship('Bill', back_populates='loc_summary')
+    loc_summary_codes = db.relationship('LOCSummaryCode', secondary=loc_summary_association, back_populates='loc_summaries')
+
 class LOCSummaryCode(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     version_code = db.Column(db.String(50), nullable=False, unique=True)
     chamber = db.Column(db.String(50), nullable=False)
     action_desc = db.Column(db.String(200), nullable=False)
     
-    loc_summaries = db.relationship('LOCSummary', back_populates='loc_summary_code', lazy=True)
-
-
-class LOCSummary(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    versions = db.Column(db.JSON)
-    bill_id = db.Column(db.Integer, db.ForeignKey('bill.id'))
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, nullable=True, onupdate=datetime.utcnow)
+    loc_summaries = db.relationship('LOCSummary', secondary=loc_summary_association, back_populates='loc_summary_codes')
 
 
 class Note(db.Model):
@@ -254,8 +280,11 @@ class PolicyArea(db.Model):
 
 class Politician(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=True)  # New name column
+    name = db.Column(db.String(255), nullable=True) 
+    first_name = db.Column(db.String(255), nullable=True) 
+    last_name = db.Column(db.String(255), nullable=True) 
     state = db.Column(db.String(50), nullable=True)
+    district = db.Column(db.String(100), nullable=True)
     party = db.Column(db.String(50), nullable=True)
     role = db.Column(db.String(100), nullable=True)
     profile_link = db.Column(db.String(500), nullable=True)
@@ -263,6 +292,7 @@ class Politician(db.Model):
     gpo_id = db.Column(db.String(50), nullable=True)
     lis_id = db.Column(db.String(50), nullable=True)
 
+    sponsored_amendments = db.relationship('Amendment', back_populates='sponsor', lazy=True)
     sponsored_bills = db.relationship('Bill', back_populates='sponsor', lazy=True)
     co_sponsored_bills = db.relationship('CoSponsor', back_populates='politician', lazy=True)
 
@@ -304,8 +334,6 @@ bill_subject = db.Table('bill_subject',
     db.Column('bill_id', db.Integer, db.ForeignKey('bill.id'), primary_key=True, index=True),
     db.Column('subject_id', db.Integer, db.ForeignKey('subject.id'), primary_key=True, index=True)
 )
-
-
 class VetoMessage(db.Model):
     """Model representing veto messages."""
     id = db.Column(db.Integer, primary_key=True)
@@ -316,3 +344,4 @@ class VetoMessage(db.Model):
     
     bill_id = db.Column(db.Integer, db.ForeignKey('bill.id'), nullable=False, index=True)
     bill = db.relationship('Bill', back_populates='veto_messages', lazy=True)
+
