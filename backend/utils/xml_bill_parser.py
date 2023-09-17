@@ -8,7 +8,6 @@ from backend.utils.xml_helper import xml_to_json , get_text, parse_date, version
 from backend.utils.database import SessionFactory
 
 
-# Initialize the logger
 logging.basicConfig(filename='backend/database/logs/bill_parser.log', level=logging.WARNING,
                     format='%(asctime)s:%(levelname)s:%(message)s')
 
