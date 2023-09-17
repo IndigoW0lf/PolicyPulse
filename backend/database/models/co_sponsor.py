@@ -25,6 +25,4 @@ class CoSponsor(db.Model):
             "sponsorship_date": self.sponsorship_date,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
-            "bill": self.bill.to_dict() if self.bill else None,
-            "politician": self.politician.to_dict() if self.politician else None,
         }

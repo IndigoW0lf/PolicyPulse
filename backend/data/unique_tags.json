@@ -33,8 +33,7 @@
                             }
                         }
                     }
-                },
-                "billCommittees": {}
+                }
             },
             "relatedBills": {
                 "item": {
@@ -71,7 +70,6 @@
                     "text": {},
                     "type": {},
                     "actionCode": {},
-                    "actionTime": {},
                     "recordedVotes": {
                         "recordedVote": {
                             "rollNumber": {},
@@ -82,17 +80,10 @@
                             "sessionNumber": {}
                         }
                     },
+                    "actionTime": {},
                     "calendarNumber": {
                         "calendar": {}
-                    },
-                    "links": {}
-                },
-                "actionTypeCounts": {
-                    "introducedInTheHouse": {},
-                    "introducedInHouse": {}
-                },
-                "actionByCounts": {
-                    "houseOfRepresentatives": {}
+                    }
                 }
             },
             "sponsors": {
@@ -106,8 +97,8 @@
                     "identifiers": {
                         "bioguideId": {}
                     },
-                    "isByRequest": {},
                     "middleName": {},
+                    "isByRequest": {},
                     "district": {}
                 }
             },
@@ -122,20 +113,7 @@
                 },
                 "policyArea": {
                     "name": {}
-                },
-                "billSubjects": {
-                    "legislativeSubjects": {}
                 }
-            },
-            "summaries": {
-                "summary": {
-                    "versionCode": {},
-                    "actionDate": {},
-                    "actionDesc": {},
-                    "updateDate": {},
-                    "text": {}
-                },
-                "billSummaries": {}
             },
             "title": {},
             "titles": {
@@ -149,8 +127,7 @@
                     "sourceSystem": {
                         "code": {},
                         "name": {}
-                    },
-                    "parentTitleType": {}
+                    }
                 }
             },
             "textVersions": {
@@ -167,8 +144,7 @@
             "latestAction": {
                 "actionDate": {},
                 "text": {},
-                "actionTime": {},
-                "links": {}
+                "actionTime": {}
             },
             "constitutionalAuthorityStatementText": {},
             "cosponsors": {
@@ -182,14 +158,22 @@
                     "identifiers": {
                         "bioguideId": {}
                     },
-                    "middleName": {},
                     "district": {},
                     "sponsorshipDate": {},
                     "isOriginalCosponsor": {},
+                    "middleName": {},
                     "sponsorshipWithdrawnDate": {}
                 }
             },
-            "cdata": {},
+            "summaries": {
+                "summary": {
+                    "versionCode": {},
+                    "actionDate": {},
+                    "actionDesc": {},
+                    "updateDate": {},
+                    "text": {}
+                }
+            },
             "committeeReports": {
                 "committeeReport": {
                     "citation": {}
@@ -209,6 +193,7 @@
                     "number": {}
                 }
             },
+            "cdata": {},
             "amendments": {
                 "amendment": {
                     "number": {},
@@ -216,19 +201,9 @@
                     "type": {},
                     "purpose": {},
                     "updateDate": {},
-                    "latestAction": {
-                        "actionDate": {},
-                        "text": {},
-                        "links": {
-                            "link": {
-                                "name": {},
-                                "url": {}
-                            }
-                        },
-                        "actionTime": {}
-                    },
                     "sponsors": {
                         "item": {
+                            "name": {},
                             "bioguideId": {},
                             "fullName": {},
                             "firstName": {},
@@ -239,11 +214,9 @@
                                 "bioguideId": {}
                             },
                             "middleName": {},
-                            "name": {},
                             "district": {}
                         }
                     },
-                    "proposedDate": {},
                     "submittedDate": {},
                     "chamber": {},
                     "amendedBill": {
@@ -255,21 +228,18 @@
                         "title": {},
                         "updateDateIncludingText": {}
                     },
-                    "amendmentsToAmendment": {
-                        "count": {}
-                    },
                     "actions": {
                         "count": {},
                         "actions": {
                             "item": {
                                 "actionDate": {},
+                                "text": {},
+                                "type": {},
+                                "actionCode": {},
                                 "sourceSystem": {
                                     "code": {},
                                     "name": {}
                                 },
-                                "text": {},
-                                "type": {},
-                                "actionCode": {},
                                 "recordedVotes": {
                                     "recordedVote": {
                                         "rollNumber": {},
@@ -280,13 +250,7 @@
                                         "url": {}
                                     }
                                 },
-                                "actionTime": {},
-                                "committees": {
-                                    "item": {
-                                        "systemCode": {},
-                                        "name": {}
-                                    }
-                                }
+                                "actionTime": {}
                             }
                         }
                     },
@@ -305,29 +269,36 @@
                             },
                             "sponsorshipDate": {},
                             "isOriginalCosponsor": {},
-                            "middleName": {},
-                            "sponsorshipWithdrawnDate": {}
+                            "middleName": {}
                         }
                     },
+                    "latestAction": {
+                        "actionDate": {},
+                        "text": {},
+                        "links": {
+                            "link": {
+                                "name": {},
+                                "url": {}
+                            }
+                        },
+                        "actionTime": {}
+                    },
+                    "proposedDate": {},
                     "amendedAmendment": {
                         "number": {},
                         "congress": {},
                         "type": {},
                         "purpose": {},
-                        "updateDate": {},
-                        "description": {}
+                        "updateDate": {}
+                    },
+                    "amendmentsToAmendment": {
+                        "count": {}
                     },
                     "description": {},
                     "links": {
                         "link": {
                             "name": {},
                             "url": {}
-                        }
-                    },
-                    "notes": {
-                        "item": {
-                            "text": {},
-                            "links": {}
                         }
                     }
                 }
@@ -342,13 +313,7 @@
                         }
                     }
                 }
-            },
-            "billNumber": {},
-            "createDate": {},
-            "billType": {},
-            "recordedVotes": {},
-            "calendarNumbers": {},
-            "version": {}
+            }
         },
         "dublinCore": {
             "{http://purl.org/dc/elements/1.1/}format": {},

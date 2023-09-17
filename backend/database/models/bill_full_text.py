@@ -32,5 +32,5 @@ class BillFullText(db.Model):
             "error_message": self.error_message,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
-            "bill": self.bill.to_dict() if self.bill else None,
+            "bill": self.bill.id if self.bill else None,
         }

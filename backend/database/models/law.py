@@ -21,7 +21,6 @@ class Law(db.Model):
             "number": self.number,
             "type": self.type,
             "bill_id": self.bill_id,
-            "bill": self.bill.to_dict() if self.bill else None,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
         }

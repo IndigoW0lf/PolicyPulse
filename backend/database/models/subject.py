@@ -15,8 +15,8 @@ class Subject(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "bills": [bill.to_dict() for bill in self.bills],
-            "primary_bills": [bill.to_dict() for bill in self.primary_bills],
+            "bills": [bill.id for bill in self.bills],
+            "primary_bills": [bill.id for bill in self.primary_bills],
         }
 
 bill_subject = db.Table('bill_subject',

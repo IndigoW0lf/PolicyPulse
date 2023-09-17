@@ -20,10 +20,10 @@ class Committee(db.Model):
             "name": self.name,
             "chamber": self.chamber,
             "committee_code": self.committee_code,
-            "bills": [bill.to_dict() for bill in self.bills],
             "created_at": self.created_at,
             "updated_at": self.updated_at,
         }
+
 
 bill_committee = db.Table('bill_committee',
     db.Column('bill_id', db.Integer, db.ForeignKey('bill.id'), primary_key=True),

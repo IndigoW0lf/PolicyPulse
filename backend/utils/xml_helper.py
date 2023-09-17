@@ -1,6 +1,7 @@
 import json
 from datetime import datetime
 from lxml import etree
+from xml.etree.ElementTree import Element
 import logging
 
 # Constants
@@ -12,18 +13,35 @@ def xml_to_json(xml_str):
     json_result = json.dumps({xml_root.tag: xml_to_dict(xml_root)})
     return json_result
 
+def xml_to_dict(xml_root, depth=0):
+    
+    if depth > 100:  # Limiting the recursion depth to avoid potential stack overflow
+        logging.error("Recursion depth has exceeded the limit in xml_to_dict")
+        return {}
 
-def xml_to_dict(xml_root):
-    """Recursively converts XML elements to dictionary."""
     result = {}
     for child in xml_root:
-        result[child.tag] = xml_to_dict(child) if len(child) or child is not None else child.text
+        if len(child):
+            result[child.tag] = xml_to_dict(child, depth+1)  # Incrementing the depth with each recursive call
+        else:
+            result[child.tag] = child.text
+
     return result
 
 def get_text(element, xpath):
     """Utility function to get text from an XML element using XPath."""
-    result = element.xpath(f'{xpath}/text()')
-    return str(result[0]) if result else None
+    result = element.xpath(xpath)
+    if result:
+        result = result[0]
+        if result.text:
+            return result.text
+        elif len(result):
+            # Handling CDATA section
+            for child in result:
+                if isinstance(child.tag, str) and child.tag == '<![CDATA[':
+                    return child.text
+    return ""
+
 
 def parse_date(date_str):
     """Utility function to parse a date string."""
@@ -35,8 +53,6 @@ def parse_date(date_str):
             return None
     else:
         return None
-
-
 
 # For LOC Summary, using codes to determine chamber.
 version_code_mapping = {

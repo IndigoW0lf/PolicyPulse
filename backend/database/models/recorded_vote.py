@@ -28,5 +28,5 @@ class RecordedVote(db.Model):
             "session_number": self.session_number,
             "url": self.url,
             "bill_id": self.bill_id,
-            "bill": self.bill.to_dict() if self.bill else None,
+            "bill": self.bill.id if self.bill else None,
         }

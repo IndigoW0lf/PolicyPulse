@@ -16,6 +16,7 @@ class BillTitle(db.Model):
     def to_dict(self):
         return {
             "id": self.id,
+            "bill_id": self.bill_id,
             "title_type": self.title_type,
             "title_text": self.title_text,
             "chamber_code": self.chamber_code,

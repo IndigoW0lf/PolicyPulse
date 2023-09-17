@@ -23,5 +23,5 @@ class VetoMessage(db.Model):
             "president": self.president,
             "text": self.text,
             "bill_id": self.bill_id,
-            "bill": self.bill.to_dict() if self.bill else None,
+            "bill": self.bill.id if self.bill else None,
         }

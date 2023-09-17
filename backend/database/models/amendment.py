@@ -37,11 +37,7 @@ class Amendment(db.Model):
             "type": self.type,
             "status": self.status,
             "bill_id": self.bill_id,
-            "bill": self.bill.to_dict() if self.bill else None,
-            "actions": [action.to_dict() for action in self.actions],
-            "amended_bill": self.amended_bill.to_dict() if self.amended_bill else None,
-            "links": [link.to_dict() for link in self.links],
-            "sponsor": self.sponsor.to_dict() if self.sponsor else None,
+            "sponsor_id": self.sponsor_id,
         }
 
 class AmendmentAction(db.Model):
@@ -101,6 +97,7 @@ class AmendedBill(db.Model):
             "title": self.title,
             "type": self.type,
         }
+
 
 class AmendmentLink(db.Model):
     """Model representing links related to amendments."""

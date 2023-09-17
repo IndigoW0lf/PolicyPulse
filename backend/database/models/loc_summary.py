@@ -1,6 +1,7 @@
 from backend import db
 from datetime import datetime
 from sqlalchemy.dialects.postgresql import JSON
+import logging
 
 loc_summary_association = db.Table(
     'loc_summary_association',
@@ -27,6 +28,7 @@ class LOCSummary(db.Model):
             "versions": self.versions,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
+            "loc_summary_codes": [loc_summary_code.id for loc_summary_code in self.loc_summary_codes],
         }
 
 class LOCSummaryCode(db.Model):
@@ -46,5 +48,5 @@ class LOCSummaryCode(db.Model):
             "version_code": self.version_code,
             "chamber": self.chamber,
             "action_desc": self.action_desc,
-            "loc_summaries": [loc_summary.to_dict() for loc_summary in self.loc_summaries],
+            "loc_summaries": [loc_summary.id for loc_summary in self.loc_summaries],
         }

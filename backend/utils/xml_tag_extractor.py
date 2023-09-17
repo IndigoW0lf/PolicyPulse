@@ -12,7 +12,8 @@ def extract_tags(element, tag_dict):
 
 def parse_xml_file(file_path, unique_tags):
     try:
-        tree = etree.parse(file_path)
+        parser = etree.XMLParser(ns_clean=True, recover=True)
+        tree = etree.parse(file_path, parser)
         root = tree.getroot()
         extract_tags(root, unique_tags)
         print(f"Processed file: {file_path}")  
@@ -27,9 +28,9 @@ def parse_xml_files(directory, unique_tags):
 
 def main():
     unique_tags = {}
-    parse_xml_files(Config.RECORDED_VOTES_DIR, unique_tags)
+    parse_xml_files(Config.XML_FILTERED_FILES_DIR, unique_tags)
 
-    with open(Config.RECORDED_VOTES_FILE, "w") as f:
+    with open(Config.UNIQUE_TAGS_FILE, "w") as f:
         json.dump(unique_tags, f, indent=4)
 
 if __name__ == "__main__":

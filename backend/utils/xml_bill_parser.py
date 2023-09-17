@@ -9,11 +9,13 @@ from backend.utils.database import SessionFactory
 
 
 # Initialize the logger
-logging.basicConfig(filename='backend/database/logs/bill_parser.log', level=logging.INFO,
+logging.basicConfig(filename='backend/database/logs/bill_parser.log', level=logging.WARNING,
                     format='%(asctime)s:%(levelname)s:%(message)s')
+
 
 # Create logger instance
 logger = logging.getLogger(__name__)
+
 
 @contextmanager
 def session_scope():
@@ -50,6 +52,8 @@ def parse_bill(xml_root, session):
     except Exception as e:
         logging.error(f"Error in parse_bill: {e}")
         return None
+    
+    main_bill_number = get_text(bill_details, 'number')
     
     try:
         sponsor_details = bill_details.xpath('sponsors/item')[0]
@@ -98,69 +102,53 @@ def parse_bill(xml_root, session):
         last_action_date_str = str(get_text(bill_details, 'latestAction/actionDate'))
         
         bill.bill_type = get_text(bill_details, 'type')
+        bill.full_bill_link = None  # Placeholder, to be populated from the API data
         bill.congress = get_text(bill_details, 'congress')
         bill.date_introduced = parse_date(introduced_date_str)
-        bill.full_bill_link = None  # Placeholder, to be populated from the API data
         bill.last_action_date = parse_date(last_action_date_str)
         bill.last_action_description = get_text(bill_details, 'latestAction/text')
         bill.official_title = official_title
-        bill.title = display_title
         bill.origin_chamber = get_text(bill_details, 'originChamber')
         bill.sponsor = sponsor
         bill.subjects = parse_subjects(session, bill_details)
-        bill.summary = get_text(bill_details, 'summaries/summary/text')
+        bill.summary = get_text(bill_details, 'summaries/summary/text/CDATA')
         bill.tags = None  # Placeholder, to be populated later
+        bill.title = display_title
         bill.xml_content = xml_to_json(etree.tostring(bill_details))
         
         session.add(bill)
         session.flush()
+        bill_id = bill.id
 
-        logging.info(f"Bill ID after flush: {bill.id}")
-
-        if bill.id is None:
-            logging.error("Bill ID is null after flush")
-            return None
-        existing_policy_area = session.query(PolicyArea).filter_by(id=2).first()
-        if existing_policy_area:
-            logging.error(f"PolicyArea with ID 2 already exists: {existing_policy_area.to_dict()}")
-
-        policy_area_name = get_text(bill_details, 'policyArea/name')
-        existing_policy_area = session.query(PolicyArea).filter_by(name=policy_area_name).first()
-
-        if existing_policy_area:
-            existing_policy_area.bill_id = bill.id
-        else:
-            policy_area = PolicyArea(name=policy_area_name, bill_id=bill.id)
-            bill.policy_areas = [policy_area]
-            session.add(policy_area)
-
-        session.commit()
-                
-        bill_id = bill.id 
-        loc_summary = parse_loc_summaries(session, bill_details, bill_id)  # Parse loc_summaries here, after bill has been saved to get the bill_id
     except Exception as e:
         logging.error(f"Error creating/updating Bill object in parse_bill: {e}")
         return None
 
     # Invoke functions to parse related entities and associate them with the bill
     try:
+    
         bill.actions = parse_actions(session, bill_details, bill_id)
-        bill.amendments = parse_amendments(session, bill_details)
+        bill.amendments = parse_amendments(session, bill_details, bill_id)
         bill.committees = parse_committees(session, bill_details)
-        bill.related_bills = parse_related_bills(session, bill_details)
-        bill.cosponsors = parse_cosponsors(session, bill_details)
-        bill.bill_titles = parse_bill_titles(session, bill_details)
-        bill.notes = parse_notes(session, bill_details)
-        bill.recorded_votes = parse_recorded_votes(session, bill_details)
-        bill.laws = parse_laws(session, bill_details)
+        bill.related_bills = parse_related_bills(session, bill_details, bill_id)
+        bill.cosponsors = parse_cosponsors(session, bill_details, bill_id)
+        bill.bill_titles = parse_bill_titles(session, bill_details, bill_id)
+        bill.notes = parse_notes(session, bill_details, bill_id)
+        bill.recorded_votes = parse_recorded_votes(session, bill_details, bill_id)
+        bill.laws = parse_laws(session, bill_details, bill_id)
+        bill.loc_summary = parse_loc_summaries(session, bill_details, bill_id)  
+        
 
         session.add(bill)
+        session.commit()
     except Exception as e:
         logging.error(f"Error associating related entities with the Bill object in parse_bill: {e}")
-        raise
+        print("Bill parsing failed.")
+        return None
 
     return bill
     
+
 def get_action_type_object(session, description, action_description):
     """Function to get an ActionType object by its description.
 
@@ -179,14 +167,8 @@ def get_action_type_object(session, description, action_description):
         raise
     return action_type_obj
 
+
 def parse_actions(session, bill_details, bill_id):
-    """Function to parse action details and return a list of Action objects.
-    
-    This function extracts action details from the XML data and 
-    creates Action objects to represent individual actions. 
-    It also associates each action with an action type and one 
-    or more action codes, based on the data available in the XML.
-    """
     actions = []
     try:
         for action in bill_details.xpath('actions/item'):
@@ -207,10 +189,12 @@ def parse_actions(session, bill_details, bill_id):
             )
             actions.append(action_obj)
             session.add(action_obj)
+        session.flush()
     except Exception as e:
-        logging.error(f"Error in parse_actions: {e}")
+        logging.error(f"Error in parse_actions: {e}", exc_info=True)
         raise
     return actions
+
 
 def get_action_code_object(session, code):
     """Function to get an ActionCode object by its code.
@@ -231,7 +215,7 @@ def get_action_code_object(session, code):
     return action_code_obj
 
 
-def parse_amendments(session, bill_details):
+def parse_amendments(session, bill_details, bill_id):
     """Function to parse amendment details and return a list of Amendment objects."""
     amendments = []
     try:
@@ -245,6 +229,7 @@ def parse_amendments(session, bill_details):
                 purpose=get_text(amendment, 'purpose'),
                 type=get_text(amendment, 'type'),
                 status=get_text(amendment, 'status'),
+                bill_id=bill_id,
             )
             amendments.append(amendment_obj)
     except Exception as e:
@@ -254,7 +239,7 @@ def parse_amendments(session, bill_details):
     return amendments
     
 
-def parse_bill_titles(session, bill_details):
+def parse_bill_titles(session, bill_details, bill_id):
     """Function to parse bill titles and return a list of BillTitle objects."""
     bill_titles = []
     try:
@@ -264,6 +249,7 @@ def parse_bill_titles(session, bill_details):
                 title_text=get_text(title, 'title'),
                 chamber_code=get_text(title, 'chamberCode'),
                 chamber_name=get_text(title, 'chamberName'),
+                bill_id=bill_id,
             )
             bill_titles.append(bill_title_obj)
     except Exception as e:
@@ -290,7 +276,8 @@ def parse_committees(session, bill_details):
         raise
     return committees
 
-def parse_cosponsors(session, bill_details):
+
+def parse_cosponsors(session, bill_details, bill_id):
     """Function to parse cosponsor details and return a list of CoSponsor objects."""
     cosponsors = []
     try:
@@ -305,6 +292,7 @@ def parse_cosponsors(session, bill_details):
                 sponsorship_date=parse_date(get_text(cosponsor, 'sponsorshipDate')),
                 is_original_cosponsor=get_text(cosponsor, 'isOriginalCosponsor') == 'true',
                 sponsorship_withdrawn_date=parse_date(get_text(cosponsor, 'sponsorshipWithdrawnDate')),
+                bill_id=bill_id,
             )
             cosponsors.append(cosponsor_obj)
     except Exception as e:
@@ -312,6 +300,7 @@ def parse_cosponsors(session, bill_details):
         # Optionally re-raise the exception
         raise
     return cosponsors
+
 
 def get_or_create_politician(session, bioguide_id, cosponsor_details):
     """Function to get or create a Politician object based on the bioguide_id."""
@@ -324,18 +313,19 @@ def get_or_create_politician(session, bioguide_id, cosponsor_details):
                 first_name=get_text(cosponsor_details, 'firstName'),
                 last_name=get_text(cosponsor_details, 'lastName'),
                 party=get_text(cosponsor_details, 'party'),
-                state=get_text(cosponsor_details, 'state')
-                # Add other fields as necessary
+                state=get_text(cosponsor_details, 'state'),
+                district=get_text(cosponsor_details, 'district')
             )
             session.add(politician)
-            session.flush()  # This is to ensure that the new object gets an ID
+            session.flush()
     except Exception as e:
         logging.error(f"Error in get_or_create_politician: {e}")
         raise
+
     return politician
 
 
-def parse_laws(session, bill_details):
+def parse_laws(session, bill_details, bill_id):
     """Function to parse laws and return a list of Law objects."""
     laws = []
     try:
@@ -343,7 +333,7 @@ def parse_laws(session, bill_details):
             law_type = get_text(item, 'type')
             law_number = get_text(item, 'number')
             if law_type and law_number:
-                law_obj = Law(type=law_type, number=law_number)
+                law_obj = Law(type=law_type, number=law_number, bill_id=bill_id)
                 laws.append(law_obj)
     except Exception as e:
         logging.error(f"Error in parse_laws: {e}")
@@ -355,34 +345,44 @@ def parse_laws(session, bill_details):
 def parse_loc_summaries(session, bill_details, bill_id):
     loc_summary_codes = []
     versions = []
+    logging.info("Entering parse_loc_summaries function")
+    
     try:
-        for summary in bill_details.xpath('summaries/summary'):
-            version_code = get_text(summary, 'versionCode')
-            text = get_text(summary, 'text')
-            
-            # Get chamber and action description from version code mapping
-            chamber = version_code_mapping.get(version_code, {}).get('chamber', '')
-            action_desc = version_code_mapping.get(version_code, {}).get('action_desc', '')
+        with session.no_autoflush:
+            # Query all existing LOCSummaryCodes and store them in a dictionary
+            existing_codes = {code.version_code: code for code in session.query(LOCSummaryCode).all()}
 
-            # Check if a LOCSummaryCode with the extracted version_code already exists in the database
-            loc_summary_code = session.query(LOCSummaryCode).filter_by(version_code=version_code).first()
-            
-            # If not, create a new LOCSummaryCode object and add it to the session
-            if not loc_summary_code:
-                loc_summary_code = LOCSummaryCode(
-                    version_code=version_code,
-                    chamber=chamber,
-                    action_desc=action_desc
-                )
-                session.add(loc_summary_code)
+            for summary in bill_details.xpath('summaries/summary'):
+                version_code = get_text(summary, 'versionCode')
+                text = get_text(summary, 'text')
+                
+                # Get chamber and action description from version code mapping
+                chamber = version_code_mapping.get(version_code, {}).get('chamber', '')
+                action_desc = version_code_mapping.get(version_code, {}).get('action_desc', '')
 
-            loc_summary_codes.append(loc_summary_code)
-            
-            # Append version details to versions list
-            versions.append({'version_code': version_code, 'text': text})
+                # Check if a LOCSummaryCode with the extracted version_code already exists in the database
+                loc_summary_code = existing_codes.get(version_code)
+                
+                # If not, create a new LOCSummaryCode object and add it to the session
+                if not loc_summary_code:
+                    loc_summary_code = LOCSummaryCode(
+                        version_code=version_code,
+                        chamber=chamber,
+                        action_desc=action_desc
+                    )
+                    session.add(loc_summary_code)
+                    
+                    logging.info("Created new LOCSummaryCode object and added it to the session")
+
+                loc_summary_codes.append(loc_summary_code)
+                
+                # Append version details to versions list
+                versions.append({'version_code': version_code, 'text': text})
     except Exception as e:
         logging.error(f"Error in parse_loc_summaries: {e}")
         raise
+
+    logging.info(f"Bill ID before creating LOCSummary: {bill_id}")
     
     # Create a single LOCSummary object with all the versions and summary codes
     loc_summary = LOCSummary(
@@ -392,17 +392,23 @@ def parse_loc_summaries(session, bill_details, bill_id):
     )
 
     session.add(loc_summary)  # Adding loc_summary to the session here
+    session.flush()  # Added session.flush() to synchronize the session's state with the database
+    logging.info("Before calling to_dict in parse_loc_summaries")
+    logging.info(f"Created new LOCSummary: {loc_summary.to_dict()}")  # New log statement
+    logging.info("After calling to_dict in parse_loc_summaries")
+    
+    logging.info("Exiting parse_loc_summaries function")
     
     return loc_summary
 
 
-
-def parse_notes(session, bill_details):
+def parse_notes(session, bill_details, bill_id):
     """Function to parse notes and return a list of Note objects."""
     notes = []
     try:
         for item in bill_details.xpath('notes/item'):
             note_text = get_text(item, 'text')
+            bill_id=bill_id
             if note_text:
                 note_obj = Note(text=note_text)
                 notes.append(note_obj)
@@ -412,7 +418,27 @@ def parse_notes(session, bill_details):
         raise
     return notes
 
-def parse_recorded_votes(session, bill_details):
+
+def parse_policy_area(session, bill_details, bill_id):
+    try:
+        policy_area_name = get_text(bill_details, 'policyArea/name')
+        existing_policy_area = session.query(PolicyArea).filter_by(name=policy_area_name).first()
+
+        if existing_policy_area:
+            existing_policy_area.bill_id = bill_id
+            policy_area = existing_policy_area  # Assign existing policy area to the policy_area variable
+        else:
+            policy_area = PolicyArea(name=policy_area_name, bill_id=bill_id)
+            session.add(policy_area)
+        
+        session.flush()
+        return policy_area
+    except Exception as e:
+        logging.error(f"Error in parse_policy_area: {e}")
+        raise
+
+
+def parse_recorded_votes(session, bill_details, bill_id):
     """Function to parse recorded votes and return a list of RecordedVote objects."""
     recorded_votes = []
     try:
@@ -430,7 +456,8 @@ def parse_recorded_votes(session, bill_details):
                     chamber=chamber,
                     congress=congress,
                     date=date,
-                    session_number=session_number
+                    session_number=session_number,
+                    bill_id=bill_id
                 )
                 recorded_votes.append(recorded_vote_obj)
     except Exception as e:
@@ -440,18 +467,29 @@ def parse_recorded_votes(session, bill_details):
     return recorded_votes
 
 
-def parse_related_bills(session, bill_details):
-    """Function to parse related bills and return a list of RelatedBill objects."""
+def parse_related_bills(session, bill_details, bill_id):
     related_bills = []
     try:
         for related_bill in bill_details.xpath('relatedBills/item'):
+            related_bill_number = get_text(related_bill, 'number')
+            congress = get_text(related_bill, 'congress')
+            type = get_text(related_bill, 'type')
+            title = get_text(related_bill, 'title')
+            latest_action_date = parse_date(get_text(related_bill, 'latestAction/actionDate'))
+            latest_action_text = get_text(related_bill, 'latestAction/text')
+            relationship_type = get_text(related_bill, 'relationshipDetails/item/type')
+            relationship_identified_by = get_text(related_bill, 'relationshipDetails/item/identifiedBy')
+            
             related_bill_obj = RelatedBill(
-                title=get_text(related_bill, 'title'),
-                congress=get_text(related_bill, 'congress'),
-                number=get_text(related_bill, 'number'),
-                type=get_text(related_bill, 'type'),
-                latest_action_date=parse_date(get_text(related_bill, 'latestAction/actionDate')),
-                latest_action_text=get_text(related_bill, 'latestAction/text'),
+                main_bill_id=bill_id,
+                related_bill_number=related_bill_number,
+                congress=congress,
+                type=type,
+                title=title,
+                latest_action_date=latest_action_date,
+                latest_action_text=latest_action_text,
+                relationship_type=relationship_type,
+                relationship_identified_by=relationship_identified_by,
             )
             related_bills.append(related_bill_obj)
     except Exception as e:
@@ -459,6 +497,7 @@ def parse_related_bills(session, bill_details):
         # Optionally re-raise the exception
         raise
     return related_bills
+
 
 def parse_subjects(session, bill_details):
     subjects = []
@@ -475,6 +514,7 @@ def parse_subjects(session, bill_details):
                     name=subject_name,
                 )
                 session.add(subject)
+                session.flush()  
             
             subjects.append(subject)
     except Exception as e:

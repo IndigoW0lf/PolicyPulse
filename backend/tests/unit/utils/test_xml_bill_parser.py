@@ -1,6 +1,6 @@
 
 import pytest
-from backend.utils.xml_bill_parser import parse_bill
+from xml_bill_parser import parse_bill
 
 @pytest.fixture
 def xml_root():

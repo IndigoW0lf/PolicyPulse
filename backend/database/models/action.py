@@ -33,9 +33,6 @@ class Action(db.Model):
             "bill_id": self.bill_id,
             "action_type_id": self.action_type_id,
             "is_latest": self.is_latest,
-            "action_type": self.action_type.to_dict() if self.action_type else None,
-            "bill": self.bill.to_dict() if self.bill else None,
-            "action_codes": [action_code.to_dict() for action_code in self.action_codes],
         }
 
 class ActionCode(db.Model):
@@ -52,5 +49,5 @@ class ActionCode(db.Model):
             "id": self.id,
             "code": self.code,
             "description": self.description,
-            "actions": [action.to_dict() for action in self.actions],
+            "actions": [action.id for action in self.action_code_relations],
         }
