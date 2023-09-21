@@ -18,7 +18,6 @@ model_files = [
     "backend/database/models/recorded_vote.py",
     "backend/database/models/related_bill.py",
     "backend/database/models/subject.py",
-    "backend/database/models/veto_message.py",
 ]
 
 output_file_path = "backend/data/model_file.py"

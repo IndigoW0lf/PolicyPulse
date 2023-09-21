@@ -15,7 +15,6 @@ from backend.tests.factories.recorded_vote_factory import RecordedVoteFactory
 from backend.tests.factories.related_bill_factory import RelatedBillFactory
 from backend.tests.factories.note_factory import NoteFactory
 from backend.tests.factories.loc_summary_factory import LOCSummaryFactory
-from backend.tests.factories.veto_message_factory import VetoMessageFactory
 from backend.tests.factories.law_factory import LawFactory
 from backend.tests.factories.amendment_factory import AmendmentFactory
 from backend.tests.factories.amended_bill_factory import AmendedBillFactory
@@ -99,12 +98,6 @@ def loc_summary_factory(session):
     def _loc_summary_factory(**kwargs):
         return create_fixture(session, LOCSummaryFactory, **kwargs)
     return _loc_summary_factory
-
-@pytest.fixture
-def veto_message_factory(session):
-    def _veto_message_factory(**kwargs):
-        return create_fixture(session, VetoMessageFactory, **kwargs)
-    return _veto_message_factory
 
 @pytest.fixture
 def law_factory(session, bill_factory):

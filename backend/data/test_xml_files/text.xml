@@ -8,7 +8,7 @@
     <originChamber>Unicorn Senate</originChamber>
     <type>UR</type>
     <introducedDate>2023-04-01</introducedDate>
-    <congress>1</congress>
+    <congress>House of Unicorns</congress>
     <committees>
       <item>
         <systemCode>UC001</systemCode>
@@ -38,7 +38,7 @@
     <relatedBills>
       <item>
         <title>The Rainbow Preservation Act</title>
-        <congress>1</congress>
+        <congress>14</congress>
         <number>RB789</number>
         <type>RB</type>
         <latestAction>
@@ -75,12 +75,12 @@
             <rollNumber>101</rollNumber>
             <url>https://www.unicornsenate.gov/vote/101</url>
             <chamber>Senate</chamber>
-            <congress>1</congress>
+            <congress>3</congress>
             <date>2023-04-01</date>
             <sessionNumber>1</sessionNumber>
           </recordedVote>
         </recordedVotes>
-        <actionTime>14:00:00</actionTime>
+        <actionTime>12:00:00</actionTime>
         <calendarNumber>
           <calendar>1</calendar>
         </calendarNumber>
@@ -99,7 +99,7 @@
         </identifiers>
         <middleName>Fairydust</middleName>
         <isByRequest>N</isByRequest>
-        <district>1</district>
+        <district>5</district>
       </item>
     </sponsors>
     <policyArea>
@@ -146,7 +146,7 @@
       </item>
       <item>
         <titleType>Official Title as Introduced</titleType>
-        <title>The Unicorn Glitter Act of 2023</title>
+        <title>It's Official: The Unicorn Glitter Act of 2023</title>
         <billTextVersionName>Introduced</billTextVersionName>
         <billTextVersionCode>INT</billTextVersionCode>
         <chamberCode>US</chamberCode>
@@ -160,7 +160,7 @@
     <textVersions>
       <item>
         <type>XML</type>
-        <date>2023-04-01</date>
+        <date>2023-04-14</date>
         <formats>
           <item>
             <url>https://www.unicornsenate.gov/bills/UGA2023/xml</url>
@@ -169,9 +169,9 @@
       </item>
     </textVersions>
     <latestAction>
-      <actionDate>2023-04-01</actionDate>
+      <actionDate>2023-04-20</actionDate>
       <text>Introduced in the Unicorn Senate</text>
-      <actionTime>14:00:00</actionTime>
+      <actionTime>04:20:00</actionTime>
     </latestAction>
     <constitutionalAuthorityStatementText>The Unicorn Constitution grants the Unicorn Senate the power to enact laws to protect the environment and unicorn habitats.</constitutionalAuthorityStatementText>
     <cosponsors>
@@ -195,9 +195,9 @@
     <summaries>
       <summary>
         <versionCode>1</versionCode>
-        <actionDate>2023-04-01</actionDate>
+        <actionDate>2023-04-20</actionDate>
         <actionDesc>Introduction</actionDesc>
-        <updateDate>2023-04-01</updateDate>
+        <updateDate>2023-04-21</updateDate>
         <text>
           <![CDATA[<p><strong>The Unicorn Glitter Act of 2023</strong></p><p>An act to regulate the production and distribution of glitter to prevent pollution in unicorn habitats and to promote the general wellbeing and happiness of unicorns.</p><p>Introduced in the Unicorn Senate on April 1, 2023.</p>]]>
         </text>
@@ -250,7 +250,7 @@
         <amendedBill>
           <congress>1</congress>
           <type>UB</type>
-          <originChamber>Unicorn Senate</originChamber>
+          <originChamber>Unicorn Sparkle Senate</originChamber>
           <originChamberCode>US</originChamberCode>
           <number>U12345</number>
           <title>Unicorn Glitter Act of 2023</title>
@@ -278,7 +278,7 @@
                   <url>https://www.unicornsenate.gov/votes/R123</url>
                 </recordedVote>
               </recordedVotes>
-              <actionTime>14:00:00</actionTime>
+              <actionTime>10:00:00</actionTime>
             </item>
           </actions>
         </actions>
@@ -310,7 +310,7 @@
               <url>https://www.unicornsenate.gov/amendments/A1</url>
             </link>
           </links>
-          <actionTime>14:00:00</actionTime>
+          <actionTime>11:59:59</actionTime>
         </latestAction>
         <proposedDate>2023-04-05</proposedDate>
         <amendedAmendment>

@@ -16,7 +16,6 @@ from backend.tests.factories.note_factory import NoteFactory
 from backend.tests.factories.politician_factory import PoliticianFactory
 from backend.tests.factories.related_bill_factory import RelatedBillFactory
 from backend.tests.factories.subject_factory import SubjectFactory
-from backend.tests.factories.veto_message_factory import VetoMessageFactory
 from backend.tests.factories.recorded_vote_factory import RecordedVoteFactory
 from backend.tests.factories.law_factory import LawFactory
 
@@ -121,7 +120,3 @@ def recorded_vote_factory(session):
 @pytest.fixture
 def subject_factory(session):
     return lambda: create_fixture(session, SubjectFactory)
-
-@pytest.fixture
-def veto_message_factory(session):
-    return lambda: create_fixture(session, VetoMessageFactory)

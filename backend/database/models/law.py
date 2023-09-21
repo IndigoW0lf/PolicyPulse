@@ -4,8 +4,8 @@ from datetime import datetime
 class Law(db.Model):
     __tablename__ = 'law'
     id = db.Column(db.Integer, primary_key=True)
-    number = db.Column(db.String(50), nullable=True)
-    type = db.Column(db.String(50), nullable=True)
+    number = db.Column(db.String, nullable=True)
+    type = db.Column(db.String, nullable=True)
     bill_id = db.Column(db.Integer, db.ForeignKey('bill.id'), nullable=False, index=True)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=True, onupdate=datetime.utcnow)

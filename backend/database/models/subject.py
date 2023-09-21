@@ -2,7 +2,7 @@ from backend import db
 
 class Subject(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), nullable=False, unique=True)
+    name = db.Column(db.String, nullable=False, unique=True)
     
     bills = db.relationship('Bill', secondary='bill_subject', back_populates='subjects', lazy=True)
     primary_bills = db.relationship('Bill', back_populates='primary_subject', lazy=True)

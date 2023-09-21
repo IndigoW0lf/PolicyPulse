@@ -3,8 +3,8 @@ from backend import db
 class Note(db.Model):
     __tablename__ = 'note'
     id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.Text, nullable=True)
     bill_id = db.Column(db.Integer, db.ForeignKey('bill.id'), nullable=False, index=True)
+    text = db.Column(db.Text, nullable=True)
     
     bill = db.relationship('Bill', back_populates='notes', lazy=True)
 

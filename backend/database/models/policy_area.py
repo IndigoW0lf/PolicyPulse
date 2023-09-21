@@ -2,7 +2,7 @@ from backend import db
 
 class PolicyArea(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), nullable=False)
+    name = db.Column(db.String, nullable=False)
     description = db.Column(db.Text, nullable=True)
     
     bill_id = db.Column(db.Integer, db.ForeignKey('bill.id'), nullable=False, index=True)

@@ -5,7 +5,10 @@ from xml.etree.ElementTree import Element
 import logging
 
 # Constants
-DATE_FORMAT = '%Y-%m-%d'
+DATE_FORMATS = [
+    '%Y-%m-%d',
+    '%Y-%m-%dT%H:%M:%SZ'
+]
 
 def xml_to_json(xml_str):
     """Converts XML string to JSON."""
@@ -28,31 +31,44 @@ def xml_to_dict(xml_root, depth=0):
 
     return result
 
+# def get_text(element, xpath):
+#     """Utility function to get text from an XML element using XPath."""
+#     result = element.xpath(xpath)
+#     if result:
+#         result = result[0]
+#         if result.text:
+#             return result.text
+#         elif len(result):
+#             # Handling CDATA section
+#             for child in result:
+#                 if isinstance(child.tag, str) and child.tag == '<![CDATA[':
+#                     return child.text
+#     return ""
+
 def get_text(element, xpath):
     """Utility function to get text from an XML element using XPath."""
     result = element.xpath(xpath)
     if result:
         result = result[0]
         if result.text:
-            return result.text
-        elif len(result):
-            # Handling CDATA section
-            for child in result:
-                if isinstance(child.tag, str) and child.tag == '<![CDATA[':
-                    return child.text
+            return result.text.strip()  # .strip() to remove any leading/trailing whitespace
     return ""
 
 
 def parse_date(date_str):
     """Utility function to parse a date string."""
     if date_str and isinstance(date_str, str):
-        try:
-            return datetime.strptime(date_str.strip(), DATE_FORMAT).date()
-        except ValueError as e:
-            logging.error(f"Error in parse_date - Failed to parse date_str: '{date_str}', Error: {e}")
-            return None
+        for date_format in DATE_FORMATS:
+            try:
+                return datetime.strptime(date_str.strip(), date_format).date()
+            except ValueError:
+                continue
+
+        logging.error(f"Error in parse_date - Failed to parse date_str: '{date_str}'")
+        return None
     else:
         return None
+
 
 # For LOC Summary, using codes to determine chamber.
 version_code_mapping = {

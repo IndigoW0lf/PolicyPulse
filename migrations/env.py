@@ -93,6 +93,7 @@ def run_migrations_online():
     connectable = get_engine()
 
     with connectable.connect() as connection:
+        print(current_app.extensions['migrate'].configure_args)
         context.configure(
             connection=connection,
             target_metadata=get_metadata(),

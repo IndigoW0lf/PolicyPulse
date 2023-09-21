@@ -2,6 +2,9 @@ from .action_type import ActionType
 from .action import ActionCode
 from .action import Action
 from .amendment import Amendment
+from .amendment import AmendmentAction
+from .amendment import AmendedBill
+from .amendment import AmendmentLink
 from .bill_full_text import BillFullText
 from .bill import Bill
 from .bill_title import BillTitle
@@ -15,5 +18,6 @@ from .related_bill import RelatedBill
 from .policy_area import PolicyArea
 from .politician import Politician
 from .recorded_vote import RecordedVote
+from .subcommittee import Subcommittee
 from .subject import Subject
-from .veto_message import VetoMessage
+from .bill_relationships import BillRelationship

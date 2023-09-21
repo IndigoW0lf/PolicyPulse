@@ -3,13 +3,14 @@ from datetime import datetime
 
 class Committee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), nullable=False, unique=True)
-    chamber = db.Column(db.String(50), nullable=False)
-    committee_code = db.Column(db.String(50), nullable=False, unique=True)
+    name = db.Column(db.String, nullable=False)
+    chamber = db.Column(db.String(255), nullable=False)
+    committee_code = db.Column(db.String(255), nullable=False, unique=True)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=True, onupdate=datetime.utcnow)
     
     bills = db.relationship('Bill', secondary='bill_committee', back_populates='committees', lazy=True)
+    subcommittees = db.relationship('Subcommittee', backref='committee', lazy=True)
 
     def __repr__(self):
         return f'<Committee {self.name} - {self.chamber}>'
