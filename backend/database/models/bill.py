@@ -5,6 +5,7 @@ from .subcommittee import bill_subcommittee
 from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy import Index, text
 
+
 class Bill(db.Model):
     """Model representing bills."""
     id = db.Column(db.Integer, primary_key=True)
@@ -13,45 +14,66 @@ class Bill(db.Model):
     date_introduced = db.Column(db.Date, nullable=False)
     origin_chamber = db.Column(db.String(255), nullable=False)
     status = db.Column(db.String, nullable=True)
-    title = db.Column(db.String, nullable=False, index=True)
     bill_type = db.Column(db.String, nullable=True)
+    title = db.Column(db.String, nullable=False, index=True)
     committee = db.Column(db.String, nullable=True)
-    last_action_date = db.Column(db.Date, nullable=True)                
+    last_action_date = db.Column(db.Date, nullable=True)
+    tags = db.Column(db.String, nullable=True, index=True)
     last_action_description = db.Column(db.Text, nullable=True)
     update_date = db.Column(db.Date, nullable=True)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)  # Timestamp of record creation
-    updated_at = db.Column(db.DateTime, nullable=True, onupdate=datetime.utcnow)  # Timestamp of last update
-    tags = db.Column(db.String, nullable=True, index=True)
+    # Timestamp of record creation
+    created_at = db.Column(db.DateTime, nullable=False,
+                           default=datetime.utcnow)
+    # Timestamp of last update
+    updated_at = db.Column(db.DateTime, nullable=True,
+                           onupdate=datetime.utcnow)
     full_bill_link = db.Column(db.String, nullable=True)
     voting_record = db.Column(db.Text, nullable=True)
-    xml_content = db.Column(JSON, nullable=True)  # Store the XML content as a JSON object
-    
-    action_type_id = db.Column(db.Integer, db.ForeignKey('action_type.id'), nullable=True)
-    primary_subject_id = db.Column(db.Integer, db.ForeignKey('subject.id'), nullable=True)
-    sponsor_id = db.Column(db.Integer, db.ForeignKey('politician.id'), nullable=False)
-    
+
+    action_type_id = db.Column(
+        db.Integer, db.ForeignKey('action_type.id'), nullable=True)
+    primary_subject_id = db.Column(
+        db.Integer, db.ForeignKey('subject.id'), nullable=True)
+    sponsor_id = db.Column(db.Integer, db.ForeignKey(
+        'politician.id'), nullable=False)
+
+    # Store the XML content as a JSON object
+    xml_content = db.Column(JSON, nullable=True)
     # Relationships
-    action_type = db.relationship('ActionType', back_populates='bills', lazy=True)
+    action_type = db.relationship(
+        'ActionType', back_populates='bills', lazy=True)
     actions = db.relationship('Action', back_populates='bill', lazy=True)
     amendments = db.relationship('Amendment', back_populates='bill', lazy=True)
-    co_sponsors = db.relationship('CoSponsor', back_populates='bill', lazy=True)
-    committees = db.relationship('Committee', secondary=bill_committee, back_populates='bills')
-    subcommittees = db.relationship('Subcommittee', secondary=bill_subcommittee, back_populates='bills', lazy=True)
-    full_texts = db.relationship('BillFullText', back_populates='bill', lazy=True)
+    co_sponsors = db.relationship(
+        'CoSponsor', back_populates='bill', lazy=True)
+    committees = db.relationship(
+        'Committee', secondary=bill_committee, back_populates='bills')
+    subcommittees = db.relationship(
+        'Subcommittee', secondary=bill_subcommittee, back_populates='bills', lazy=True)
+    full_texts = db.relationship(
+        'BillFullText', back_populates='bill', lazy=True)
     laws = db.relationship('Law', back_populates='bill', lazy=True)
-    loc_summaries = db.relationship('LOCSummary', back_populates='bill', lazy=True)  # Changed attribute name to 'loc_summaries' and removed uselist parameter
+    # Changed attribute name to 'loc_summaries' and removed uselist parameter
+    loc_summaries = db.relationship(
+        'LOCSummary', back_populates='bill', lazy=True)
     notes = db.relationship('Note', back_populates='bill', lazy=True)
-    policy_areas = db.relationship('PolicyArea', back_populates='bill', lazy=True)
-    primary_subject = db.relationship('Subject', back_populates='primary_bills', lazy=True)
-    recorded_votes = db.relationship('RecordedVote', back_populates='bill', lazy=True)
-    related_bills = db.relationship('RelatedBill', back_populates='bill', lazy=True)
-    sponsor = db.relationship('Politician', back_populates='sponsored_bills', lazy=True)
-    subjects = db.relationship('Subject', secondary='bill_subject', back_populates='bills', lazy=True)
+    policy_areas = db.relationship(
+        'PolicyArea', back_populates='bill', lazy=True)
+    primary_subject = db.relationship(
+        'Subject', back_populates='primary_bills', lazy=True)
+    recorded_votes = db.relationship(
+        'RecordedVote', back_populates='bill', lazy=True)
+    related_bills = db.relationship(
+        'RelatedBill', back_populates='bill', lazy=True)
+    sponsor = db.relationship(
+        'Politician', back_populates='sponsored_bills', lazy=True)
+    subjects = db.relationship(
+        'Subject', secondary='bill_subject', back_populates='bills', lazy=True)
     titles = db.relationship('BillTitle', back_populates='bill', lazy=True)
-    
+
     def __repr__(self):
         return f'<Bill {self.bill_number}>'
-    
+
     def to_dict(self):
         return {
             "id": self.id,

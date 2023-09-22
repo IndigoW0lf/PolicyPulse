@@ -35,5 +35,15 @@ tags = [
     "Allyship",
     "Education",
     "Transgender",
-    "Loss of Rights"
+    "Loss of Rights",
+    "Intersex Rights",
+    "Non-binary/Genderqueer",
+    "Asylum & Immigration",
+    "Blood Donation",
+    "Fertility & Reproductive Rights",
+    "Public Accommodations",
+    "Partnership Benefits",
+    "Aging & Elder Care",
+    "Therapy & Counseling",
+    "Youth Shelters"
 ]

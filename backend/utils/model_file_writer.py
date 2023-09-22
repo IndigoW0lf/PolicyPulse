@@ -6,6 +6,7 @@ model_files = [
     "backend/database/models/action.py",
     "backend/database/models/amendment.py",
     "backend/database/models/bill_full_text.py",
+    "backend/database/models/bill_relationships.py",
     "backend/database/models/bill_title.py",
     "backend/database/models/bill.py",
     "backend/database/models/co_sponsor.py",
@@ -17,6 +18,7 @@ model_files = [
     "backend/database/models/politician.py",
     "backend/database/models/recorded_vote.py",
     "backend/database/models/related_bill.py",
+    "backend/database/models/subcommittee.py",
     "backend/database/models/subject.py",
 ]
 
@@ -29,7 +31,7 @@ other_lines = []
 for model_file in model_files:
     with open(model_file, 'r') as file:
         lines = file.readlines()
-        
+
         in_repr_method = False
         in_to_dict_method = False
         for line in lines:
@@ -55,8 +57,8 @@ for model_file in model_files:
 with open(output_file_path, 'w') as output_file:
     for import_statement in import_statements:
         output_file.write(import_statement)
-    
+
     output_file.write("\n")
-    
+
     for line in other_lines:
         output_file.write(line)

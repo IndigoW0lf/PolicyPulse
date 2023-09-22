@@ -1,17 +1,18 @@
+from backend.database.models.subcommittee import bill_subcommittee
+import logging
+from backend import db 
+from enum import Enum
+from sqlalchemy.dialects.postgresql import JSON
+from datetime import datetime
 from backend import db
 from backend.database.models.committee import bill_committee
 from sqlalchemy import Index, text
-from sqlalchemy.dialects.postgresql import JSON
-from backend import db 
-from datetime import datetime
-from backend.database.models.subcommittee import bill_subcommittee
 
 
 class ActionType(db.Model):
     """Model representing action types."""
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String, nullable=False, unique=True)
-    is_latest = db.Column(db.Boolean, default=False)
     action_type = db.Column(db.String, nullable=False)
     
     actions = db.relationship('Action', back_populates='action_type', lazy=True)
@@ -27,10 +28,13 @@ class Action(db.Model):
     """Model representing actions."""
     id = db.Column(db.Integer, primary_key=True)
     bill_id = db.Column(db.Integer, db.ForeignKey('bill.id'), nullable=False, index=True)
-    action_date = db.Column(db.Date, nullable=False)
-    chamber = db.Column(db.Text, nullable=True)
-    action_type_id = db.Column(db.Integer, db.ForeignKey('action_type.id'), nullable=True, index=True)
     is_latest = db.Column(db.Boolean, default=False)
+    chamber = db.Column(db.Text, nullable=True)
+    action_date = db.Column(db.Date, nullable=False)
+    action_type_id = db.Column(db.Integer, db.ForeignKey('action_type.id'), nullable=True, index=True)
+    yea_votes = db.Column(db.Integer, nullable=True)
+    nay_votes = db.Column(db.Integer, nullable=True)
+    record_vote_number = db.Column(db.Integer, nullable=True)
     description = db.Column(db.Text, nullable=True)
     
     action_type = db.relationship('ActionType', back_populates='actions', lazy=True)
@@ -40,22 +44,22 @@ class Action(db.Model):
 
 class ActionCode(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.String(30), nullable=False)
-    description = db.Column(db.String(200), nullable=True)
+    code = db.Column(db.String, nullable=False)
+    description = db.Column(db.String, nullable=True)
     action_code_relations = db.relationship('Action', secondary=action_actioncode, back_populates='action_codes')
 
 
 class Amendment(db.Model):
     """Model representing amendments to bills."""
     id = db.Column(db.Integer, primary_key=True)
-    amendment_number = db.Column(db.String(50), nullable=False)
-    congress = db.Column(db.String(50), nullable=True)
-    latest_action_date = db.Column(db.Date, nullable=True)
-    latest_action_text = db.Column(db.Text, nullable=True)
+    amendment_number = db.Column(db.String, nullable=False)
+    congress = db.Column(db.String, nullable=True)
     type = db.Column(db.String, nullable=True)
     status = db.Column(db.String, nullable=True)
-    description = db.Column(db.Text, nullable=True)
     purpose = db.Column(db.Text, nullable=True)
+    description = db.Column(db.Text, nullable=True)
+    latest_action_date = db.Column(db.Date, nullable=True)
+    latest_action_text = db.Column(db.Text, nullable=True)
 
     bill_id = db.Column(db.Integer, db.ForeignKey('bill.id'), nullable=False, index=True)
     sponsor_id = db.Column(db.Integer, db.ForeignKey('politician.id'), nullable=True)
@@ -69,11 +73,11 @@ class Amendment(db.Model):
 class AmendmentAction(db.Model):
     """Model representing actions on amendments."""
     id = db.Column(db.Integer, primary_key=True)
-    action_code = db.Column(db.String(50), nullable=True)
+    action_code = db.Column(db.String, nullable=True)
     action_date = db.Column(db.Date, nullable=True)
-    action_time = db.Column(db.String(20), nullable=True)
-    committee_name = db.Column(db.String(200), nullable=True)
-    committee_system_code = db.Column(db.String(50), nullable=True)
+    action_time = db.Column(db.String, nullable=True)
+    committee_name = db.Column(db.String, nullable=True)
+    committee_system_code = db.Column(db.String, nullable=True)
     action_text = db.Column(db.Text, nullable=True)
     
     amendment_id = db.Column(db.Integer, db.ForeignKey('amendment.id'), nullable=False)
@@ -82,11 +86,11 @@ class AmendmentAction(db.Model):
 class AmendedBill(db.Model):
     """Model representing bills amended by amendments."""
     id = db.Column(db.Integer, primary_key=True)
-    congress = db.Column(db.String(50), nullable=True)
-    origin_chamber = db.Column(db.String(255), nullable=True)
-    origin_chamber_code = db.Column(db.String(30), nullable=True)
+    congress = db.Column(db.String, nullable=True)
+    origin_chamber = db.Column(db.String, nullable=True)
+    origin_chamber_code = db.Column(db.String, nullable=True)
     title = db.Column(db.Text, nullable=True)
-    type = db.Column(db.String(50), nullable=True)
+    type = db.Column(db.String, nullable=True)
     
     amendment_id = db.Column(db.Integer, db.ForeignKey('amendment.id'), nullable=False)
     amendment = db.relationship('Amendment', back_populates='amended_bill')
@@ -95,8 +99,8 @@ class AmendedBill(db.Model):
 class AmendmentLink(db.Model):
     """Model representing links related to amendments."""
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), nullable=True)
-    url = db.Column(db.String(500), nullable=True)
+    name = db.Column(db.String, nullable=True)
+    url = db.Column(db.String, nullable=True)
     
     amendment_id = db.Column(db.Integer, db.ForeignKey('amendment.id'), nullable=False)
     amendment = db.relationship('Amendment', back_populates='links')
@@ -105,17 +109,27 @@ class AmendmentLink(db.Model):
 class BillFullText(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     bill_id = db.Column(db.Integer, db.ForeignKey('bill.id'), nullable=False, index=True)
-    title = db.Column(db.Text, nullable=True)
+    title = db.Column(db.Text, nullable=False)
     raw_data = db.Column(db.Text, nullable=True)
     bill_metadata = db.Column(db.JSON, nullable=True)
     actions = db.Column(db.JSON, nullable=True)
     sections = db.Column(db.JSON, nullable=True)
-    parsing_status = db.Column(db.String(50), nullable=True)
+    parsing_status = db.Column(db.String, nullable=True)
     error_message = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=True, onupdate=datetime.utcnow)
     
     bill = db.relationship('Bill', back_populates='full_texts', lazy=True)
+
+
+class BillRelationship(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.String, nullable=True)
+    identified_by = db.Column(db.String, nullable=True)
+
+    related_bill_id = db.Column(db.Integer, db.ForeignKey('related_bill.id'), nullable=False)
+    related_bill = db.relationship('RelatedBill', back_populates='relationship_details', lazy=True)
+
 
 
 class BillTitle(db.Model):
@@ -132,21 +146,21 @@ class BillTitle(db.Model):
 class Bill(db.Model):
     """Model representing bills."""
     id = db.Column(db.Integer, primary_key=True)
-    bill_number = db.Column(db.String(50), nullable=False, unique=True, index=True)
+    bill_number = db.Column(db.String, nullable=False, index=True)
+    congress = db.Column(db.String, nullable=True)
     date_introduced = db.Column(db.Date, nullable=False)
     origin_chamber = db.Column(db.String(255), nullable=False)
-    status = db.Column(db.String(255), nullable=True)
+    status = db.Column(db.String, nullable=True)
     title = db.Column(db.String, nullable=False, index=True)
-    bill_type = db.Column(db.String(255), nullable=True)
-    congress = db.Column(db.String(255), nullable=True)
-    committee = db.Column(db.String(255), nullable=True)
+    bill_type = db.Column(db.String, nullable=True)
+    committee = db.Column(db.String, nullable=True)
     last_action_date = db.Column(db.Date, nullable=True)                
     last_action_description = db.Column(db.Text, nullable=True)
     update_date = db.Column(db.Date, nullable=True)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)  # Timestamp of record creation
     updated_at = db.Column(db.DateTime, nullable=True, onupdate=datetime.utcnow)  # Timestamp of last update
     tags = db.Column(db.String, nullable=True, index=True)
-    full_bill_link = db.Column(db.String(255), nullable=True)
+    full_bill_link = db.Column(db.String, nullable=True)
     voting_record = db.Column(db.Text, nullable=True)
     xml_content = db.Column(JSON, nullable=True)  # Store the XML content as a JSON object
     
@@ -172,8 +186,7 @@ class Bill(db.Model):
     sponsor = db.relationship('Politician', back_populates='sponsored_bills', lazy=True)
     subjects = db.relationship('Subject', secondary='bill_subject', back_populates='bills', lazy=True)
     titles = db.relationship('BillTitle', back_populates='bill', lazy=True)
-
-
+    
 
 class CoSponsor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -191,7 +204,7 @@ class CoSponsor(db.Model):
 
 class Committee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False, unique=True)
+    name = db.Column(db.String, nullable=False)
     chamber = db.Column(db.String(255), nullable=False)
     committee_code = db.Column(db.String(255), nullable=False, unique=True)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
@@ -209,8 +222,8 @@ bill_committee = db.Table('bill_committee',
 class Law(db.Model):
     __tablename__ = 'law'
     id = db.Column(db.Integer, primary_key=True)
-    number = db.Column(db.String(50), nullable=True)
-    type = db.Column(db.String(255), nullable=True)
+    number = db.Column(db.String, nullable=True)
+    type = db.Column(db.String, nullable=True)
     bill_id = db.Column(db.Integer, db.ForeignKey('bill.id'), nullable=False, index=True)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=True, onupdate=datetime.utcnow)
@@ -226,7 +239,7 @@ loc_summary_association = db.Table(
 
 class LOCSummary(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    version_code = db.Column(db.String(255), nullable=False)
+    version_code = db.Column(db.String, nullable=False)
     action_date = db.Column(db.Date, nullable=True)
     update_date = db.Column(db.DateTime, nullable=True, index=True)
     action_desc = db.Column(db.String, nullable=True)
@@ -241,9 +254,9 @@ class LOCSummary(db.Model):
 
 class LOCSummaryCode(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    version_code = db.Column(db.String(50), nullable=False, unique=True)
-    chamber = db.Column(db.String(50), nullable=False)
-    action_desc = db.Column(db.String(200), nullable=False)
+    chamber = db.Column(db.String, nullable=False)
+    version_code = db.Column(db.String, nullable=False, unique=True)
+    action_desc = db.Column(db.String, nullable=False)
     
     loc_summaries = db.relationship('LOCSummary', secondary=loc_summary_association, back_populates='loc_summary_codes')
 
@@ -251,8 +264,8 @@ class LOCSummaryCode(db.Model):
 class Note(db.Model):
     __tablename__ = 'note'
     id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.Text, nullable=True)
     bill_id = db.Column(db.Integer, db.ForeignKey('bill.id'), nullable=False, index=True)
+    text = db.Column(db.Text, nullable=True)
     
     bill = db.relationship('Bill', back_populates='notes', lazy=True)
 
@@ -269,13 +282,13 @@ class PolicyArea(db.Model):
 class Politician(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=True) 
+    party = db.Column(db.String, nullable=True)
+    state = db.Column(db.String(30), nullable=True)
+    bioguide_id = db.Column(db.String, nullable=True)
     first_name = db.Column(db.String(255), nullable=True) 
     last_name = db.Column(db.String(255), nullable=True) 
-    state = db.Column(db.String(30), nullable=True)
     district = db.Column(db.String(100), nullable=True)
-    party = db.Column(db.String(40), nullable=True)
-    profile_link = db.Column(db.String(500), nullable=True)
-    bioguide_id = db.Column(db.String(50), nullable=True)
+    profile_link = db.Column(db.String, nullable=True)
 
     sponsored_amendments = db.relationship('Amendment', back_populates='sponsor', lazy=True)
     sponsored_bills = db.relationship('Bill', back_populates='sponsor', lazy=True)
@@ -285,13 +298,13 @@ class Politician(db.Model):
 class RecordedVote(db.Model):
     __tablename__ = 'recorded_vote'
     id = db.Column(db.Integer, primary_key=True)
-    chamber = db.Column(db.String(255), nullable=True)
-    congress = db.Column(db.String(255), nullable=True)
+    chamber = db.Column(db.String, nullable=True)
+    congress = db.Column(db.String, nullable=True)
     date = db.Column(db.Date, nullable=True)
-    full_action_name = db.Column(db.String(1000), nullable=True)
-    roll_number = db.Column(db.String(255), nullable=True)
-    session_number = db.Column(db.String(255), nullable=True)
-    url = db.Column(db.String(500), nullable=True)
+    full_action_name = db.Column(db.String, nullable=True)
+    roll_number = db.Column(db.String, nullable=True)
+    session_number = db.Column(db.String, nullable=True)
+    url = db.Column(db.String, nullable=True)
     bill_id = db.Column(db.Integer, db.ForeignKey('bill.id'), nullable=False, index=True)
     
     bill = db.relationship('Bill', back_populates='recorded_votes', lazy=True)
@@ -316,9 +329,28 @@ class RelatedBill(db.Model):
 
 
 
+class Subcommittee(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(500), nullable=False)
+    subcommittee_code = db.Column(db.String(255), nullable=False, unique=True)
+    activity_name = db.Column(db.String(1000), nullable=True)
+    activity_date = db.Column(db.Date, nullable=True)
+    committee_id = db.Column(db.Integer, db.ForeignKey('committee.id'), nullable=False)
+    
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, nullable=True, onupdate=datetime.utcnow)
+
+    bills = db.relationship('Bill', secondary='bill_subcommittee', back_populates='subcommittees', lazy=True)
+
+
+bill_subcommittee = db.Table('bill_subcommittee',
+    db.Column('bill_id', db.Integer, db.ForeignKey('bill.id'), primary_key=True),
+    db.Column('subcommittee_id', db.Integer, db.ForeignKey('subcommittee.id'), primary_key=True)
+)
+
 class Subject(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(500), nullable=False, unique=True)
+    name = db.Column(db.String, nullable=False, unique=True)
     
     bills = db.relationship('Bill', secondary='bill_subject', back_populates='subjects', lazy=True)
     primary_bills = db.relationship('Bill', back_populates='primary_subject', lazy=True)
@@ -328,12 +360,3 @@ bill_subject = db.Table('bill_subject',
     db.Column('bill_id', db.Integer, db.ForeignKey('bill.id'), primary_key=True, index=True),
     db.Column('subject_id', db.Integer, db.ForeignKey('subject.id'), primary_key=True, index=True)
 )
-class VetoMessage(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Date, nullable=True)
-    message = db.Column(db.Text, nullable=True)
-    president = db.Column(db.String(200), nullable=True)
-    text = db.Column(db.Text, nullable=True)
-    
-    bill_id = db.Column(db.Integer, db.ForeignKey('bill.id'), nullable=False, index=True)
-
