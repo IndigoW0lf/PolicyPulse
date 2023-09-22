@@ -34,7 +34,7 @@ def is_bill_related_to_lgbtq(text):
     """Determine if a given bill text is related to LGBTQ+ rights issues using GPT-3.5-turbo."""
     logger.debug("Sending request to GPT to analyze bill relevance.")
     response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo-16k",
+        model="gpt-3.5-turbo",
         messages=[
             {
                 "role": "user",
@@ -68,7 +68,7 @@ def process_xml_files(directory):
 
             # Extracting the title, summary, and amended bill title text
             title_element = tree.find(
-                ".//titles/item[titleType='Display Title']/title")
+                ".//titles/item[titleType='Official Title as Introduced']/title")
             summary_element = tree.find(".//summaries/summary/text")
             amended_title_element = tree.find(".//amendedBill/title")
 
@@ -90,17 +90,17 @@ def process_xml_files(directory):
                 relevant_bills += 1
 
                 # Move the relevant file to the 'prelim_related_xml_files' folder
-                destination_folder = "backend/data/secondary_related_xml_files"
+                destination_folder = "backend/data/LGBTQ+_related_xml_files"
                 shutil.move(xml_file, os.path.join(
                     destination_folder, os.path.basename(xml_file)))
 
             else:
                 non_relevant_bills += 1
 
-                # # Move the non-relevant file to the 'prelim_non_related_xml_files' folder
-                # destination_folder = "backend/data/prelim_non_related_xml_files"
-                # shutil.move(xml_file, os.path.join(
-                #     destination_folder, os.path.basename(xml_file)))
+                # Move the non-relevant file to the 'prelim_non_related_xml_files' folder
+                destination_folder = "backend/data/prelim_non_related_xml_files"
+                shutil.move(xml_file, os.path.join(
+                    destination_folder, os.path.basename(xml_file)))
 
         except Exception as e:
             logger.error(f"Error processing file {xml_file}", exc_info=True)

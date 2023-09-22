@@ -116,18 +116,16 @@ def parse_bill(xml_root, session):
         bill.title = display_title
 
         # Set fields based on conversions or parsing
-        bill.status = get_text(bill_details, 'summaries/summary/actionDesc')
+        bill.status = get_latest_bill_status(bill_details) 
         bill.bill_type = get_text(bill_details, 'type')
         bill.committee = get_text(bill_details, 'committees/item/name')
         bill.congress = get_text(bill_details, 'congress')
         bill.date_introduced = parse_date(introduced_date_str)
         bill.last_action_date = parse_date(last_action_date_str)
-        bill.last_action_description = get_text(
-            bill_details, 'latestAction/text')
+        bill.last_action_description = get_text(bill_details, 'latestAction/text')
         bill.origin_chamber = get_text(bill_details, 'originChamber')
         bill.subjects = parse_subjects(session, bill_details)
-        bill.update_date = parse_date(
-            get_text(bill_details, 'summaries/summary/updateDate'))
+        bill.update_date = parse_date(get_text(bill_details, 'summaries/summary/updateDate'))
         bill.xml_content = xml_to_json(etree.tostring(bill_details))
         bill.full_bill_link = None  # Placeholder, to be populated from the API data
         bill.tags = None  # Placeholder, to be populated later
@@ -148,21 +146,16 @@ def parse_bill(xml_root, session):
         bill.actions = parse_actions(session, bill_details, bill_id)
         amendments = parse_amendments(session, bill_details, bill_id)
         bill.amendments = amendments
-        bill.amended_bill = parse_amended_bill(
-            session, bill_details, amendments)
-        bill.amendment_links = parse_amendment_links(
-            session, bill_details, bill_id)
-        bill.amendment_actions = parse_amendment_actions(
-            session, bill_details, bill_id)
+        bill.amended_bill = parse_amended_bill(session, bill_details, amendments)
+        bill.amendment_links = parse_amendment_links(session, bill_details, bill_id)
+        bill.amendment_actions = parse_amendment_actions(session, bill_details, bill_id)
         bill.committees = parse_committees(session, bill_details)
-        bill.related_bills = parse_related_bills(
-            session, bill_details, bill_id)
+        bill.related_bills = parse_related_bills(session, bill_details, bill_id)
         bill.co_sponsors = parse_cosponsors(session, bill_details, bill_id)
         bill.notes = parse_notes(session, bill_details, bill_id)
         bill.subcommittees = parse_subcommittees(session, bill_details)
         bill.policy_area = parse_policy_area(session, bill_details, bill_id)
-        bill.recorded_votes = parse_recorded_votes(
-            session, bill_details, bill_id)
+        bill.recorded_votes = parse_recorded_votes(session, bill_details, bill_id)
         bill.laws = parse_laws(session, bill_details, bill_id)
         bill.loc_summary = parse_loc_summaries(session, bill_details, bill_id)
 
@@ -263,6 +256,25 @@ def parse_actions(session, bill_details, bill_id):
         f"Finished parsing actions with bill_id in parse_actions: {bill_id}")
     return actions
 
+def get_latest_bill_status(bill_details):
+    """Extract the latest bill status based on the newest actionDate."""
+    # Extract all actions from the bill details
+    actions = bill_details.findall('actions/item')
+
+    # If there are no actions, return None or a default status
+    if not actions:
+        return None
+
+    # Sort the actions based on actionDate in descending order
+    sorted_actions = sorted(actions, key=lambda action: action.findtext('actionDate'), reverse=True)
+
+    # Get the latest action (first item after sorting in descending order)
+    latest_action = sorted_actions[0]
+
+    # Extract the status text from the latest action
+    latest_status = latest_action.findtext('text')
+
+    return latest_status
 
 def get_action_code_object(session, code):
     """Function to get an ActionCode object by its code.

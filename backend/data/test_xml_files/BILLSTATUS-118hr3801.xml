@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<billStatus>
+  <version>3.0.0</version>
+  <bill>
+    <number>3801</number>
+    <updateDate>2023-09-20T14:05:54Z</updateDate>
+    <updateDateIncludingText>2023-09-20T13:40:22Z</updateDateIncludingText>
+    <originChamber>House</originChamber>
+    <type>HR</type>
+    <introducedDate>2023-06-05</introducedDate>
+    <congress>118</congress>
+    <constitutionalAuthorityStatementText><![CDATA[<pre>[Congressional Record Volume 169, Number 97 (Monday, June 5, 2023)][House]From the Congressional Record Online through the Government Publishing Office [<a href="https://www.gpo.gov">www.gpo.gov</a>]By Mr. SMITH of Nebraska:H.R. 3801.Congress has the power to enact this legislation pursuantto the following:Article I, Section 8The single subject of this legislation is:Improving the employer reporting process related to healthinsurance coverage[Page H2742]</pre>]]></constitutionalAuthorityStatementText>
+    <committees>
+      <item>
+        <systemCode>ssfi00</systemCode>
+        <name>Finance Committee</name>
+        <chamber>Senate</chamber>
+        <type>Standing</type>
+        <activities>
+          <item>
+            <name>Referred to</name>
+            <date>2023-06-22T17:06:43Z</date>
+          </item>
+        </activities>
+      </item>
+      <item>
+        <systemCode>hswm00</systemCode>
+        <name>Ways and Means Committee</name>
+        <chamber>House</chamber>
+        <type>Standing</type>
+        <activities>
+          <item>
+            <name>Reported by</name>
+            <date>2023-06-13T22:56:46Z</date>
+          </item>
+          <item>
+            <name>Markup by</name>
+            <date>2023-06-07T19:32:50Z</date>
+          </item>
+          <item>
+            <name>Referred to</name>
+            <date>2023-06-05T16:03:25Z</date>
+          </item>
+        </activities>
+      </item>
+    </committees>
+    <committeeReports>
+      <committeeReport>
+        <citation>H. Rept. 118-111</citation>
+      </committeeReport>
+    </committeeReports>
+    <actions>
+      <item>
+        <actionDate>2023-06-22</actionDate>
+        <committees>
+          <item>
+            <systemCode>ssfi00</systemCode>
+            <name>Finance Committee</name>
+          </item>
+        </committees>
+        <sourceSystem>
+          <name>Senate</name>
+        </sourceSystem>
+        <text>Received in the Senate and Read twice and referred to the Committee on Finance.</text>
+        <type>IntroReferral</type>
+      </item>
+      <item>
+        <actionDate>2023-06-21</actionDate>
+        <actionTime>19:10:01</actionTime>
+        <text>Motion to reconsider laid on the table Agreed to without objection.</text>
+        <type>Floor</type>
+        <actionCode>H38310</actionCode>
+        <sourceSystem>
+          <code>2</code>
+          <name>House floor actions</name>
+        </sourceSystem>
+      </item>
+      <item>
+        <actionDate>2023-06-21</actionDate>
+        <actionTime>19:09:59</actionTime>
+        <text>On motion to suspend the rules and pass the bill, as amended Agreed to by voice vote. (text: CR H3048-3049)</text>
+        <type>Floor</type>
+        <actionCode>H37300</actionCode>
+        <sourceSystem>
+          <code>2</code>
+          <name>House floor actions</name>
+        </sourceSystem>
+      </item>
+      <item>
+        <actionDate>2023-06-21</actionDate>
+        <actionTime>19:09:59</actionTime>
+        <text>Passed/agreed to in House: On motion to suspend the rules and pass the bill, as amended Agreed to by voice vote.(text: CR H3048-3049)</text>
+        <type>Floor</type>
+        <actionCode>8000</actionCode>
+        <sourceSystem>
+          <code>9</code>
+          <name>Library of Congress</name>
+        </sourceSystem>
+      </item>
+      <item>
+        <actionDate>2023-06-21</actionDate>
+        <actionTime>19:03:45</actionTime>
+        <text>DEBATE - The House proceeded with forty minutes of debate on H.R. 3801.</text>
+        <type>Floor</type>
+        <actionCode>H8D000</actionCode>
+        <sourceSystem>
+          <code>2</code>
+          <name>House floor actions</name>
+        </sourceSystem>
+      </item>
+      <item>
+        <actionDate>2023-06-21</actionDate>
+        <actionTime>19:03:38</actionTime>
+        <text>Considered under suspension of the rules. (consideration: CR H3048-3050)</text>
+        <type>Floor</type>
+        <actionCode>H30000</actionCode>
+        <sourceSystem>
+          <code>2</code>
+          <name>House floor actions</name>
+        </sourceSystem>
+      </item>
+      <item>
+        <actionDate>2023-06-21</actionDate>
+        <actionTime>19:02:32</actionTime>
+        <text>Mr. Smith (MO) moved to suspend the rules and pass the bill, as amended.</text>
+        <type>Floor</type>
+        <actionCode>H30300</actionCode>
+        <sourceSystem>
+          <code>2</code>
+          <name>House floor actions</name>
+        </sourceSystem>
+      </item>
+      <item>
+        <actionDate>2023-06-13</actionDate>
+        <text>Placed on the Union Calendar, Calendar No. 86.</text>
+        <type>Calendars</type>
+        <actionCode>H12410</actionCode>
+        <sourceSystem>
+          <code>2</code>
+          <name>House floor actions</name>
+        </sourceSystem>
+        <calendarNumber>
+          <calendar>U00086</calendar>
+        </calendarNumber>
+      </item>
+      <item>
+        <actionDate>2023-06-13</actionDate>
+        <text>Reported (Amended) by the Committee on Ways and Means. H. Rept. 118-111.</text>
+        <type>Committee</type>
+        <actionCode>H12200</actionCode>
+        <sourceSystem>
+          <code>2</code>
+          <name>House floor actions</name>
+        </sourceSystem>
+        <committees>
+          <item>
+            <systemCode>hswm00</systemCode>
+            <name>Ways and Means Committee</name>
+          </item>
+        </committees>
+      </item>
+      <item>
+        <actionDate>2023-06-13</actionDate>
+        <text>Reported (Amended) by the Committee on Ways and Means. H. Rept. 118-111.</text>
+        <type>Committee</type>
+        <actionCode>5000</actionCode>
+        <sourceSystem>
+          <code>9</code>
+          <name>Library of Congress</name>
+        </sourceSystem>
+        <committees>
+          <item>
+            <systemCode>hswm00</systemCode>
+            <name>Ways and Means Committee</name>
+          </item>
+        </committees>
+      </item>
+      <item>
+        <actionDate>2023-06-07</actionDate>
+        <committees>
+          <item>
+            <systemCode>hswm00</systemCode>
+            <name>Ways and Means Committee</name>
+          </item>
+        </committees>
+        <sourceSystem>
+          <code>1</code>
+          <name>House committee actions</name>
+        </sourceSystem>
+        <text>Ordered to be Reported in the Nature of a Substitute (Amended) by the Yeas and Nays: 37 - 0.</text>
+        <type>Committee</type>
+      </item>
+      <item>
+        <actionDate>2023-06-07</actionDate>
+        <committees>
+          <item>
+            <systemCode>hswm00</systemCode>
+            <name>Ways and Means Committee</name>
+          </item>
+        </committees>
+        <sourceSystem>
+          <code>1</code>
+          <name>House committee actions</name>
+        </sourceSystem>
+        <text>Committee Consideration and Mark-up Session Held</text>
+        <type>Committee</type>
+      </item>
+      <item>
+        <actionDate>2023-06-05</actionDate>
+        <text>Referred to the House Committee on Ways and Means.</text>
+        <type>IntroReferral</type>
+        <actionCode>H11100</actionCode>
+        <sourceSystem>
+          <code>2</code>
+          <name>House floor actions</name>
+        </sourceSystem>
+        <committees>
+          <item>
+            <systemCode>hswm00</systemCode>
+            <name>Ways and Means Committee</name>
+          </item>
+        </committees>
+      </item>
+      <item>
+        <actionDate>2023-06-05</actionDate>
+        <text>Introduced in House</text>
+        <type>IntroReferral</type>
+        <actionCode>Intro-H</actionCode>
+        <sourceSystem>
+          <code>9</code>
+          <name>Library of Congress</name>
+        </sourceSystem>
+      </item>
+      <item>
+        <actionDate>2023-06-05</actionDate>
+        <text>Introduced in House</text>
+        <type>IntroReferral</type>
+        <actionCode>1000</actionCode>
+        <sourceSystem>
+          <code>9</code>
+          <name>Library of Congress</name>
+        </sourceSystem>
+      </item>
+    </actions>
+    <sponsors>
+      <item>
+        <bioguideId>S001172</bioguideId>
+        <fullName>Rep. Smith, Adrian [R-NE-3]</fullName>
+        <firstName>Adrian</firstName>
+        <lastName>Smith</lastName>
+        <party>R</party>
+        <state>NE</state>
+        <district>3</district>
+        <isByRequest>N</isByRequest>
+      </item>
+    </sponsors>
+    <cosponsors>
+      <item>
+        <bioguideId>T000460</bioguideId>
+        <fullName>Rep. Thompson, Mike [D-CA-4]</fullName>
+        <firstName>MIKE</firstName>
+        <lastName>THOMPSON</lastName>
+        <party>D</party>
+        <state>CA</state>
+        <district>4</district>
+        <sponsorshipDate>2023-06-05</sponsorshipDate>
+        <isOriginalCosponsor>True</isOriginalCosponsor>
+      </item>
+    </cosponsors>
+    <cboCostEstimates>
+      <item>
+        <pubDate>2023-06-26T18:21:00Z</pubDate>
+        <title>H.R. 3801, the Employer Reporting Improvement Act</title>
+        <url>https://www.cbo.gov/publication/59317</url>
+        <description>As ordered reported by the House Committee on Ways and Means onJune 7, 2023</description>
+      </item>
+    </cboCostEstimates>
+    <policyArea>
+      <name>Taxation</name>
+    </policyArea>
+    <subjects>
+      <legislativeSubjects>
+        <item>
+          <name>Business records</name>
+        </item>
+        <item>
+          <name>Employee benefits and pensions</name>
+        </item>
+        <item>
+          <name>Health care costs and insurance</name>
+        </item>
+        <item>
+          <name>Internal Revenue Service (IRS)</name>
+        </item>
+        <item>
+          <name>Personnel records</name>
+        </item>
+        <item>
+          <name>Tax administration and collection, taxpayers</name>
+        </item>
+      </legislativeSubjects>
+      <policyArea>
+        <name>Taxation</name>
+      </policyArea>
+    </subjects>
+    <summaries>
+      <summary>
+        <versionCode>00</versionCode>
+        <actionDate>2023-06-05</actionDate>
+        <actionDesc>Introduced in House</actionDesc>
+        <updateDate>2023-06-28T15:04:00Z</updateDate>
+        <text><![CDATA[ <p><b>Employer Reporting Improvement Act</b></p> <p>This bill modifies provisions under the Patient Protection and Affordable Care Act that require employers and health insurance providers to prepare tax forms showing proof of minimum essential coverage (1095-B and 1095-C tax forms).</p> <p>Currently, employers and health insurance providers that provide minimum essential coverage must report this information for each covered individual to the Internal Revenue Service (IRS), including the covered individual's Tax Identification Number (TIN). Employers and providers must also send a copy of this information to the covered individual (through 1095-B and 1095-C tax forms) by January 31 of each year. </p> <p>The IRS allows for an individual's date of birth to be substituted for the individual's TIN if the TIN is not available. The IRS also allows employers and providers to offer 1095-B and 1095-C tax forms to individuals electronically. The bill provides statutory authority for these flexibilities. </p> <p>Additionally, under current law, large employers (generally those with 50 or more full-time employees) are subject to an assessment by the IRS if they do not offer affordable minimum essential coverage. The bill requires the IRS to give large employers at least 90 days to respond after sending its first letter about a proposed assessment (Currently, the IRS generally gives 30 days to respond.) It also establishes a six-year statute of limitations for collecting assessments.</p>]]></text>
+      </summary>
+      <summary>
+        <versionCode>07</versionCode>
+        <actionDate>2023-06-13</actionDate>
+        <actionDesc>Reported to House</actionDesc>
+        <updateDate>2023-06-28T15:04:17Z</updateDate>
+        <text><![CDATA[ <p><b>Employer Reporting Improvement Act</b></p> <p>This bill modifies provisions under the Patient Protection and Affordable Care Act that require employers and health insurance providers to prepare tax forms showing proof of minimum essential coverage (1095-B and 1095-C tax forms).</p> <p>Currently, employers and health insurance providers that provide minimum essential coverage must report this information for each covered individual to the Internal Revenue Service (IRS), including the covered individual's Tax Identification Number (TIN). Employers and providers must also send a copy of this information to the covered individual (through 1095-B and 1095-C tax forms) by January 31 of each year. </p> <p>The IRS allows for an individual's date of birth to be substituted for the individual's TIN if the TIN is not available. The IRS also allows employers and providers to offer 1095-B and 1095-C tax forms to individuals electronically. The bill provides statutory authority for these flexibilities. </p> <p>Additionally, under current law, large employers (generally those with 50 or more full-time employees) are subject to an assessment by the IRS if they do not offer affordable minimum essential coverage. The bill requires the IRS to give large employers at least 90 days to respond after sending its first letter about a proposed assessment (Currently, the IRS generally gives 30 days to respond.) It also establishes a six-year statute of limitations for collecting assessments.</p>]]></text>
+      </summary>
+      <summary>
+        <versionCode>53</versionCode>
+        <actionDate>2023-06-21</actionDate>
+        <actionDesc>Passed House</actionDesc>
+        <updateDate>2023-06-28T15:04:44Z</updateDate>
+        <text><![CDATA[ <p><b>Employer Reporting Improvement Act</b></p> <p>This bill modifies provisions under the Patient Protection and Affordable Care Act that require employers and health insurance providers to prepare tax forms showing proof of minimum essential coverage (1095-B and 1095-C tax forms).</p> <p>Currently, employers and health insurance providers that provide minimum essential coverage must report this information for each covered individual to the Internal Revenue Service (IRS), including the covered individual's Tax Identification Number (TIN). Employers and providers must also send a copy of this information to the covered individual (through 1095-B and 1095-C tax forms) by January 31 of each year. </p> <p>The IRS allows for an individual's date of birth to be substituted for the individual's TIN if the TIN is not available. The IRS also allows employers and providers to offer 1095-B and 1095-C tax forms to individuals electronically. The bill provides statutory authority for these flexibilities. </p> <p>Additionally, under current law, large employers (generally those with 50 or more full-time employees) are subject to an assessment by the IRS if they do not offer affordable minimum essential coverage. The bill requires the IRS to give large employers at least 90 days to respond after sending its first letter about a proposed assessment (Currently, the IRS generally gives 30 days to respond.) It also establishes a six-year statute of limitations for collecting assessments.</p>]]></text>
+      </summary>
+    </summaries>
+    <title>Employer Reporting Improvement Act</title>
+    <titles>
+      <item>
+        <titleType>Display Title</titleType>
+        <title>Employer Reporting Improvement Act</title>
+      </item>
+      <item>
+        <titleType>Short Title(s) as Passed House</titleType>
+        <title>Employer Reporting Improvement Act</title>
+        <chamberCode>H</chamberCode>
+        <chamberName>House</chamberName>
+        <billTextVersionName>Engrossed in House</billTextVersionName>
+        <billTextVersionCode>EH</billTextVersionCode>
+      </item>
+      <item>
+        <titleType>Short Title(s) as Reported to House</titleType>
+        <title>Employer Reporting Improvement Act</title>
+        <chamberCode>H</chamberCode>
+        <chamberName>House</chamberName>
+        <billTextVersionName>Reported in House</billTextVersionName>
+        <billTextVersionCode>RH</billTextVersionCode>
+      </item>
+      <item>
+        <titleType>Short Title(s) as Introduced</titleType>
+        <title>Employer Reporting Improvement Act</title>
+        <billTextVersionName>Introduced in House</billTextVersionName>
+        <billTextVersionCode>IH</billTextVersionCode>
+      </item>
+      <item>
+        <titleType>Official Title as Introduced</titleType>
+        <title>To amend the Internal Revenue Code of 1986 to streamline and improve the employer reporting process relating to health insurance coverage and to protect dependent privacy.</title>
+        <billTextVersionName>Introduced in House</billTextVersionName>
+        <billTextVersionCode>IH</billTextVersionCode>
+      </item>
+    </titles>
+    <textVersions>
+      <item>
+        <type>Referred in Senate</type>
+        <date>2023-06-22T04:00:00Z</date>
+        <formats>
+          <item>
+            <url>https://www.govinfo.gov/content/pkg/BILLS-118hr3801rfs/xml/BILLS-118hr3801rfs.xml</url>
+          </item>
+        </formats>
+      </item>
+      <item>
+        <type>Engrossed in House</type>
+        <date>2023-06-21T04:00:00Z</date>
+        <formats>
+          <item>
+            <url>https://www.govinfo.gov/content/pkg/BILLS-118hr3801eh/xml/BILLS-118hr3801eh.xml</url>
+          </item>
+        </formats>
+      </item>
+      <item>
+        <type>Reported in House</type>
+        <date>2023-06-13T04:00:00Z</date>
+        <formats>
+          <item>
+            <url>https://www.govinfo.gov/content/pkg/BILLS-118hr3801rh/xml/BILLS-118hr3801rh.xml</url>
+          </item>
+        </formats>
+      </item>
+      <item>
+        <type>Introduced in House</type>
+        <date>2023-06-05T04:00:00Z</date>
+        <formats>
+          <item>
+            <url>https://www.govinfo.gov/content/pkg/BILLS-118hr3801ih/xml/BILLS-118hr3801ih.xml</url>
+          </item>
+        </formats>
+      </item>
+    </textVersions>
+    <latestAction>
+      <actionDate>2023-06-22</actionDate>
+      <text>Received in the Senate and Read twice and referred to the Committee on Finance.</text>
+    </latestAction>
+  </bill>
+  <dublinCore xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:format>text/xml</dc:format>
+    <dc:language>EN</dc:language>
+    <dc:rights>Pursuant to Title 17 Section 105 of the United States Code, this file is not subject to copyright protection and is in the public domain.</dc:rights>
+    <dc:contributor>Congressional Research Service, Library of Congress</dc:contributor>
+    <dc:description>This file contains bill summaries and statuses for federal legislation. A bill summary describes the most significant provisions of a piece of legislation and details the effects the legislative text may have on current law and federal programs. Bill summaries are authored by the Congressional Research Service (CRS) of the Library of Congress. As stated in Public Law 91-510 (2 USC 166 (d)(6)), one of the duties of CRS is "to prepare summaries and digests of bills and resolutions of a public general nature introduced in the Senate or House of Representatives". For more information, refer to the User Guide that accompanies this file.</dc:description>
+  </dublinCore>
+</billStatus>

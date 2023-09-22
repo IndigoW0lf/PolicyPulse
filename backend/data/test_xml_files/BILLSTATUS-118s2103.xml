@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<billStatus>
+  <version>3.0.0</version>
+  <bill>
+    <number>2103</number>
+    <updateDate>2023-09-20T14:10:51Z</updateDate>
+    <updateDateIncludingText>2023-09-20T14:10:51Z</updateDateIncludingText>
+    <originChamber>Senate</originChamber>
+    <type>S</type>
+    <introducedDate>2023-06-22</introducedDate>
+    <congress>118</congress>
+    <committees>
+      <item>
+        <systemCode>slin00</systemCode>
+        <name>Intelligence (Select) Committee</name>
+        <chamber>Senate</chamber>
+        <type>Select</type>
+        <activities>
+          <item>
+            <name>Reported original measure</name>
+            <date>2023-06-22T14:28:21Z</date>
+          </item>
+        </activities>
+      </item>
+    </committees>
+    <committeeReports>
+      <committeeReport>
+        <citation>S. Rept. 118-59</citation>
+      </committeeReport>
+    </committeeReports>
+    <relatedBills>
+      <item>
+        <title>Stop Foreign Funds in Elections Act</title>
+        <congress>118</congress>
+        <number>3229</number>
+        <type>HR</type>
+        <latestAction>
+          <actionDate>2023-05-11</actionDate>
+          <text>Referred to the House Committee on House Administration.</text>
+        </latestAction>
+        <relationshipDetails>
+          <item>
+            <type>Related bill</type>
+            <identifiedBy>CRS</identifiedBy>
+          </item>
+        </relationshipDetails>
+      </item>
+      <item>
+        <title>Protecting Ballot Measures From Foreign Influence Act of 2023</title>
+        <congress>118</congress>
+        <number>3463</number>
+        <type>HR</type>
+        <latestAction>
+          <actionDate>2023-05-18</actionDate>
+          <text>Referred to the House Committee on House Administration.</text>
+        </latestAction>
+        <relationshipDetails>
+          <item>
+            <type>Related bill</type>
+            <identifiedBy>CRS</identifiedBy>
+          </item>
+        </relationshipDetails>
+      </item>
+      <item>
+        <title>Intelligence Authorization Act for Fiscal Year 2024</title>
+        <congress>118</congress>
+        <number>3932</number>
+        <type>HR</type>
+        <latestAction>
+          <actionDate>2023-08-18</actionDate>
+          <text>Placed on the Union Calendar, Calendar No. 129.</text>
+        </latestAction>
+        <relationshipDetails>
+          <item>
+            <type>Related bill</type>
+            <identifiedBy>CRS</identifiedBy>
+          </item>
+        </relationshipDetails>
+      </item>
+      <item>
+        <title>SECURE IT Act</title>
+        <congress>118</congress>
+        <number>1500</number>
+        <type>S</type>
+        <latestAction>
+          <actionDate>2023-05-09</actionDate>
+          <text>Read twice and referred to the Committee on Rules and Administration.</text>
+        </latestAction>
+        <relationshipDetails>
+          <item>
+            <type>Related bill</type>
+            <identifiedBy>CRS</identifiedBy>
+          </item>
+        </relationshipDetails>
+      </item>
+      <item>
+        <title>Sensible Classification Act of 2023</title>
+        <congress>118</congress>
+        <number>1518</number>
+        <type>S</type>
+        <latestAction>
+          <actionDate>2023-05-10</actionDate>
+          <text>Read twice and referred to the Committee on Homeland Security and Governmental Affairs.</text>
+        </latestAction>
+        <relationshipDetails>
+          <item>
+            <type>Related bill</type>
+            <identifiedBy>CRS</identifiedBy>
+          </item>
+        </relationshipDetails>
+      </item>
+      <item>
+        <title>Classification Reform Act of 2023</title>
+        <congress>118</congress>
+        <number>1541</number>
+        <type>S</type>
+        <latestAction>
+          <actionDate>2023-05-10</actionDate>
+          <text>Read twice and referred to the Select Committee on Intelligence.</text>
+        </latestAction>
+        <relationshipDetails>
+          <item>
+            <type>Related bill</type>
+            <identifiedBy>CRS</identifiedBy>
+          </item>
+        </relationshipDetails>
+      </item>
+      <item>
+        <title>Protecting Ballot Measures from Foreign Influence Act</title>
+        <congress>118</congress>
+        <number>1638</number>
+        <type>S</type>
+        <latestAction>
+          <actionDate>2023-05-17</actionDate>
+          <text>Read twice and referred to the Committee on Rules and Administration.</text>
+        </latestAction>
+        <relationshipDetails>
+          <item>
+            <type>Related bill</type>
+            <identifiedBy>CRS</identifiedBy>
+          </item>
+        </relationshipDetails>
+      </item>
+      <item>
+        <title>CCP Act</title>
+        <congress>118</congress>
+        <number>1903</number>
+        <type>S</type>
+        <latestAction>
+          <actionDate>2023-06-08</actionDate>
+          <text>Read twice and referred to the Select Committee on Intelligence.</text>
+        </latestAction>
+        <relationshipDetails>
+          <item>
+            <type>Related bill</type>
+            <identifiedBy>CRS</identifiedBy>
+          </item>
+        </relationshipDetails>
+      </item>
+    </relatedBills>
+    <actions>
+      <item>
+        <actionDate>2023-07-13</actionDate>
+        <committees>
+          <item>
+            <systemCode>slin00</systemCode>
+            <name>Intelligence (Select) Committee</name>
+          </item>
+        </committees>
+        <sourceSystem>
+          <name>Senate</name>
+        </sourceSystem>
+        <text>By Senator Warner from Select Committee on Intelligence filed written report. Report No. 118-59. Additional views filed.</text>
+        <type>Floor</type>
+      </item>
+      <item>
+        <actionDate>2023-07-13</actionDate>
+        <text>By Senator Warner from Select Committee on Intelligence filed written report. Report No. 118-59. Additional views filed.</text>
+        <type>Committee</type>
+        <actionCode>14900</actionCode>
+        <sourceSystem>
+          <code>9</code>
+          <name>Library of Congress</name>
+        </sourceSystem>
+        <committees>
+          <item>
+            <systemCode>slin00</systemCode>
+            <name>Intelligence (Select) Committee</name>
+          </item>
+        </committees>
+      </item>
+      <item>
+        <actionDate>2023-06-22</actionDate>
+        <sourceSystem>
+          <name>Senate</name>
+        </sourceSystem>
+        <text>Placed on Senate Legislative Calendar under General Orders. Calendar No. 106.</text>
+        <type>Calendars</type>
+      </item>
+      <item>
+        <actionDate>2023-06-22</actionDate>
+        <committees>
+          <item>
+            <systemCode>slin00</systemCode>
+            <name>Intelligence (Select) Committee</name>
+          </item>
+        </committees>
+        <sourceSystem>
+          <name>Senate</name>
+        </sourceSystem>
+        <text>Select Committee on Intelligence. Original measure reported to Senate by Senator Warner. Without written report.</text>
+        <type>Committee</type>
+      </item>
+      <item>
+        <actionDate>2023-06-22</actionDate>
+        <text>Select Committee on Intelligence. Original measure reported to Senate by Senator Warner. Without written report.</text>
+        <type>Committee</type>
+        <actionCode>14000</actionCode>
+        <sourceSystem>
+          <code>9</code>
+          <name>Library of Congress</name>
+        </sourceSystem>
+        <committees>
+          <item>
+            <systemCode>slin00</systemCode>
+            <name>Intelligence (Select) Committee</name>
+          </item>
+        </committees>
+      </item>
+      <item>
+        <actionDate>2023-06-22</actionDate>
+        <text>Introduced in Senate</text>
+        <type>IntroReferral</type>
+        <actionCode>10000</actionCode>
+        <sourceSystem>
+          <code>9</code>
+          <name>Library of Congress</name>
+        </sourceSystem>
+      </item>
+    </actions>
+    <sponsors>
+      <item>
+        <bioguideId>W000805</bioguideId>
+        <fullName>Sen. Warner, Mark R. [D-VA]</fullName>
+        <firstName>Mark</firstName>
+        <lastName>Warner</lastName>
+        <party>D</party>
+        <state>VA</state>
+        <middleName>R.</middleName>
+        <isByRequest>N</isByRequest>
+      </item>
+    </sponsors>
+    <policyArea>
+      <name>Armed Forces and National Security</name>
+    </policyArea>
+    <subjects>
+      <legislativeSubjects>
+        <item>
+          <name>Administrative remedies</name>
+        </item>
+        <item>
+          <name>Advanced technology and technological innovations</name>
+        </item>
+        <item>
+          <name>Advisory bodies</name>
+        </item>
+        <item>
+          <name>Asia</name>
+        </item>
+        <item>
+          <name>Assault and harassment offenses</name>
+        </item>
+        <item>
+          <name>Aviation and airports</name>
+        </item>
+        <item>
+          <name>Business records</name>
+        </item>
+        <item>
+          <name>Central Intelligence Agency (CIA)</name>
+        </item>
+        <item>
+          <name>China</name>
+        </item>
+        <item>
+          <name>Competitiveness, trade promotion, trade deficits</name>
+        </item>
+        <item>
+          <name>Computer security and identity theft</name>
+        </item>
+        <item>
+          <name>Computers and information technology</name>
+        </item>
+        <item>
+          <name>Conflicts and wars</name>
+        </item>
+        <item>
+          <name>Congressional oversight</name>
+        </item>
+        <item>
+          <name>Congressional-executive branch relations</name>
+        </item>
+        <item>
+          <name>Criminal investigation, prosecution, interrogation</name>
+        </item>
+        <item>
+          <name>Department of Defense</name>
+        </item>
+        <item>
+          <name>Detention of persons</name>
+        </item>
+        <item>
+          <name>Drug trafficking and controlled substances</name>
+        </item>
+        <item>
+          <name>Drug, alcohol, tobacco use</name>
+        </item>
+        <item>
+          <name>Employment and training programs</name>
+        </item>
+        <item>
+          <name>Employment discrimination and employee rights</name>
+        </item>
+        <item>
+          <name>Europe</name>
+        </item>
+        <item>
+          <name>Executive agency funding and structure</name>
+        </item>
+        <item>
+          <name>Federal Bureau of Investigation (FBI)</name>
+        </item>
+        <item>
+          <name>Federal officials</name>
+        </item>
+        <item>
+          <name>Government buildings, facilities, and property</name>
+        </item>
+        <item>
+          <name>Government employee pay, benefits, personnel management</name>
+        </item>
+        <item>
+          <name>Government ethics and transparency, public corruption</name>
+        </item>
+        <item>
+          <name>Government information and archives</name>
+        </item>
+        <item>
+          <name>Government studies and investigations</name>
+        </item>
+        <item>
+          <name>Higher education</name>
+        </item>
+        <item>
+          <name>Intelligence activities, surveillance, classified information</name>
+        </item>
+        <item>
+          <name>Mental health</name>
+        </item>
+        <item>
+          <name>Nuclear power</name>
+        </item>
+        <item>
+          <name>Performance measurement</name>
+        </item>
+        <item>
+          <name>Presidents and presidential powers, Vice Presidents</name>
+        </item>
+        <item>
+          <name>Public utilities and utility rates</name>
+        </item>
+        <item>
+          <name>Russia</name>
+        </item>
+        <item>
+          <name>Student aid and college costs</name>
+        </item>
+        <item>
+          <name>Trade restrictions</name>
+        </item>
+        <item>
+          <name>U.S. and foreign investments</name>
+        </item>
+        <item>
+          <name>Ukraine</name>
+        </item>
+        <item>
+          <name>War crimes, genocide, crimes against humanity</name>
+        </item>
+      </legislativeSubjects>
+      <policyArea>
+        <name>Armed Forces and National Security</name>
+      </policyArea>
+    </subjects>
+    <summaries>
+      <summary>
+        <versionCode>25</versionCode>
+        <actionDate>2023-06-22</actionDate>
+        <actionDesc>Reported to Senate</actionDesc>
+        <updateDate>2023-07-14T18:32:24Z</updateDate>
+        <text><![CDATA[ <p><b>Intelligence Authorization Act for Fiscal Year 2024</b></p> <p>This bill authorizes various intelligence-related activities for FY2024 and addresses related issues.</p> <p>For example, the bill</p> <ul> <li>modifies the requirements for a Department of Defense scholarship program for certain individuals pursuing cyber or digital technology degrees to allow scholarship recipients to fulfill their post-graduation employment obligation in the intelligence community;</li> <li>expands eligibility to receive in-state tuition rates at public institutions of higher education to members of the intelligence community on active duty for more than 30 days and their spouses and dependent children;</li> <li>requires the Office of the Director of National Intelligence (ODNI) to designate a senior official to serve as the intelligence community coordinator for accountability of China's atrocities (i.e., crimes against humanity, genocide, or war crimes);</li> <li>requires the ODNI to produce a national intelligence estimate on the implications of the ongoing war in Ukraine with respect to a long-term U.S. and NATO confrontation with Russia;</li> <li>requires the President to establish an office for analysis of global competition to carry out analysis and support policy development related to U.S. leadership in science, technology, and innovation relative to other countries;</li> <li>requires intelligence community Inspectors General to appoint security officers to provide confidential, security-related guidance to employees and contract employees who intend to make a complaint or provide information to Congress;</li> <li>defines circumstantial evidence that may be used in determining whether an adverse security clearance or access determination was a reprisal for the lawful disclosure of actions such as mismanagement, waste, abuse, or a violation of federal law; </li> <li>revises statutory requirements regarding classification and declassification of national security information; and</li> <li>defines the process whereby certain records of the President or Vice President may be designated as personal records in conjunction with the National Archives and Records Administration. </li> </ul>]]></text>
+      </summary>
+    </summaries>
+    <title>Intelligence Authorization Act for Fiscal Year 2024</title>
+    <titles>
+      <item>
+        <titleType>Display Title</titleType>
+        <title>Intelligence Authorization Act for Fiscal Year 2024</title>
+      </item>
+      <item>
+        <titleType>Short Title(s) as Reported to Senate</titleType>
+        <title>Intelligence Authorization Act for Fiscal Year 2024</title>
+        <chamberCode>S</chamberCode>
+        <chamberName>Senate</chamberName>
+        <billTextVersionName>Reported to Senate</billTextVersionName>
+        <billTextVersionCode>RS</billTextVersionCode>
+      </item>
+      <item>
+        <titleType>Short Title(s) as Reported to Senate for portions of this bill</titleType>
+        <title>Protecting Ballot Measures from Foreign Influence Act of 2023</title>
+        <chamberCode>S</chamberCode>
+        <chamberName>Senate</chamberName>
+        <billTextVersionName>Reported to Senate</billTextVersionName>
+        <billTextVersionCode>RS</billTextVersionCode>
+      </item>
+      <item>
+        <titleType>Short Title(s) as Reported to Senate for portions of this bill</titleType>
+        <title>SECURE IT Act of 2023</title>
+        <chamberCode>S</chamberCode>
+        <chamberName>Senate</chamberName>
+        <billTextVersionName>Reported to Senate</billTextVersionName>
+        <billTextVersionCode>RS</billTextVersionCode>
+      </item>
+      <item>
+        <titleType>Short Title(s) as Reported to Senate for portions of this bill</titleType>
+        <title>Strengthening Election Cybersecurity to Uphold Respect for Elections through Independent Testing Act of 2023</title>
+        <chamberCode>S</chamberCode>
+        <chamberName>Senate</chamberName>
+        <billTextVersionName>Reported to Senate</billTextVersionName>
+        <billTextVersionCode>RS</billTextVersionCode>
+      </item>
+      <item>
+        <titleType>Short Title(s) as Reported to Senate for portions of this bill</titleType>
+        <title>Sensible Classification Act of 2023</title>
+        <chamberCode>S</chamberCode>
+        <chamberName>Senate</chamberName>
+        <billTextVersionName>Reported to Senate</billTextVersionName>
+        <billTextVersionCode>RS</billTextVersionCode>
+      </item>
+      <item>
+        <titleType>Short Title(s) as Reported to Senate for portions of this bill</titleType>
+        <title>Classification Reform Act of 2023</title>
+        <chamberCode>S</chamberCode>
+        <chamberName>Senate</chamberName>
+        <billTextVersionName>Reported to Senate</billTextVersionName>
+        <billTextVersionCode>RS</billTextVersionCode>
+      </item>
+      <item>
+        <titleType>Official Title as Introduced</titleType>
+        <title>An original bill to authorize appropriations for fiscal year 2024 for intelligence and intelligence-related activities of the United States Government, the Intelligence Community Management Account, and the Central Intelligence Agency Retirement and Disability System, and for other purposes.</title>
+      </item>
+    </titles>
+    <textVersions>
+      <item>
+        <type>Reported to Senate</type>
+        <date>2023-06-22T04:00:00Z</date>
+        <formats>
+          <item>
+            <url>https://www.govinfo.gov/content/pkg/BILLS-118s2103rs/xml/BILLS-118s2103rs.xml</url>
+          </item>
+        </formats>
+      </item>
+    </textVersions>
+    <latestAction>
+      <actionDate>2023-07-13</actionDate>
+      <text>By Senator Warner from Select Committee on Intelligence filed written report. Report No. 118-59. Additional views filed.</text>
+    </latestAction>
+  </bill>
+  <dublinCore xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:format>text/xml</dc:format>
+    <dc:language>EN</dc:language>
+    <dc:rights>Pursuant to Title 17 Section 105 of the United States Code, this file is not subject to copyright protection and is in the public domain.</dc:rights>
+    <dc:contributor>Congressional Research Service, Library of Congress</dc:contributor>
+    <dc:description>This file contains bill summaries and statuses for federal legislation. A bill summary describes the most significant provisions of a piece of legislation and details the effects the legislative text may have on current law and federal programs. Bill summaries are authored by the Congressional Research Service (CRS) of the Library of Congress. As stated in Public Law 91-510 (2 USC 166 (d)(6)), one of the duties of CRS is "to prepare summaries and digests of bills and resolutions of a public general nature introduced in the Senate or House of Representatives". For more information, refer to the User Guide that accompanies this file.</dc:description>
+  </dublinCore>
+</billStatus>

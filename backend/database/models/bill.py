@@ -22,54 +22,37 @@ class Bill(db.Model):
     last_action_description = db.Column(db.Text, nullable=True)
     update_date = db.Column(db.Date, nullable=True)
     # Timestamp of record creation
-    created_at = db.Column(db.DateTime, nullable=False,
-                           default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False,default=datetime.utcnow)
     # Timestamp of last update
-    updated_at = db.Column(db.DateTime, nullable=True,
-                           onupdate=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, nullable=True,onupdate=datetime.utcnow)
     full_bill_link = db.Column(db.String, nullable=True)
     voting_record = db.Column(db.Text, nullable=True)
 
-    action_type_id = db.Column(
-        db.Integer, db.ForeignKey('action_type.id'), nullable=True)
-    primary_subject_id = db.Column(
-        db.Integer, db.ForeignKey('subject.id'), nullable=True)
-    sponsor_id = db.Column(db.Integer, db.ForeignKey(
-        'politician.id'), nullable=False)
+    action_type_id = db.Column(db.Integer, db.ForeignKey('action_type.id'), nullable=True)
+    primary_subject_id = db.Column(db.Integer, db.ForeignKey('subject.id'), nullable=True)
+    sponsor_id = db.Column(db.Integer, db.ForeignKey('politician.id'), nullable=False)
 
     # Store the XML content as a JSON object
     xml_content = db.Column(JSON, nullable=True)
     # Relationships
-    action_type = db.relationship(
-        'ActionType', back_populates='bills', lazy=True)
-    actions = db.relationship('Action', back_populates='bill', lazy=True)
-    amendments = db.relationship('Amendment', back_populates='bill', lazy=True)
-    co_sponsors = db.relationship(
-        'CoSponsor', back_populates='bill', lazy=True)
-    committees = db.relationship(
-        'Committee', secondary=bill_committee, back_populates='bills')
-    subcommittees = db.relationship(
-        'Subcommittee', secondary=bill_subcommittee, back_populates='bills', lazy=True)
-    full_texts = db.relationship(
-        'BillFullText', back_populates='bill', lazy=True)
-    laws = db.relationship('Law', back_populates='bill', lazy=True)
+    action_type = db.relationship('ActionType', back_populates='bills', lazy=True, cascade="all,delete")
+    actions = db.relationship('Action', back_populates='bill', lazy=True, cascade="all,delete")
+    amendments = db.relationship('Amendment', back_populates='bill', lazy=True, cascade="all,delete")
+    co_sponsors = db.relationship('CoSponsor', back_populates='bill', lazy=True, cascade="all,delete")
+    committees = db.relationship('Committee', secondary=bill_committee, back_populates='bills', cascade="all,delete")
+    subcommittees = db.relationship('Subcommittee', secondary=bill_subcommittee, back_populates='bills', lazy=True, cascade="all,delete")
+    full_texts = db.relationship('BillFullText', back_populates='bill', lazy=True, cascade="all,delete")
+    laws = db.relationship('Law', back_populates='bill',lazy=True, cascade="all,delete")
     # Changed attribute name to 'loc_summaries' and removed uselist parameter
-    loc_summaries = db.relationship(
-        'LOCSummary', back_populates='bill', lazy=True)
-    notes = db.relationship('Note', back_populates='bill', lazy=True)
-    policy_areas = db.relationship(
-        'PolicyArea', back_populates='bill', lazy=True)
-    primary_subject = db.relationship(
-        'Subject', back_populates='primary_bills', lazy=True)
-    recorded_votes = db.relationship(
-        'RecordedVote', back_populates='bill', lazy=True)
-    related_bills = db.relationship(
-        'RelatedBill', back_populates='bill', lazy=True)
-    sponsor = db.relationship(
-        'Politician', back_populates='sponsored_bills', lazy=True)
-    subjects = db.relationship(
-        'Subject', secondary='bill_subject', back_populates='bills', lazy=True)
-    titles = db.relationship('BillTitle', back_populates='bill', lazy=True)
+    loc_summaries = db.relationship('LOCSummary', back_populates='bill', lazy=True, cascade="all,delete")
+    notes = db.relationship('Note', back_populates='bill',lazy=True, cascade="all,delete")
+    policy_areas = db.relationship('PolicyArea', back_populates='bill', lazy=True, cascade="all,delete")
+    primary_subject = db.relationship('Subject', back_populates='primary_bills', lazy=True, cascade="all,delete")
+    recorded_votes = db.relationship('RecordedVote', back_populates='bill', lazy=True, cascade="all,delete")
+    related_bills = db.relationship('RelatedBill', back_populates='bill', lazy=True, cascade="all,delete")
+    sponsor = db.relationship('Politician', back_populates='sponsored_bills', lazy=True, cascade="all,delete")
+    subjects = db.relationship('Subject', secondary='bill_subject', back_populates='bills', lazy=True, cascade="all,delete")
+    titles = db.relationship('BillTitle', back_populates='bill', lazy=True, cascade="all,delete")
 
     def __repr__(self):
         return f'<Bill {self.bill_number}>'

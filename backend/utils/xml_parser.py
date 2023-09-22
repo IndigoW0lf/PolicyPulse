@@ -17,15 +17,15 @@ def parse_xml_files(directory, keywords):
 
     keyword_found_count = 0
     
-    filtered_xml_directory = Config.XML_FILTERED_FILES_DIR
-    os.makedirs(filtered_xml_directory, exist_ok=True)
+    prelim_related_files = 'backend/data/prelim_related_xml_files'
+    os.makedirs(prelim_related_files, exist_ok=True)
     
     for xml_file in xml_files:
         try:
             tree = etree.parse(xml_file)
             
             # Extracting the title, summary, and amended bill title text
-            title_element = tree.find(".//titles/item[titleType='Display Title']/title")
+            title_element = tree.find(".//titles/item[titleType='Official Title as Introduced']/title")
             summary_element = tree.find(".//summaries/summary/text")
             amended_title_element = tree.find(".//amendedBill/title")
             
@@ -42,7 +42,7 @@ def parse_xml_files(directory, keywords):
                     keyword_found_count += 1
 
                     # Define the destination path
-                    dest_path = os.path.join(filtered_xml_directory, os.path.basename(xml_file))
+                    dest_path = os.path.join(prelim_related_files, os.path.basename(xml_file))
                     
                     # Check if the file already exists in the destination directory
                     if not os.path.exists(dest_path):
@@ -60,4 +60,4 @@ def parse_xml_files(directory, keywords):
         
 # Specify the directory containing XML files and the keywords to search for
 if __name__ == "__main__":
-    parse_xml_files(Config.XML_RAW_FILES_DIR, keywords)  
+    parse_xml_files('backend/data/test_xml_files', keywords)  
