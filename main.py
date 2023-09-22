@@ -63,7 +63,7 @@ def main():
     reset_sequences()  # Reset sequences in the database to start from 1
     
     # Specify the path to the directory containing your XML files here
-    xml_directory_path = "backend/data/filtered_xml_files/"
+    xml_directory_path = "backend/data/prelim_related_xml_files"
 
     # Get a list of all files in the directory
     files_in_directory = os.listdir(xml_directory_path)
