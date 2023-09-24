@@ -4,6 +4,9 @@ import json
 from config import Config
 
 def extract_tags(element, tag_dict):
+    if not isinstance(element.tag, str):
+        print(f"Unexpected tag type for {element.tag}: {type(element.tag)}")
+        return
     if element.tag not in tag_dict:
         tag_dict[element.tag] = {}
 
@@ -28,9 +31,9 @@ def parse_xml_files(directory, unique_tags):
 
 def main():
     unique_tags = {}
-    parse_xml_files(Config.XML_FILTERED_FILES_DIR, unique_tags)
+    parse_xml_files('backend/data/fullBill_xml_files', unique_tags)
 
-    with open(Config.UNIQUE_TAGS_FILE, "w") as f:
+    with open('backend/data/fullBill_xml_tags.xml', "w") as f:
         json.dump(unique_tags, f, indent=4)
 
 if __name__ == "__main__":

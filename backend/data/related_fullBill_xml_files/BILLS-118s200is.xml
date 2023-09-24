@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="billres.xsl"?>
+<!DOCTYPE bill PUBLIC "-//US Congress//DTDs/bill.dtd//EN" "bill.dtd">
+<bill bill-stage="Introduced-in-Senate" dms-id="A1" public-private="public" slc-id="S1-BOM23050-WC4-02-KXP">
+<metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+<dublinCore>
+<dc:title>118 S200 IS: Parental Rights Over The Education and Care of Their Kids Act </dc:title>
+<dc:publisher>U.S. Senate</dc:publisher>
+<dc:date>2023-02-01</dc:date>
+<dc:format>text/xml</dc:format>
+<dc:language>EN</dc:language>
+<dc:rights>Pursuant to Title 17 Section 105 of the United States Code, this file is not subject to copyright protection and is in the public domain.</dc:rights>
+</dublinCore>
+</metadata>
+<form>
+<distribution-code display="yes">II</distribution-code>
+<congress>118th CONGRESS</congress><session>1st Session</session>
+<legis-num>S. 200</legis-num>
+<current-chamber>IN THE SENATE OF THE UNITED STATES</current-chamber>
+<action>
+<action-date date="20230201">February 1, 2023</action-date>
+<action-desc><sponsor name-id="S365">Mr. Scott of South Carolina</sponsor> (for himself, <cosponsor name-id="S266">Mr. Crapo</cosponsor>, <cosponsor name-id="S293">Mr. Graham</cosponsor>, <cosponsor name-id="S395">Mrs. Hyde-Smith</cosponsor>, <cosponsor name-id="S404">Mr. Scott of Florida</cosponsor>, <cosponsor name-id="S350">Mr. Rubio</cosponsor>, and <cosponsor name-id="S323">Mr. Risch</cosponsor>) introduced the following bill; which was read twice and referred to the <committee-name committee-id="SSHR00">Committee on Health, Education, Labor, and Pensions</committee-name></action-desc>
+</action>
+<legis-type>A BILL</legis-type>
+<official-title>To require elementary and middle schools that receive Federal funds to obtain parental consent before changing a minor child's gender markers, pronouns, or preferred name on any school form or allowing a child to change the child's sex-based accommodations, including locker rooms or bathrooms.</official-title>
+</form>
+<legis-body display-enacting-clause="yes-display-enacting-clause" id="H428621DB8886496E85C3E494F846EA5C">
+<section section-type="section-one" id="id25d5bfff46e744d794eafbc45fd0d487"><enum>1.</enum><header>Short title</header><text display-inline="no-display-inline">This Act may be cited as the <quote><short-title>Parental Rights Over The Education and Care of Their Kids Act </short-title></quote> or the <quote><short-title>PROTECT Kids Act</short-title></quote>.</text></section> <section id="id7944A8BAC7DE4C72B560A110919530FD"><enum>2.</enum><header>Findings</header><text display-inline="no-display-inline">Congress finds the following:</text>
+<paragraph id="id11e4e688473242f0bcbf24a0029a276e"><enum>(1)</enum><text>The law in the United States has long recognized the importance of parental rights. A parent’s right to oversee the care and education of their child is guaranteed by the Fourteenth Amendment.</text></paragraph> <paragraph id="id58f95a646f38439fb3663ab34bc0c068"><enum>(2)</enum><text>Parents have a fundamental, constitutionally guaranteed right to raise and educate their children in the way that they choose.</text></paragraph>
+<paragraph id="idb8a9be5eb2b44191a1c02fe9ce5529bc"><enum>(3)</enum><text>Public schools across the country are violating these fundamental parental and familial rights by deliberately hiding information about gender transitioning children from their parents.</text></paragraph> <paragraph id="id256b59ce00944352a5cdd67917ae6fb8"><enum>(4)</enum><text>School staff in Montgomery County Public Schools in Maryland instruct teachers to form <quote>gender transition plans</quote> for students without the knowledge or consent of the student’s family.</text></paragraph>
+<paragraph id="id7ec24d71efdb4e5abc03cde1137532be"><enum>(5)</enum><text>An Iowa public school district was sued for allowing children as young as 12 to create <quote>gender support plans</quote> without the knowledge or consent of the students’ parents.</text></paragraph> <paragraph id="ide07e21c7fa884cb6a130a3aff60e038a"><enum>(6)</enum><text>Fairfax County Public Schools in Virginia has required all teachers to complete a training program saying that parental permission is not required for students who seek to be addressed by different names or pronouns. </text></paragraph>
+<paragraph id="idbbe24d59c6324a69a07cc1983b2e7ab2"><enum>(7)</enum><text>Regardless of their intentions, these schools are sabotaging the parent-child relationship and encouraging children to keep secrets from the adults who are charged with protecting and defending them—their parents.</text></paragraph> <paragraph id="id464706ab561e4bc4a8a9f13b087e013f"><enum>(8)</enum><text>Children do best when their parents are actively involved in their education. School districts, activist organizations, and teachers unions must never be allowed to intrude on parental rights by concealing critical information from parents about their children. </text></paragraph></section>
+<section id="idA95969EA4F234B00B5C948AA20257D83"><enum>3.</enum><header>Requirement related to gender markers, pronouns, and preferred names on school forms</header><text display-inline="no-display-inline">As a condition of receiving Federal funds, any elementary school (as such term is defined in section 8101 of the Elementary and Secondary Education Act of 1965 (<external-xref legal-doc="usc" parsable-cite="usc/20/7801">20 U.S.C. 7801</external-xref>)) or school that consists of only middle grades (as such term is defined in such section), that receives Federal funds shall be required to obtain parental consent before—</text> <paragraph id="id617053B28BB54530BF6BD4A0A92CF408"><enum>(1)</enum><text display-inline="yes-display-inline">changing a minor child's gender markers, pronouns, or preferred name on any school form; or</text></paragraph>
+<paragraph id="idF08D187DB79449B0BE2D34BC64FF9F32"><enum>(2)</enum><text>allowing a child to change the child's sex-based accommodations, including locker rooms or bathrooms. </text></paragraph></section> </legis-body> </bill> 
+

@@ -1,0 +1,292 @@
+<?xml version="1.0" ?>
+<ROOT>
+	
+	
+	
+	
+	<BillInformation>
+		
+		
+		
+		
+		<BillNumber>HB438</BillNumber>
+		
+		
+		
+		
+		<CurrentBillString>HB 438</CurrentBillString>
+		
+		
+		
+		
+		<SubstitutedBy/>
+		
+		
+		
+		
+		<Title>
+			
+			
+			
+			
+			<ShortTitle>MINIMUM PRISON TERMS</ShortTitle>
+			
+			
+			
+			
+			<LongTitle>Modifies provisions relating to minimum prison terms</LongTitle>
+			
+			
+		
+		
+		</Title>
+		
+		
+		
+		
+		<Action>
+			
+			
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB438&amp;year=2023&amp;code=R </Link>
+			
+			
+			
+			
+			<Description>Prefiled (H)</Description>
+			
+			
+			
+			
+			<Guid>532969</Guid>
+			
+			
+			
+			
+			<PubDate>2022-12-15</PubDate>
+			
+			
+		
+		
+		</Action>
+		
+		
+		
+		
+		<Action>
+			
+			
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB438&amp;year=2023&amp;code=R </Link>
+			
+			
+			
+			
+			<Description>Read First Time (H)</Description>
+			
+			
+			
+			
+			<Guid>533614</Guid>
+			
+			
+			
+			
+			<PubDate>2023-01-04</PubDate>
+			
+			
+			
+			
+			<HouseJournalStartPage>73</HouseJournalStartPage>
+			
+			
+			
+			
+			<HouseJournalEndPage>73</HouseJournalEndPage>
+			
+			
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn001.pdf#page=73</JournalLink>
+			
+			
+		
+		
+		</Action>
+		
+		
+		
+		
+		<Action>
+			
+			
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB438&amp;year=2023&amp;code=R </Link>
+			
+			
+			
+			
+			<Description>Read Second Time (H)</Description>
+			
+			
+			
+			
+			<Guid>534789</Guid>
+			
+			
+			
+			
+			<PubDate>2023-01-05</PubDate>
+			
+			
+			
+			
+			<HouseJournalStartPage>193</HouseJournalStartPage>
+			
+			
+			
+			
+			<HouseJournalEndPage>193</HouseJournalEndPage>
+			
+			
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn002.pdf#page=193</JournalLink>
+			
+			
+		
+		
+		</Action>
+		
+		
+		
+		
+		<Action>
+			
+			
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB438&amp;year=2023&amp;code=R </Link>
+			
+			
+			
+			
+			<Description>Referred: Judiciary(H)</Description>
+			
+			
+			
+			
+			<Guid>539390</Guid>
+			
+			
+			
+			
+			<PubDate>2023-03-02</PubDate>
+			
+			
+			
+			
+			<HouseJournalStartPage>750</HouseJournalStartPage>
+			
+			
+			
+			
+			<HouseJournalEndPage>750</HouseJournalEndPage>
+			
+			
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn032.pdf#page=750</JournalLink>
+			
+			
+		
+		
+		</Action>
+		
+		
+		
+		
+		<Sponsor>
+			
+			
+			
+			
+			<SponsorType>Sponsor</SponsorType>
+			
+			
+			
+			
+			<FullName>Barry Hovis</FullName>
+			
+			
+			
+			
+			<District>146</District>
+			
+			
+		
+		
+		</Sponsor>
+		
+		
+		
+		
+		<BillText>
+			
+			
+			
+			
+			<BillTextLink>https://documents.house.mo.gov/billtracking/bills231/hlrbillspdf/1355H.01I.pdf</BillTextLink>
+			
+			
+			
+			
+			<DocumentName>Introduced</DocumentName>
+			
+			
+			
+			
+			<VersionTypeCode>IN</VersionTypeCode>
+			
+			
+		
+		
+		</BillText>
+		
+		
+		
+		
+		<BillSummary>
+			
+			
+			
+			
+			<SummaryTextLink>https://documents.house.mo.gov/billtracking/bills231/sumpdf/HB0438I.pdf</SummaryTextLink>
+			
+			
+			
+			
+			<DocumentName>Introduced</DocumentName>
+			
+			
+			
+			
+			<VersionTypeCode>IN</VersionTypeCode>
+			
+			
+		
+		
+		</BillSummary>
+		
+		
+	
+	
+	</BillInformation>
+	
+	
+
+
+</ROOT>

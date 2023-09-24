@@ -1,0 +1,347 @@
+<?xml version="1.0" ?>
+<ROOT>
+	
+	
+	<BillInformation>
+		
+		
+		<BillNumber>HB99</BillNumber>
+		
+		
+		<CurrentBillString>HB 99</CurrentBillString>
+		
+		
+		<SubstitutedBy>
+			
+			
+			<ParentBillString>HB115</ParentBillString>
+			
+			
+			<ParentBillLink>https://house.mo.gov/bill.aspx?bill=HB115&amp;year=2023&amp;code=R </ParentBillLink>
+			
+		
+		</SubstitutedBy>
+		
+		
+		<Title>
+			
+			
+			<ShortTitle>PHYSICAL THERAPISTS</ShortTitle>
+			
+			
+			<LongTitle>Modifies provisions relating to the scope of practice for physical therapists</LongTitle>
+			
+		
+		</Title>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB99&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Prefiled (H)</Description>
+			
+			
+			<Guid>530776</Guid>
+			
+			
+			<PubDate>2022-12-01</PubDate>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB99&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Read First Time (H)</Description>
+			
+			
+			<Guid>533277</Guid>
+			
+			
+			<PubDate>2023-01-04</PubDate>
+			
+			
+			<HouseJournalStartPage>55</HouseJournalStartPage>
+			
+			
+			<HouseJournalEndPage>55</HouseJournalEndPage>
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn001.pdf#page=55</JournalLink>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB99&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Read Second Time (H)</Description>
+			
+			
+			<Guid>534452</Guid>
+			
+			
+			<PubDate>2023-01-05</PubDate>
+			
+			
+			<HouseJournalStartPage>178</HouseJournalStartPage>
+			
+			
+			<HouseJournalEndPage>178</HouseJournalEndPage>
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn002.pdf#page=178</JournalLink>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB99&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Referred: Professional Registration and Licensing(H)</Description>
+			
+			
+			<Guid>535437</Guid>
+			
+			
+			<PubDate>2023-01-17</PubDate>
+			
+			
+			<HouseJournalStartPage>308</HouseJournalStartPage>
+			
+			
+			<HouseJournalEndPage>308</HouseJournalEndPage>
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn007.pdf#page=308</JournalLink>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB99&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Public Hearing Completed (H)</Description>
+			
+			
+			<Guid>535978</Guid>
+			
+			
+			<PubDate>2023-01-24</PubDate>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB99&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Executive Session Completed (H)</Description>
+			
+			
+			<Guid>536342</Guid>
+			
+			
+			<PubDate>2023-01-31</PubDate>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB99&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>HCS Voted Do Pass (H)</Description>
+			
+			
+			<Guid>536344</Guid>
+			
+			
+			<PubDate>2023-01-31</PubDate>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB99&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>HCS Reported Do Pass (H)</Description>
+			
+			
+			<Guid>536413</Guid>
+			
+			
+			<PubDate>2023-02-01</PubDate>
+			
+			
+			<RollCall>
+				
+				
+				<TotalYes>10</TotalYes>
+				
+				
+				<TotalNo>0</TotalNo>
+				
+				
+				<TotalPresent>0</TotalPresent>
+				
+			
+			</RollCall>
+			
+			
+			<HouseJournalStartPage>460</HouseJournalStartPage>
+			
+			
+			<HouseJournalEndPage>460</HouseJournalEndPage>
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn016.pdf#page=460</JournalLink>
+			
+		
+		</Action>
+		
+		
+		<Sponsor>
+			
+			
+			<SponsorType>Sponsor</SponsorType>
+			
+			
+			<FullName>Bishop Davidson</FullName>
+			
+			
+			<District>130</District>
+			
+		
+		</Sponsor>
+		
+		
+		<BillText>
+			
+			
+			<BillTextLink>https://documents.house.mo.gov/billtracking/bills231/hlrbillspdf/0430H.01I.pdf</BillTextLink>
+			
+			
+			<DocumentName>Introduced</DocumentName>
+			
+			
+			<VersionTypeCode>IN</VersionTypeCode>
+			
+		
+		</BillText>
+		
+		
+		<BillSummary>
+			
+			
+			<SummaryTextLink>https://documents.house.mo.gov/billtracking/bills231/sumpdf/HB0099I.pdf</SummaryTextLink>
+			
+			
+			<DocumentName>Introduced</DocumentName>
+			
+			
+			<VersionTypeCode>IN</VersionTypeCode>
+			
+		
+		</BillSummary>
+		
+		
+		<FiscalNote>
+			
+			
+			<FiscalNoteLink>https://documents.house.mo.gov/billtracking/bills231/fiscal/fispdf/0430H.01I.ORG.pdf</FiscalNoteLink>
+			
+		
+		</FiscalNote>
+		
+		
+		<Hearings>
+			
+			
+			<CommitteeName>Professional Registration and Licensing</CommitteeName>
+			
+			
+			<NoticeDate>2023-01-24</NoticeDate>
+			
+			
+			<NoticeTime>1900-01-01T12:00:00</NoticeTime>
+			
+			
+			<Location>House Hearing Room 1</Location>
+			
+			
+			<Comments/>
+			
+			
+			<AltTime/>
+			
+		
+		</Hearings>
+		
+		
+		<Hearings>
+			
+			
+			<CommitteeName>Professional Registration and Licensing</CommitteeName>
+			
+			
+			<NoticeDate>2023-01-31</NoticeDate>
+			
+			
+			<NoticeTime>1900-01-01T12:00:00</NoticeTime>
+			
+			
+			<Location>House Hearing Room 1</Location>
+			
+			
+			<Comments/>
+			
+			
+			<AltTime/>
+			
+		
+		</Hearings>
+		
+		
+		<Witness>
+			
+			
+			<WitnessFormsLink>https://documents.house.mo.gov/billtracking/bills231/witnesses/HB99Testimony.pdf</WitnessFormsLink>
+			
+		
+		</Witness>
+		
+	
+	</BillInformation>
+	
+
+</ROOT>

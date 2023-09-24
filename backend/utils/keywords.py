@@ -14,8 +14,6 @@ keywords = [
     "polyamorists",
     "transgender rights",
     "transgender",
-    "bisexual",
-    "lesbian",
     "gender identity",
     "sexual orientation",
     "homophobia",
@@ -110,7 +108,7 @@ keywords = [
     "LGBTQ+ policies",
     "LGBTQ+ inclusion",
     "sexual identity",
-    "gender identity disorder", # historical/medical term
+    "gender identity disorder",
     "sexual minorities",
     "gender minorities",
     "queer identity",
@@ -173,7 +171,7 @@ keywords = [
     "Don't Ask, Don't Tell Repeal Act",
     "Defense of Marriage Act",
     "Employment Non-Discrimination Act",
-    "sexual preference" # often considered a derogatory term now, but might be in older legislation
+    "sexual preference",
     "homosexual acts",
     "sexual reassignment surgery",
     "gender confirmation surgery",
@@ -187,7 +185,7 @@ keywords = [
     "queer rights",
     "queer representation",
     "queer media",
-     "gender fluid",
+    "gender fluid",
     "gender fluidity",
     "gender diverse",
     "gender diversity",
@@ -230,8 +228,8 @@ keywords = [
     "gender-affirming practices",
     "queer festivals",
     "queer parades",
-    "PFLAG", # Organization for parents and allies of LGBTQ+ individuals
-    "GLAAD", # Organization that focuses on media representation of LGBTQ+ individuals
+    "PFLAG",
+    "GLAAD", 
     "LGBTQ+ unions",
     "LGBTQ+ partnerships",
     "LGBTQ+ marriage",
@@ -359,14 +357,13 @@ keywords = [
     "LGBTQ+ HIV/AIDS inclusion",
     "LGBTQ+ HIV/AIDS integration",
     "LGBTQ+ HIV",
-    "Section 377", # Referring to the law criminalizing homosexual acts in India, could be mentioned in international contexts
-    "Pink Dot", # LGBTQ+ movement in Singapore
-    "ARCIGAY", # Italian LGBTQ+ organization
-    "Cogam", # Spanish LGBTQ+ organization
-    "homophile", # An older term that was used before 'homosexual' and 'LGBTQ+' became prevalent
-    "SOGIE", # Sexual Orientation, Gender Identity, and Expression - often used in policy and international discussions
-    "Section 28", # UK legislation that restricted "promotion" of homosexuality in schools
-    "Rainbow Railroad", # A Canadian organization helping LGBTQ+ people escape violence and persecution
-    "Rainbow Refugees", # A Canadian organization helping LGBTQ+ people escape violence and persecution
-    "Rainbow Railroad Canada", # A Canadian organization helping LGBTQ+ people escape violence and persecution
+    "Section 377", 
+    "Pink Dot", 
+    "ARCIGAY", 
+    "Cogam", 
+    "homophile", 
+    "SOGIE",
+    "Rainbow Railroad", 
+    "Rainbow Refugees", 
+    "Rainbow Railroad Canada", 
     ]

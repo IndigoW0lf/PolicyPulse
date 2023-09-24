@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="billres.xsl"?>
+<!DOCTYPE bill PUBLIC "-//US Congress//DTDs/bill.dtd//EN" "bill.dtd">
+<bill bill-stage="Introduced-in-Senate" dms-id="A1" public-private="public" slc-id="S1-DAV23F96-063-V9-HHC"><metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+<dublinCore>
+<dc:title>118 S2509 IS: To require reporting on sexual assault in surveys.</dc:title>
+<dc:publisher>U.S. Senate</dc:publisher>
+<dc:date>2023-07-26</dc:date>
+<dc:format>text/xml</dc:format>
+<dc:language>EN</dc:language>
+<dc:rights>Pursuant to Title 17 Section 105 of the United States Code, this file is not subject to copyright protection and is in the public domain.</dc:rights>
+</dublinCore>
+</metadata>
+<form>
+<distribution-code display="yes">II</distribution-code><congress>118th CONGRESS</congress><session>1st Session</session><legis-num>S. 2509</legis-num><current-chamber>IN THE SENATE OF THE UNITED STATES</current-chamber><action><action-date date="20230726">July 26, 2023</action-date><action-desc><sponsor name-id="S221">Mrs. Feinstein</sponsor> introduced the following bill; which was read twice and referred to the <committee-name committee-id="SSAS00">Committee on Armed Services</committee-name></action-desc></action><legis-type>A BILL</legis-type><official-title>To require reporting on sexual assault in surveys.</official-title></form><legis-body><section id="id8f98808fdeab4444a86feb6a128aa05b" section-type="section-one"><enum>1.</enum><header>Armed Forces surveys</header><paragraph id="id5923c70587504a3f809df793ed47d4e7"><enum/><text>Section 481(c) of title 10, United States Code, is amended—</text></paragraph><paragraph commented="no" display-inline="no-display-inline" id="ide18d6d4afedc4fed9f39659a248eb0cc"><enum>(1)</enum><text display-inline="yes-display-inline">by redesignating paragraphs (3), (4), and (5) as paragraphs (4), (5), and (6), respectively; and </text></paragraph><paragraph commented="no" display-inline="no-display-inline" id="id7ba5ce33b72341018f9170639c1304f5"><enum>(2)</enum><text display-inline="yes-display-inline">by inserting after paragraph (2) the following new paragraph: </text><quoted-block id="id108E33B581714660A077DF9D902DA2C0" style="OLC" act-name=""><paragraph id="id0A01CD737A4C49DD9BAAE189B7CF501A"><enum>(3)</enum><text>Indicators of the assault (including unwanted sexual contact) that give reason to believe that the victim was targeted, or discriminated against, or both, for their real or perceived sexual orientation or status in a group as described under subsections (b) or (c), and any other factor considered appropriate by the Secretary.</text></paragraph><after-quoted-block>.</after-quoted-block></quoted-block></paragraph></section></legis-body></bill> 
+

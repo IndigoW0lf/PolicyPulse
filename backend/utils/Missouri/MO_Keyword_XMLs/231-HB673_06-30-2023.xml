@@ -1,0 +1,262 @@
+<?xml version="1.0" ?>
+<ROOT>
+	
+	
+	
+	
+	<BillInformation>
+		
+		
+		
+		
+		<BillNumber>HB673</BillNumber>
+		
+		
+		
+		
+		<CurrentBillString>HB 673</CurrentBillString>
+		
+		
+		
+		
+		<SubstitutedBy/>
+		
+		
+		
+		
+		<Title>
+			
+			
+			
+			
+			<ShortTitle>WITHDRAWN</ShortTitle>
+			
+			
+			
+			
+			<LongTitle>Creates the Missouri Earned Family and Medical Leave Act</LongTitle>
+			
+			
+		
+		
+		</Title>
+		
+		
+		
+		
+		<Action>
+			
+			
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB673&amp;year=2023&amp;code=R </Link>
+			
+			
+			
+			
+			<Description>Introduced and Read First Time (H)</Description>
+			
+			
+			
+			
+			<Guid>535036</Guid>
+			
+			
+			
+			
+			<PubDate>2023-01-05</PubDate>
+			
+			
+			
+			
+			<HouseJournalStartPage>171</HouseJournalStartPage>
+			
+			
+			
+			
+			<HouseJournalEndPage>171</HouseJournalEndPage>
+			
+			
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn002.pdf#page=171</JournalLink>
+			
+			
+		
+		
+		</Action>
+		
+		
+		
+		
+		<Action>
+			
+			
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB673&amp;year=2023&amp;code=R </Link>
+			
+			
+			
+			
+			<Description>Read Second Time (H)</Description>
+			
+			
+			
+			
+			<Guid>535139</Guid>
+			
+			
+			
+			
+			<PubDate>2023-01-09</PubDate>
+			
+			
+			
+			
+			<HouseJournalStartPage>211</HouseJournalStartPage>
+			
+			
+			
+			
+			<HouseJournalEndPage>211</HouseJournalEndPage>
+			
+			
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn003.pdf#page=211</JournalLink>
+			
+			
+		
+		
+		</Action>
+		
+		
+		
+		
+		<Action>
+			
+			
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB673&amp;year=2023&amp;code=R </Link>
+			
+			
+			
+			
+			<Description>Withdrawn (H)</Description>
+			
+			
+			
+			
+			<Guid>537211</Guid>
+			
+			
+			
+			
+			<PubDate>2023-02-09</PubDate>
+			
+			
+			
+			
+			<HouseJournalStartPage>564</HouseJournalStartPage>
+			
+			
+			
+			
+			<HouseJournalEndPage>564</HouseJournalEndPage>
+			
+			
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn021.pdf#page=564</JournalLink>
+			
+			
+		
+		
+		</Action>
+		
+		
+		
+		
+		<Sponsor>
+			
+			
+			
+			
+			<SponsorType>Sponsor</SponsorType>
+			
+			
+			
+			
+			<FullName>Bridget Walsh Moore</FullName>
+			
+			
+			
+			
+			<District>093</District>
+			
+			
+		
+		
+		</Sponsor>
+		
+		
+		
+		
+		<BillText>
+			
+			
+			
+			
+			<BillTextLink>https://documents.house.mo.gov/billtracking/bills231/hlrbillspdf/1145H.01I.pdf</BillTextLink>
+			
+			
+			
+			
+			<DocumentName>Introduced</DocumentName>
+			
+			
+			
+			
+			<VersionTypeCode>IN</VersionTypeCode>
+			
+			
+		
+		
+		</BillText>
+		
+		
+		
+		
+		<BillSummary>
+			
+			
+			
+			
+			<SummaryTextLink>https://documents.house.mo.gov/billtracking/bills231/sumpdf/HB0673I.pdf</SummaryTextLink>
+			
+			
+			
+			
+			<DocumentName>Introduced</DocumentName>
+			
+			
+			
+			
+			<VersionTypeCode>IN</VersionTypeCode>
+			
+			
+		
+		
+		</BillSummary>
+		
+		
+	
+	
+	</BillInformation>
+	
+	
+
+
+</ROOT>

@@ -1,0 +1,1448 @@
+<?xml version="1.0" ?>
+<ROOT>
+	
+	
+	<BillInformation>
+		
+		
+		<BillNumber>HB419</BillNumber>
+		
+		
+		<CurrentBillString>HCS HB 419</CurrentBillString>
+		
+		
+		<SubstitutedBy/>
+		
+		
+		<Title>
+			
+			
+			<ShortTitle>GENDER TRANSITION PROCEDURES</ShortTitle>
+			
+			
+			<LongTitle>Creates provisions relating to gender transition procedures</LongTitle>
+			
+		
+		</Title>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB419&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Prefiled (H)</Description>
+			
+			
+			<Guid>531830</Guid>
+			
+			
+			<PubDate>2022-12-13</PubDate>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB419&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Read First Time (H)</Description>
+			
+			
+			<Guid>533595</Guid>
+			
+			
+			<PubDate>2023-01-04</PubDate>
+			
+			
+			<HouseJournalStartPage>72</HouseJournalStartPage>
+			
+			
+			<HouseJournalEndPage>72</HouseJournalEndPage>
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn001.pdf#page=72</JournalLink>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB419&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Read Second Time (H)</Description>
+			
+			
+			<Guid>534770</Guid>
+			
+			
+			<PubDate>2023-01-05</PubDate>
+			
+			
+			<HouseJournalStartPage>192</HouseJournalStartPage>
+			
+			
+			<HouseJournalEndPage>192</HouseJournalEndPage>
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn002.pdf#page=192</JournalLink>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB419&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Referred: General Laws(H)</Description>
+			
+			
+			<Guid>535862</Guid>
+			
+			
+			<PubDate>2023-01-23</PubDate>
+			
+			
+			<HouseJournalStartPage>383</HouseJournalStartPage>
+			
+			
+			<HouseJournalEndPage>383</HouseJournalEndPage>
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn010.pdf#page=383</JournalLink>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB419&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Public Hearing Completed (H)</Description>
+			
+			
+			<Guid>536000</Guid>
+			
+			
+			<PubDate>2023-01-24</PubDate>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB419&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Executive Session Completed (H)</Description>
+			
+			
+			<Guid>537738</Guid>
+			
+			
+			<PubDate>2023-02-16</PubDate>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB419&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>HCS Voted Do Pass (H)</Description>
+			
+			
+			<Guid>537740</Guid>
+			
+			
+			<PubDate>2023-02-16</PubDate>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB419&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>HCS Reported Do Pass (H)</Description>
+			
+			
+			<Guid>537756</Guid>
+			
+			
+			<PubDate>2023-02-16</PubDate>
+			
+			
+			<RollCall>
+				
+				
+				<TotalYes>8</TotalYes>
+				
+				
+				<TotalNo>5</TotalNo>
+				
+				
+				<TotalPresent>1</TotalPresent>
+				
+			
+			</RollCall>
+			
+			
+			<HouseJournalStartPage>610</HouseJournalStartPage>
+			
+			
+			<HouseJournalEndPage>610</HouseJournalEndPage>
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn025.pdf#page=610</JournalLink>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB419&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Referred: Rules - Legislative Oversight(H)</Description>
+			
+			
+			<Guid>537900</Guid>
+			
+			
+			<PubDate>2023-02-21</PubDate>
+			
+			
+			<HouseJournalStartPage>630</HouseJournalStartPage>
+			
+			
+			<HouseJournalEndPage>630</HouseJournalEndPage>
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn026.pdf#page=630</JournalLink>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB419&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Executive Session Completed (H)</Description>
+			
+			
+			<Guid>539980</Guid>
+			
+			
+			<PubDate>2023-03-09</PubDate>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB419&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Voted Do Pass (H)</Description>
+			
+			
+			<Guid>539990</Guid>
+			
+			
+			<PubDate>2023-03-09</PubDate>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB419&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Reported Do Pass (H)</Description>
+			
+			
+			<Guid>540016</Guid>
+			
+			
+			<PubDate>2023-03-09</PubDate>
+			
+			
+			<RollCall>
+				
+				
+				<TotalYes>7</TotalYes>
+				
+				
+				<TotalNo>2</TotalNo>
+				
+				
+				<TotalPresent>0</TotalPresent>
+				
+			
+			</RollCall>
+			
+			
+			<HouseJournalStartPage>860</HouseJournalStartPage>
+			
+			
+			<HouseJournalEndPage>860</HouseJournalEndPage>
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn036.pdf#page=860</JournalLink>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB419&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Placed on the Informal Perfection Calendar (H)</Description>
+			
+			
+			<Guid>540705</Guid>
+			
+			
+			<PubDate>2023-03-22</PubDate>
+			
+			
+			<HouseJournalStartPage>946</HouseJournalStartPage>
+			
+			
+			<HouseJournalEndPage>946</HouseJournalEndPage>
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn040.pdf#page=946</JournalLink>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB419&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Placed Back on Formal Perfection Calendar (H)</Description>
+			
+			
+			<Guid>542750</Guid>
+			
+			
+			<PubDate>2023-04-05</PubDate>
+			
+			
+			<HouseJournalStartPage>1397</HouseJournalStartPage>
+			
+			
+			<HouseJournalEndPage>1397</HouseJournalEndPage>
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn049.pdf#page=1397</JournalLink>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB419&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Placed on the Informal Perfection Calendar (H)</Description>
+			
+			
+			<Guid>542858</Guid>
+			
+			
+			<PubDate>2023-04-06</PubDate>
+			
+			
+			<HouseJournalStartPage>1411</HouseJournalStartPage>
+			
+			
+			<HouseJournalEndPage>1411</HouseJournalEndPage>
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn050.pdf#page=1411</JournalLink>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB419&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Taken Up for Perfection (H)</Description>
+			
+			
+			<Guid>543200</Guid>
+			
+			
+			<PubDate>2023-04-11</PubDate>
+			
+			
+			<HouseJournalStartPage>1454</HouseJournalStartPage>
+			
+			
+			<HouseJournalEndPage>1454</HouseJournalEndPage>
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn051.pdf#page=1454</JournalLink>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB419&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Title of Bill - Agreed To</Description>
+			
+			
+			<Guid>543201</Guid>
+			
+			
+			<PubDate>2023-04-11</PubDate>
+			
+			
+			<HouseJournalStartPage>1454</HouseJournalStartPage>
+			
+			
+			<HouseJournalEndPage>1454</HouseJournalEndPage>
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn051.pdf#page=1454</JournalLink>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB419&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>HCS Adopted (H)</Description>
+			
+			
+			<Guid>543238</Guid>
+			
+			
+			<PubDate>2023-04-11</PubDate>
+			
+			
+			<HouseJournalStartPage>1482</HouseJournalStartPage>
+			
+			
+			<HouseJournalEndPage>1482</HouseJournalEndPage>
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn051.pdf#page=1482</JournalLink>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB419&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Perfected with Amendments (H)</Description>
+			
+			
+			<Guid>543239</Guid>
+			
+			
+			<PubDate>2023-04-11</PubDate>
+			
+			
+			<Comments>HA 1, adopted</Comments>
+			
+			
+			<RollCall>
+				
+				
+				<TotalYes>106</TotalYes>
+				
+				
+				<TotalNo>45</TotalNo>
+				
+				
+				<TotalPresent>2</TotalPresent>
+				
+			
+			</RollCall>
+			
+			
+			<HouseJournalStartPage>1482</HouseJournalStartPage>
+			
+			
+			<HouseJournalEndPage>1482</HouseJournalEndPage>
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn051.pdf#page=1482</JournalLink>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB419&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Taken Up for Third Reading (H)</Description>
+			
+			
+			<Guid>543765</Guid>
+			
+			
+			<PubDate>2023-04-13</PubDate>
+			
+			
+			<HouseJournalStartPage>1658</HouseJournalStartPage>
+			
+			
+			<HouseJournalEndPage>1658</HouseJournalEndPage>
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn053.pdf#page=1658</JournalLink>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB419&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Third Read and Passed (H)</Description>
+			
+			
+			<Guid>543772</Guid>
+			
+			
+			<PubDate>2023-04-13</PubDate>
+			
+			
+			<RollCall>
+				
+				
+				<TotalYes>103</TotalYes>
+				
+				
+				<TotalNo>52</TotalNo>
+				
+				
+				<TotalPresent>1</TotalPresent>
+				
+			
+			</RollCall>
+			
+			
+			<HouseJournalStartPage>1659</HouseJournalStartPage>
+			
+			
+			<HouseJournalEndPage>1660</HouseJournalEndPage>
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn053.pdf#page=1659</JournalLink>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB419&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Reported to the Senate and First Read (S)</Description>
+			
+			
+			<Guid>543776</Guid>
+			
+			
+			<PubDate>2023-04-17</PubDate>
+			
+			
+			<SenateJournalStartPage>1082</SenateJournalStartPage>
+			
+			
+			<SenateJournalEndPage>1082</SenateJournalEndPage>
+			
+			
+			<JournalLink>https://www.senate.mo.gov/23info/jrnlist/default.aspx</JournalLink>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB419&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Second read and referred: Emerging Issues(S)</Description>
+			
+			
+			<Guid>544972</Guid>
+			
+			
+			<PubDate>2023-04-20</PubDate>
+			
+			
+			<SenateJournalStartPage>1169</SenateJournalStartPage>
+			
+			
+			<SenateJournalEndPage>1169</SenateJournalEndPage>
+			
+			
+			<JournalLink>https://www.senate.mo.gov/23info/jrnlist/default.aspx</JournalLink>
+			
+		
+		</Action>
+		
+		
+		<Amendment>
+			
+			
+			<AmendmentText>https://documents.house.mo.gov/billtracking/bills231/amendpdf/1203H02.04H.pdf</AmendmentText>
+			
+			
+			<Status>G</Status>
+			
+			
+			<StatusDescription>Distributed</StatusDescription>
+			
+			
+			<AmendmentDescription/>
+			
+			
+			<Sponsor>Sander</Sponsor>
+			
+		
+		</Amendment>
+		
+		
+		<Amendment>
+			
+			
+			<AmendmentText>https://documents.house.mo.gov/billtracking/bills231/amendpdf/1203H02.05H.pdf</AmendmentText>
+			
+			
+			<Status>G</Status>
+			
+			
+			<StatusDescription>Distributed</StatusDescription>
+			
+			
+			<AmendmentDescription/>
+			
+			
+			<Sponsor>Hudson</Sponsor>
+			
+		
+		</Amendment>
+		
+		
+		<Amendment>
+			
+			
+			<AmendmentText>https://documents.house.mo.gov/billtracking/bills231/amendpdf/1203H02.06H.pdf</AmendmentText>
+			
+			
+			<Status>G</Status>
+			
+			
+			<StatusDescription>Distributed</StatusDescription>
+			
+			
+			<AmendmentDescription/>
+			
+			
+			<Sponsor>Unsicker</Sponsor>
+			
+		
+		</Amendment>
+		
+		
+		<Amendment>
+			
+			
+			<AmendmentText>https://documents.house.mo.gov/billtracking/bills231/amendpdf/1203H02.08H.pdf</AmendmentText>
+			
+			
+			<Status>R</Status>
+			
+			
+			<StatusDescription>Point of Order</StatusDescription>
+			
+			
+			<AmendmentDescription>HA 2</AmendmentDescription>
+			
+			
+			<Sponsor>Unsicker</Sponsor>
+			
+		
+		</Amendment>
+		
+		
+		<Amendment>
+			
+			
+			<AmendmentText>https://documents.house.mo.gov/billtracking/bills231/amendpdf/1203H02.09H.pdf</AmendmentText>
+			
+			
+			<Status>A</Status>
+			
+			
+			<StatusDescription>Adopted</StatusDescription>
+			
+			
+			<AmendmentDescription>HA 1</AmendmentDescription>
+			
+			
+			<Sponsor>Hudson</Sponsor>
+			
+		
+		</Amendment>
+		
+		
+		<Amendment>
+			
+			
+			<AmendmentText>https://documents.house.mo.gov/billtracking/bills231/amendpdf/1203H02.10H.pdf</AmendmentText>
+			
+			
+			<Status>R</Status>
+			
+			
+			<StatusDescription>Point of Order</StatusDescription>
+			
+			
+			<AmendmentDescription>HA 3</AmendmentDescription>
+			
+			
+			<Sponsor>Merideth</Sponsor>
+			
+		
+		</Amendment>
+		
+		
+		<Sponsor>
+			
+			
+			<SponsorType>Co-Sponsor</SponsorType>
+			
+			
+			<FullName>Hannah Kelly</FullName>
+			
+			
+			<District>141</District>
+			
+		
+		</Sponsor>
+		
+		
+		<Sponsor>
+			
+			
+			<SponsorType>Co-Sponsor</SponsorType>
+			
+			
+			<FullName>Dan Stacy</FullName>
+			
+			
+			<District>031</District>
+			
+		
+		</Sponsor>
+		
+		
+		<Sponsor>
+			
+			
+			<SponsorType>Co-Sponsor</SponsorType>
+			
+			
+			<FullName>Cheri Toalson Reisch</FullName>
+			
+			
+			<District>044</District>
+			
+		
+		</Sponsor>
+		
+		
+		<Sponsor>
+			
+			
+			<SponsorType>Co-Sponsor</SponsorType>
+			
+			
+			<FullName>Hardy Billington</FullName>
+			
+			
+			<District>152</District>
+			
+		
+		</Sponsor>
+		
+		
+		<Sponsor>
+			
+			
+			<SponsorType>Co-Sponsor</SponsorType>
+			
+			
+			<FullName>Adam Schnelting</FullName>
+			
+			
+			<District>069</District>
+			
+		
+		</Sponsor>
+		
+		
+		<Sponsor>
+			
+			
+			<SponsorType>Co-Sponsor</SponsorType>
+			
+			
+			<FullName>Ann Kelley</FullName>
+			
+			
+			<District>127</District>
+			
+		
+		</Sponsor>
+		
+		
+		<Sponsor>
+			
+			
+			<SponsorType>Co-Sponsor</SponsorType>
+			
+			
+			<FullName>Ben Baker</FullName>
+			
+			
+			<District>160</District>
+			
+		
+		</Sponsor>
+		
+		
+		<Sponsor>
+			
+			
+			<SponsorType>Co-Sponsor</SponsorType>
+			
+			
+			<FullName>Mike McGirl</FullName>
+			
+			
+			<District>118</District>
+			
+		
+		</Sponsor>
+		
+		
+		<Sponsor>
+			
+			
+			<SponsorType>Co-Sponsor</SponsorType>
+			
+			
+			<FullName>Danny Busick</FullName>
+			
+			
+			<District>003</District>
+			
+		
+		</Sponsor>
+		
+		
+		<Sponsor>
+			
+			
+			<SponsorType>Co-Sponsor</SponsorType>
+			
+			
+			<FullName>Mitch Boggs</FullName>
+			
+			
+			<District>157</District>
+			
+		
+		</Sponsor>
+		
+		
+		<Sponsor>
+			
+			
+			<SponsorType>Co-Sponsor</SponsorType>
+			
+			
+			<FullName>Bennie Cook</FullName>
+			
+			
+			<District>143</District>
+			
+		
+		</Sponsor>
+		
+		
+		<Sponsor>
+			
+			
+			<SponsorType>Co-Sponsor</SponsorType>
+			
+			
+			<FullName>Michael Davis</FullName>
+			
+			
+			<District>056</District>
+			
+		
+		</Sponsor>
+		
+		
+		<Sponsor>
+			
+			
+			<SponsorType>Co-Sponsor</SponsorType>
+			
+			
+			<FullName>Willard Haley</FullName>
+			
+			
+			<District>058</District>
+			
+		
+		</Sponsor>
+		
+		
+		<Sponsor>
+			
+			
+			<SponsorType>Co-Sponsor</SponsorType>
+			
+			
+			<FullName>Brian Seitz</FullName>
+			
+			
+			<District>156</District>
+			
+		
+		</Sponsor>
+		
+		
+		<Sponsor>
+			
+			
+			<SponsorType>Co-Sponsor</SponsorType>
+			
+			
+			<FullName>Cyndi Buchheit-Courtway</FullName>
+			
+			
+			<District>115</District>
+			
+		
+		</Sponsor>
+		
+		
+		<Sponsor>
+			
+			
+			<SponsorType>Co-Sponsor</SponsorType>
+			
+			
+			<FullName>Mazzie Boyd</FullName>
+			
+			
+			<District>002</District>
+			
+		
+		</Sponsor>
+		
+		
+		<Sponsor>
+			
+			
+			<SponsorType>Co-Sponsor</SponsorType>
+			
+			
+			<FullName>Jeff Myers</FullName>
+			
+			
+			<District>042</District>
+			
+		
+		</Sponsor>
+		
+		
+		<Sponsor>
+			
+			
+			<SponsorType>Co-Sponsor</SponsorType>
+			
+			
+			<FullName>Bob Titus</FullName>
+			
+			
+			<District>139</District>
+			
+		
+		</Sponsor>
+		
+		
+		<Sponsor>
+			
+			
+			<SponsorType>Co-Sponsor</SponsorType>
+			
+			
+			<FullName>Darin Chappell</FullName>
+			
+			
+			<District>137</District>
+			
+		
+		</Sponsor>
+		
+		
+		<Sponsor>
+			
+			
+			<SponsorType>Co-Sponsor</SponsorType>
+			
+			
+			<FullName>Jamie Gragg</FullName>
+			
+			
+			<District>140</District>
+			
+		
+		</Sponsor>
+		
+		
+		<Sponsor>
+			
+			
+			<SponsorType>Co-Sponsor</SponsorType>
+			
+			
+			<FullName>Justin Sparks</FullName>
+			
+			
+			<District>110</District>
+			
+		
+		</Sponsor>
+		
+		
+		<Sponsor>
+			
+			
+			<SponsorType>Sponsor</SponsorType>
+			
+			
+			<FullName>Brad Hudson</FullName>
+			
+			
+			<District>138</District>
+			
+		
+		</Sponsor>
+		
+		
+		<BillText>
+			
+			
+			<BillTextLink>https://documents.house.mo.gov/billtracking/bills231/hlrbillspdf/1203H.01I.pdf</BillTextLink>
+			
+			
+			<DocumentName>Introduced</DocumentName>
+			
+			
+			<VersionTypeCode>IN</VersionTypeCode>
+			
+		
+		</BillText>
+		
+		
+		<BillText>
+			
+			
+			<BillTextLink>https://documents.house.mo.gov/billtracking/bills231/hlrbillspdf/1203H.02C.pdf</BillTextLink>
+			
+			
+			<DocumentName>House Committee Substitute</DocumentName>
+			
+			
+			<VersionTypeCode>HC</VersionTypeCode>
+			
+			
+			<RollCalls>
+				
+				
+				<RollCall>
+					
+					
+					<RollCallPDF>https://documents.house.mo.gov/billtracking/bills231/rollcalls/051.010.pdf</RollCallPDF>
+					
+					
+					<SessionDay>051</SessionDay>
+					
+					
+					<RollCallNumber>010</RollCallNumber>
+					
+					
+					<TotalYes>44</TotalYes>
+					
+					
+					<TotalNo>110</TotalNo>
+					
+					
+					<TotalPresent>0</TotalPresent>
+					
+				
+				</RollCall>
+				
+				
+				<RollCall>
+					
+					
+					<RollCallPDF>https://documents.house.mo.gov/billtracking/bills231/rollcalls/051.011.pdf</RollCallPDF>
+					
+					
+					<SessionDay>051</SessionDay>
+					
+					
+					<RollCallNumber>011</RollCallNumber>
+					
+					
+					<TotalYes>110</TotalYes>
+					
+					
+					<TotalNo>44</TotalNo>
+					
+					
+					<TotalPresent>0</TotalPresent>
+					
+				
+				</RollCall>
+				
+				
+				<RollCall>
+					
+					
+					<RollCallPDF>https://documents.house.mo.gov/billtracking/bills231/rollcalls/051.012.pdf</RollCallPDF>
+					
+					
+					<SessionDay>051</SessionDay>
+					
+					
+					<RollCallNumber>012</RollCallNumber>
+					
+					
+					<TotalYes>106</TotalYes>
+					
+					
+					<TotalNo>45</TotalNo>
+					
+					
+					<TotalPresent>2</TotalPresent>
+					
+				
+				</RollCall>
+				
+			
+			</RollCalls>
+			
+		
+		</BillText>
+		
+		
+		<BillText>
+			
+			
+			<BillTextLink>https://documents.house.mo.gov/billtracking/bills231/hlrbillspdf/1203H.02P.pdf</BillTextLink>
+			
+			
+			<DocumentName>Perfected</DocumentName>
+			
+			
+			<VersionTypeCode>P</VersionTypeCode>
+			
+			
+			<RollCalls>
+				
+				
+				<RollCall>
+					
+					
+					<RollCallPDF>https://documents.house.mo.gov/billtracking/bills231/rollcalls/053.006.pdf</RollCallPDF>
+					
+					
+					<SessionDay>053</SessionDay>
+					
+					
+					<RollCallNumber>006</RollCallNumber>
+					
+					
+					<TotalYes>104</TotalYes>
+					
+					
+					<TotalNo>45</TotalNo>
+					
+					
+					<TotalPresent>0</TotalPresent>
+					
+				
+				</RollCall>
+				
+				
+				<RollCall>
+					
+					
+					<RollCallPDF>https://documents.house.mo.gov/billtracking/bills231/rollcalls/053.007.pdf</RollCallPDF>
+					
+					
+					<SessionDay>053</SessionDay>
+					
+					
+					<RollCallNumber>007</RollCallNumber>
+					
+					
+					<TotalYes>103</TotalYes>
+					
+					
+					<TotalNo>52</TotalNo>
+					
+					
+					<TotalPresent>1</TotalPresent>
+					
+				
+				</RollCall>
+				
+			
+			</RollCalls>
+			
+		
+		</BillText>
+		
+		
+		<BillSummary>
+			
+			
+			<SummaryTextLink>https://documents.house.mo.gov/billtracking/bills231/sumpdf/HB0419I.pdf</SummaryTextLink>
+			
+			
+			<DocumentName>Introduced</DocumentName>
+			
+			
+			<VersionTypeCode>IN</VersionTypeCode>
+			
+		
+		</BillSummary>
+		
+		
+		<BillSummary>
+			
+			
+			<SummaryTextLink>https://documents.house.mo.gov/billtracking/bills231/sumpdf/HB0419C.pdf</SummaryTextLink>
+			
+			
+			<DocumentName>House Committee Substitute</DocumentName>
+			
+			
+			<VersionTypeCode>HC</VersionTypeCode>
+			
+		
+		</BillSummary>
+		
+		
+		<BillSummary>
+			
+			
+			<SummaryTextLink>https://documents.house.mo.gov/billtracking/bills231/sumpdf/HB0419P.pdf</SummaryTextLink>
+			
+			
+			<DocumentName>Perfected</DocumentName>
+			
+			
+			<VersionTypeCode>P</VersionTypeCode>
+			
+		
+		</BillSummary>
+		
+		
+		<FiscalNote>
+			
+			
+			<FiscalNoteLink>https://documents.house.mo.gov/billtracking/bills231/fiscal/fispdf/1203H.01I.ORG.pdf</FiscalNoteLink>
+			
+		
+		</FiscalNote>
+		
+		
+		<FiscalNote>
+			
+			
+			<FiscalNoteLink>https://documents.house.mo.gov/billtracking/bills231/fiscal/fispdf/1203H.02C.ORG.pdf</FiscalNoteLink>
+			
+		
+		</FiscalNote>
+		
+		
+		<FiscalNote>
+			
+			
+			<FiscalNoteLink>https://documents.house.mo.gov/billtracking/bills231/fiscal/fispdf/1203H.02P.ORG.pdf</FiscalNoteLink>
+			
+		
+		</FiscalNote>
+		
+		
+		<Hearings>
+			
+			
+			<CommitteeName>General Laws</CommitteeName>
+			
+			
+			<NoticeDate>2023-01-24</NoticeDate>
+			
+			
+			<NoticeTime>1900-01-01T16:30:00</NoticeTime>
+			
+			
+			<Location>House Hearing Room 7</Location>
+			
+			
+			<Comments>Added HBs 170, 183, 337, 419, 463, 494, 498, and 540</Comments>
+			
+			
+			<AltTime/>
+			
+		
+		</Hearings>
+		
+		
+		<Hearings>
+			
+			
+			<CommitteeName>General Laws</CommitteeName>
+			
+			
+			<NoticeDate>2023-02-16</NoticeDate>
+			
+			
+			<NoticeTime>1900-01-01T00:00:00</NoticeTime>
+			
+			
+			<Location>House Hearing Room 5</Location>
+			
+			
+			<Comments/>
+			
+			
+			<AltTime>10:00 AM or upon adjournment (whichever is later)</AltTime>
+			
+		
+		</Hearings>
+		
+		
+		<Hearings>
+			
+			
+			<CommitteeName>Rules - Legislative Oversight</CommitteeName>
+			
+			
+			<NoticeDate>2023-03-09</NoticeDate>
+			
+			
+			<NoticeTime>1900-01-01T08:45:00</NoticeTime>
+			
+			
+			<Location>House Hearing Room 4</Location>
+			
+			
+			<Comments>Added HB 1015, HB 197, HB 863, HB 183, and HB 419.</Comments>
+			
+			
+			<AltTime/>
+			
+		
+		</Hearings>
+		
+		
+		<Witness>
+			
+			
+			<WitnessFormsLink>https://documents.house.mo.gov/billtracking/bills231/witnesses/HB419Testimony.pdf</WitnessFormsLink>
+			
+		
+		</Witness>
+		
+	
+	</BillInformation>
+	
+
+</ROOT>

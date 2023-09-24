@@ -1,0 +1,185 @@
+<?xml version="1.0" ?>
+<ROOT>
+	
+	
+	<BillInformation>
+		
+		
+		<BillNumber>HB165</BillNumber>
+		
+		
+		<CurrentBillString>HB 165</CurrentBillString>
+		
+		
+		<SubstitutedBy/>
+		
+		
+		<Title>
+			
+			
+			<ShortTitle>DISCRIMINATION IN EDUCATION</ShortTitle>
+			
+			
+			<LongTitle>Prohibits discrimination in education</LongTitle>
+			
+		
+		</Title>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB165&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Prefiled (H)</Description>
+			
+			
+			<Guid>530834</Guid>
+			
+			
+			<PubDate>2022-12-01</PubDate>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB165&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Read First Time (H)</Description>
+			
+			
+			<Guid>533343</Guid>
+			
+			
+			<PubDate>2023-01-04</PubDate>
+			
+			
+			<HouseJournalStartPage>59</HouseJournalStartPage>
+			
+			
+			<HouseJournalEndPage>59</HouseJournalEndPage>
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn001.pdf#page=59</JournalLink>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB165&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Read Second Time (H)</Description>
+			
+			
+			<Guid>534518</Guid>
+			
+			
+			<PubDate>2023-01-05</PubDate>
+			
+			
+			<HouseJournalStartPage>181</HouseJournalStartPage>
+			
+			
+			<HouseJournalEndPage>181</HouseJournalEndPage>
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn002.pdf#page=181</JournalLink>
+			
+		
+		</Action>
+		
+		
+		<Action>
+			
+			
+			<Link>https://house.mo.gov/bill.aspx?bill=HB165&amp;year=2023&amp;code=R </Link>
+			
+			
+			<Description>Referred: Elementary and Secondary Education(H)</Description>
+			
+			
+			<Guid>537632</Guid>
+			
+			
+			<PubDate>2023-02-15</PubDate>
+			
+			
+			<HouseJournalStartPage>598</HouseJournalStartPage>
+			
+			
+			<HouseJournalEndPage>598</HouseJournalEndPage>
+			
+			
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn024.pdf#page=598</JournalLink>
+			
+		
+		</Action>
+		
+		
+		<Sponsor>
+			
+			
+			<SponsorType>Sponsor</SponsorType>
+			
+			
+			<FullName>Brian Seitz</FullName>
+			
+			
+			<District>156</District>
+			
+		
+		</Sponsor>
+		
+		
+		<BillText>
+			
+			
+			<BillTextLink>https://documents.house.mo.gov/billtracking/bills231/hlrbillspdf/0188H.01I.pdf</BillTextLink>
+			
+			
+			<DocumentName>Introduced</DocumentName>
+			
+			
+			<VersionTypeCode>IN</VersionTypeCode>
+			
+		
+		</BillText>
+		
+		
+		<BillSummary>
+			
+			
+			<SummaryTextLink>https://documents.house.mo.gov/billtracking/bills231/sumpdf/HB0165I.pdf</SummaryTextLink>
+			
+			
+			<DocumentName>Introduced</DocumentName>
+			
+			
+			<VersionTypeCode>IN</VersionTypeCode>
+			
+		
+		</BillSummary>
+		
+		
+		<FiscalNote>
+			
+			
+			<FiscalNoteLink>https://documents.house.mo.gov/billtracking/bills231/fiscal/fispdf/0188H.01I.ORG.pdf</FiscalNoteLink>
+			
+		
+		</FiscalNote>
+		
+	
+	</BillInformation>
+	
+
+</ROOT>
