@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<ROOT>
+	<BillInformation>
+		<BillNumber>HB1332</BillNumber>
+		<CurrentBillString>HB 1332</CurrentBillString>
+		<SubstitutedBy/>
+		<Title>
+			<ShortTitle>TAX RATES</ShortTitle>
+			<LongTitle>Authorizes a tax on the endowments of qualifying institutions of higher education and a corresponding endowment tax revenue trigger to income tax rates</LongTitle>
+		</Title>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB1332&amp;year=2023&amp;code=R </Link>
+			<Description>Introduced and Read First Time (H)</Description>
+			<Guid>538778</Guid>
+			<PubDate>2023-02-28</PubDate>
+			<HouseJournalStartPage>694</HouseJournalStartPage>
+			<HouseJournalEndPage>694</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn030.pdf#page=694</JournalLink>
+		</Action>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB1332&amp;year=2023&amp;code=R </Link>
+			<Description>Read Second Time (H)</Description>
+			<Guid>538971</Guid>
+			<PubDate>2023-03-01</PubDate>
+			<HouseJournalStartPage>721</HouseJournalStartPage>
+			<HouseJournalEndPage>721</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn031.pdf#page=721</JournalLink>
+		</Action>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB1332&amp;year=2023&amp;code=R </Link>
+			<Description>Referred: Ways and Means(H)</Description>
+			<Guid>548713</Guid>
+			<PubDate>2023-05-12</PubDate>
+			<HouseJournalStartPage>3505</HouseJournalStartPage>
+			<HouseJournalEndPage>3505</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn072.pdf#page=3505</JournalLink>
+		</Action>
+		<Sponsor>
+			<SponsorType>Sponsor</SponsorType>
+			<FullName>Justin Sparks</FullName>
+			<District>110</District>
+		</Sponsor>
+		<BillText>
+			<BillTextLink>https://documents.house.mo.gov/billtracking/bills231/hlrbillspdf/2583H.02I.pdf</BillTextLink>
+			<DocumentName>Introduced</DocumentName>
+			<VersionTypeCode>IN</VersionTypeCode>
+		</BillText>
+		<BillSummary>
+			<SummaryTextLink>https://documents.house.mo.gov/billtracking/bills231/sumpdf/HB1332I.pdf</SummaryTextLink>
+			<DocumentName>Introduced</DocumentName>
+			<VersionTypeCode>IN</VersionTypeCode>
+		</BillSummary>
+	</BillInformation>
+</ROOT>

@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<ROOT>
+	<BillInformation>
+		<BillNumber>HB1168</BillNumber>
+		<CurrentBillString>HB 1168</CurrentBillString>
+		<SubstitutedBy/>
+		<Title>
+			<ShortTitle>COURT-IMPOSED SENTENCES</ShortTitle>
+			<LongTitle>Modifies provisions relating to court-imposed sentences</LongTitle>
+		</Title>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB1168&amp;year=2023&amp;code=R </Link>
+			<Description>Introduced and Read First Time (H)</Description>
+			<Guid>537600</Guid>
+			<PubDate>2023-02-15</PubDate>
+			<HouseJournalStartPage>595</HouseJournalStartPage>
+			<HouseJournalEndPage>595</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn024.pdf#page=595</JournalLink>
+		</Action>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB1168&amp;year=2023&amp;code=R </Link>
+			<Description>Read Second Time (H)</Description>
+			<Guid>537698</Guid>
+			<PubDate>2023-02-16</PubDate>
+			<HouseJournalStartPage>608</HouseJournalStartPage>
+			<HouseJournalEndPage>608</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn025.pdf#page=608</JournalLink>
+		</Action>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB1168&amp;year=2023&amp;code=R </Link>
+			<Description>Referred: Corrections and Public Institutions(H)</Description>
+			<Guid>548223</Guid>
+			<PubDate>2023-05-12</PubDate>
+			<HouseJournalStartPage>3503</HouseJournalStartPage>
+			<HouseJournalEndPage>3503</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn072.pdf#page=3503</JournalLink>
+		</Action>
+		<Sponsor>
+			<SponsorType>Sponsor</SponsorType>
+			<FullName>Darin Chappell</FullName>
+			<District>137</District>
+		</Sponsor>
+		<BillText>
+			<BillTextLink>https://documents.house.mo.gov/billtracking/bills231/hlrbillspdf/2294H.01I.pdf</BillTextLink>
+			<DocumentName>Introduced</DocumentName>
+			<VersionTypeCode>IN</VersionTypeCode>
+		</BillText>
+		<BillSummary>
+			<SummaryTextLink>https://documents.house.mo.gov/billtracking/bills231/sumpdf/HB1168I.pdf</SummaryTextLink>
+			<DocumentName>Introduced</DocumentName>
+			<VersionTypeCode>IN</VersionTypeCode>
+		</BillSummary>
+	</BillInformation>
+</ROOT>

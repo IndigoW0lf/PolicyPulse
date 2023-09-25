@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<ROOT>
+	<BillInformation>
+		<BillNumber>HB943</BillNumber>
+		<CurrentBillString>HB 943</CurrentBillString>
+		<SubstitutedBy/>
+		<Title>
+			<ShortTitle>SEXUAL OFFENDERS</ShortTitle>
+			<LongTitle>Modifies provisions relating to a sexual offender's duty to report</LongTitle>
+		</Title>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB943&amp;year=2023&amp;code=R </Link>
+			<Description>Introduced and Read First Time (H)</Description>
+			<Guid>535982</Guid>
+			<PubDate>2023-01-24</PubDate>
+			<HouseJournalStartPage>395</HouseJournalStartPage>
+			<HouseJournalEndPage>395</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn011.pdf#page=395</JournalLink>
+		</Action>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB943&amp;year=2023&amp;code=R </Link>
+			<Description>Read Second Time (H)</Description>
+			<Guid>536046</Guid>
+			<PubDate>2023-01-25</PubDate>
+			<HouseJournalStartPage>408</HouseJournalStartPage>
+			<HouseJournalEndPage>408</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn012.pdf#page=408</JournalLink>
+		</Action>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB943&amp;year=2023&amp;code=R </Link>
+			<Description>Referred: Judiciary(H)</Description>
+			<Guid>539394</Guid>
+			<PubDate>2023-03-02</PubDate>
+			<HouseJournalStartPage>750</HouseJournalStartPage>
+			<HouseJournalEndPage>750</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn032.pdf#page=750</JournalLink>
+		</Action>
+		<Sponsor>
+			<SponsorType>Sponsor</SponsorType>
+			<FullName>Chris Dinkins</FullName>
+			<District>144</District>
+		</Sponsor>
+		<BillText>
+			<BillTextLink>https://documents.house.mo.gov/billtracking/bills231/hlrbillspdf/2101H.01I.pdf</BillTextLink>
+			<DocumentName>Introduced</DocumentName>
+			<VersionTypeCode>IN</VersionTypeCode>
+		</BillText>
+		<BillSummary>
+			<SummaryTextLink>https://documents.house.mo.gov/billtracking/bills231/sumpdf/HB0943I.pdf</SummaryTextLink>
+			<DocumentName>Introduced</DocumentName>
+			<VersionTypeCode>IN</VersionTypeCode>
+		</BillSummary>
+	</BillInformation>
+</ROOT>

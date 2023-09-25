@@ -1,0 +1,89 @@
+{
+    "ROOT": {
+        "BillInformation": {
+            "BillNumber": {},
+            "CurrentBillString": {},
+            "SubstitutedBy": {
+                "ParentBillString": {},
+                "ParentBillLink": {}
+            },
+            "Title": {
+                "ShortTitle": {},
+                "LongTitle": {}
+            },
+            "Action": {
+                "Link": {},
+                "Description": {},
+                "Guid": {},
+                "PubDate": {},
+                "HouseJournalStartPage": {},
+                "HouseJournalEndPage": {},
+                "JournalLink": {},
+                "RollCall": {
+                    "TotalYes": {},
+                    "TotalNo": {},
+                    "TotalPresent": {}
+                },
+                "Comments": {},
+                "SenateJournalStartPage": {},
+                "SenateJournalEndPage": {}
+            },
+            "Amendment": {
+                "AmendmentText": {},
+                "Status": {},
+                "StatusDescription": {},
+                "AmendmentDescription": {},
+                "Sponsor": {},
+                "RollCalls": {
+                    "RollCall": {
+                        "RollCallPDF": {},
+                        "SessionDay": {},
+                        "RollCallNumber": {},
+                        "TotalYes": {},
+                        "TotalNo": {},
+                        "TotalPresent": {}
+                    }
+                }
+            },
+            "Sponsor": {
+                "SponsorType": {},
+                "FullName": {},
+                "District": {}
+            },
+            "BillText": {
+                "BillTextLink": {},
+                "DocumentName": {},
+                "VersionTypeCode": {},
+                "RollCalls": {
+                    "RollCall": {
+                        "RollCallPDF": {},
+                        "SessionDay": {},
+                        "RollCallNumber": {},
+                        "TotalYes": {},
+                        "TotalNo": {},
+                        "TotalPresent": {}
+                    }
+                }
+            },
+            "BillSummary": {
+                "SummaryTextLink": {},
+                "DocumentName": {},
+                "VersionTypeCode": {}
+            },
+            "FiscalNote": {
+                "FiscalNoteLink": {}
+            },
+            "Hearings": {
+                "CommitteeName": {},
+                "NoticeDate": {},
+                "NoticeTime": {},
+                "Location": {},
+                "Comments": {},
+                "AltTime": {}
+            },
+            "Witness": {
+                "WitnessFormsLink": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<ROOT>
+	<BillInformation>
+		<BillNumber>HB3002</BillNumber>
+		<CurrentBillString>CCS SS SCS HCS HB 3002</CurrentBillString>
+		<SubstitutedBy/>
+		<Title>
+			<ShortTitle>APPROPRIATIONS BILL</ShortTitle>
+			<LongTitle>APPROPRIATION BILL</LongTitle>
+		</Title>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB3002&amp;year=2023&amp;code=R </Link>
+			<Description>Message Received from the Governor, pursuant to Article IV, Section 27</Description>
+			<Guid>533193</Guid>
+			<PubDate>2022-10-17</PubDate>
+		</Action>
+		<Sponsor>
+			<SponsorType>Sponsor</SponsorType>
+			<FullName>Cody Smith</FullName>
+			<District>163</District>
+		</Sponsor>
+		<BillText>
+			<BillTextLink>https://documents.house.mo.gov/billtracking/bills231/hlrbillspdf/3002H.06T.pdf</BillTextLink>
+			<DocumentName>Truly Agreed and Finally Passed</DocumentName>
+			<VersionTypeCode>T</VersionTypeCode>
+		</BillText>
+	</BillInformation>
+</ROOT>

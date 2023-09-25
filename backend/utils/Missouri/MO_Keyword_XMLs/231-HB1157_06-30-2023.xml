@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<ROOT>
+	<BillInformation>
+		<BillNumber>HB1157</BillNumber>
+		<CurrentBillString>HB 1157</CurrentBillString>
+		<SubstitutedBy/>
+		<Title>
+			<ShortTitle>PARTICIPATION IN CERTAIN MEDICAL TREATMENTS</ShortTitle>
+			<LongTitle>Prohibits discrimination against health care professionals who refuse to assist in medical procedures or treatments relating to sex reassignment or gender identity transitioning</LongTitle>
+		</Title>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB1157&amp;year=2023&amp;code=R </Link>
+			<Description>Introduced and Read First Time (H)</Description>
+			<Guid>537460</Guid>
+			<PubDate>2023-02-14</PubDate>
+			<HouseJournalStartPage>584</HouseJournalStartPage>
+			<HouseJournalEndPage>584</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn023.pdf#page=584</JournalLink>
+		</Action>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB1157&amp;year=2023&amp;code=R </Link>
+			<Description>Read Second Time (H)</Description>
+			<Guid>537556</Guid>
+			<PubDate>2023-02-15</PubDate>
+			<HouseJournalStartPage>597</HouseJournalStartPage>
+			<HouseJournalEndPage>597</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn024.pdf#page=597</JournalLink>
+		</Action>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB1157&amp;year=2023&amp;code=R </Link>
+			<Description>Referred: General Laws(H)</Description>
+			<Guid>542685</Guid>
+			<PubDate>2023-04-05</PubDate>
+			<HouseJournalStartPage>1397</HouseJournalStartPage>
+			<HouseJournalEndPage>1397</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn049.pdf#page=1397</JournalLink>
+		</Action>
+		<Sponsor>
+			<SponsorType>Sponsor</SponsorType>
+			<FullName>Brad Hudson</FullName>
+			<District>138</District>
+		</Sponsor>
+		<BillText>
+			<BillTextLink>https://documents.house.mo.gov/billtracking/bills231/hlrbillspdf/2490H.01I.pdf</BillTextLink>
+			<DocumentName>Introduced</DocumentName>
+			<VersionTypeCode>IN</VersionTypeCode>
+		</BillText>
+		<BillSummary>
+			<SummaryTextLink>https://documents.house.mo.gov/billtracking/bills231/sumpdf/HB1157I.pdf</SummaryTextLink>
+			<DocumentName>Introduced</DocumentName>
+			<VersionTypeCode>IN</VersionTypeCode>
+		</BillSummary>
+	</BillInformation>
+</ROOT>

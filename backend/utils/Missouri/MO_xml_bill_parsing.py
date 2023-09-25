@@ -19,7 +19,7 @@ HEADERS = {
 
 LAST_UPDATE_FILE = 'backend/utils/Missouri/last_update.txt'
 LAST_PROCESSED_INDEX_FILE = 'backend/utils/Missouri/last_processed_index.txt'
-BATCH_SIZE = 800 
+BATCH_SIZE = 5 
 
 def fetch_initial_xml(url):
     try:

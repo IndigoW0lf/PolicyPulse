@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<ROOT>
+	<BillInformation>
+		<BillNumber>HB1177</BillNumber>
+		<CurrentBillString>HB 1177</CurrentBillString>
+		<SubstitutedBy/>
+		<Title>
+			<ShortTitle>SEXUAL OFFENSES</ShortTitle>
+			<LongTitle>Modifies provisions relating to sexual offenses</LongTitle>
+		</Title>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB1177&amp;year=2023&amp;code=R </Link>
+			<Description>Introduced and Read First Time (H)</Description>
+			<Guid>537708</Guid>
+			<PubDate>2023-02-16</PubDate>
+			<HouseJournalStartPage>606</HouseJournalStartPage>
+			<HouseJournalEndPage>606</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn025.pdf#page=606</JournalLink>
+		</Action>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB1177&amp;year=2023&amp;code=R </Link>
+			<Description>Read Second Time (H)</Description>
+			<Guid>537882</Guid>
+			<PubDate>2023-02-21</PubDate>
+			<HouseJournalStartPage>619</HouseJournalStartPage>
+			<HouseJournalEndPage>619</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn026.pdf#page=619</JournalLink>
+		</Action>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB1177&amp;year=2023&amp;code=R </Link>
+			<Description>Referred: Judiciary(H)</Description>
+			<Guid>548580</Guid>
+			<PubDate>2023-05-12</PubDate>
+			<HouseJournalStartPage>3503</HouseJournalStartPage>
+			<HouseJournalEndPage>3503</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn072.pdf#page=3503</JournalLink>
+		</Action>
+		<Sponsor>
+			<SponsorType>Sponsor</SponsorType>
+			<FullName>Betsy Fogle</FullName>
+			<District>135</District>
+		</Sponsor>
+		<BillText>
+			<BillTextLink>https://documents.house.mo.gov/billtracking/bills231/hlrbillspdf/0859H.01I.pdf</BillTextLink>
+			<DocumentName>Introduced</DocumentName>
+			<VersionTypeCode>IN</VersionTypeCode>
+		</BillText>
+		<BillSummary>
+			<SummaryTextLink>https://documents.house.mo.gov/billtracking/bills231/sumpdf/HB1177I.pdf</SummaryTextLink>
+			<DocumentName>Introduced</DocumentName>
+			<VersionTypeCode>IN</VersionTypeCode>
+		</BillSummary>
+	</BillInformation>
+</ROOT>

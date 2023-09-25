@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<ROOT>
+	<BillInformation>
+		<BillNumber>HR1817</BillNumber>
+		<CurrentBillString>HR 1817</CurrentBillString>
+		<SubstitutedBy/>
+		<Title>
+			<ShortTitle>CONVERSION THERAPY</ShortTitle>
+			<LongTitle>Affirms the importance of protecting minors against exposure to the serious harms caused by conversion therapy</LongTitle>
+		</Title>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HR1817&amp;year=2023&amp;code=R </Link>
+			<Description>Offered (H)</Description>
+			<Guid>542524</Guid>
+			<PubDate>2023-04-05</PubDate>
+			<HouseJournalStartPage>1357</HouseJournalStartPage>
+			<HouseJournalEndPage>1357</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn049.pdf#page=1357</JournalLink>
+		</Action>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HR1817&amp;year=2023&amp;code=R </Link>
+			<Description>Referred: General Laws(H)</Description>
+			<Guid>548474</Guid>
+			<PubDate>2023-05-12</PubDate>
+			<HouseJournalStartPage>3492</HouseJournalStartPage>
+			<HouseJournalEndPage>3492</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn072.pdf#page=3492</JournalLink>
+		</Action>
+		<Sponsor>
+			<SponsorType>Sponsor</SponsorType>
+			<FullName>Chris Sander</FullName>
+			<District>033</District>
+		</Sponsor>
+		<BillText>
+			<BillTextLink>https://documents.house.mo.gov/billtracking/bills231/hlrbillspdf/2788H.01I.pdf</BillTextLink>
+			<DocumentName>Introduced</DocumentName>
+			<VersionTypeCode>IN</VersionTypeCode>
+		</BillText>
+		<BillSummary>
+			<SummaryTextLink>https://documents.house.mo.gov/billtracking/bills231/sumpdf/HR1817I.pdf</SummaryTextLink>
+			<DocumentName>Introduced</DocumentName>
+			<VersionTypeCode>IN</VersionTypeCode>
+		</BillSummary>
+	</BillInformation>
+</ROOT>

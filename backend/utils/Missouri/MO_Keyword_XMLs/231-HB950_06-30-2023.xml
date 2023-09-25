@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<ROOT>
+	<BillInformation>
+		<BillNumber>HB950</BillNumber>
+		<CurrentBillString>HB 950</CurrentBillString>
+		<SubstitutedBy/>
+		<Title>
+			<ShortTitle>SERVICES PROVIDED TO STUDENTS</ShortTitle>
+			<LongTitle>Requires school districts to provide &quot;period products&quot; at no cost in middle schools and high schools and charter schools and repeals provisions prohibiting abortion services providers from providing instruction on human sexuality or sexually transmitted diseases</LongTitle>
+		</Title>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB950&amp;year=2023&amp;code=R </Link>
+			<Description>Introduced and Read First Time (H)</Description>
+			<Guid>536019</Guid>
+			<PubDate>2023-01-25</PubDate>
+			<HouseJournalStartPage>406</HouseJournalStartPage>
+			<HouseJournalEndPage>406</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn012.pdf#page=406</JournalLink>
+		</Action>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB950&amp;year=2023&amp;code=R </Link>
+			<Description>Read Second Time (H)</Description>
+			<Guid>536146</Guid>
+			<PubDate>2023-01-26</PubDate>
+			<HouseJournalStartPage>418</HouseJournalStartPage>
+			<HouseJournalEndPage>418</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn013.pdf#page=418</JournalLink>
+		</Action>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB950&amp;year=2023&amp;code=R </Link>
+			<Description>Referred: Elementary and Secondary Education(H)</Description>
+			<Guid>548381</Guid>
+			<PubDate>2023-05-12</PubDate>
+			<HouseJournalStartPage>3501</HouseJournalStartPage>
+			<HouseJournalEndPage>3501</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn072.pdf#page=3501</JournalLink>
+		</Action>
+		<Sponsor>
+			<SponsorType>Sponsor</SponsorType>
+			<FullName>Ingrid Burnett</FullName>
+			<District>019</District>
+		</Sponsor>
+		<BillText>
+			<BillTextLink>https://documents.house.mo.gov/billtracking/bills231/hlrbillspdf/1032H.01I.pdf</BillTextLink>
+			<DocumentName>Introduced</DocumentName>
+			<VersionTypeCode>IN</VersionTypeCode>
+		</BillText>
+		<BillSummary>
+			<SummaryTextLink>https://documents.house.mo.gov/billtracking/bills231/sumpdf/HB0950I.pdf</SummaryTextLink>
+			<DocumentName>Introduced</DocumentName>
+			<VersionTypeCode>IN</VersionTypeCode>
+		</BillSummary>
+	</BillInformation>
+</ROOT>

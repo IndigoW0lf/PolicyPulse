@@ -31,9 +31,9 @@ def parse_xml_files(directory, unique_tags):
 
 def main():
     unique_tags = {}
-    parse_xml_files('backend/data/fullBill_xml_files', unique_tags)
+    parse_xml_files('backend/utils/Missouri/MO_Keyword_XMLs', unique_tags)
 
-    with open('backend/data/fullBill_xml_tags.xml', "w") as f:
+    with open('backend/utils/Missouri/MO_Full_XML_Tags.xml', "w") as f:
         json.dump(unique_tags, f, indent=4)
 
 if __name__ == "__main__":

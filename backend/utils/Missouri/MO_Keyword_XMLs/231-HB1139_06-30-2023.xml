@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<ROOT>
+	<BillInformation>
+		<BillNumber>HB1139</BillNumber>
+		<CurrentBillString>HB 1139</CurrentBillString>
+		<SubstitutedBy/>
+		<Title>
+			<ShortTitle>SEXUAL OFFENSES</ShortTitle>
+			<LongTitle>Modifies and establishes provisions relating to time limitations for certain sexual offenses</LongTitle>
+		</Title>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB1139&amp;year=2023&amp;code=R </Link>
+			<Description>Introduced and Read First Time (H)</Description>
+			<Guid>537387</Guid>
+			<PubDate>2023-02-14</PubDate>
+			<HouseJournalStartPage>583</HouseJournalStartPage>
+			<HouseJournalEndPage>583</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn023.pdf#page=583</JournalLink>
+		</Action>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB1139&amp;year=2023&amp;code=R </Link>
+			<Description>Read Second Time (H)</Description>
+			<Guid>537538</Guid>
+			<PubDate>2023-02-15</PubDate>
+			<HouseJournalStartPage>596</HouseJournalStartPage>
+			<HouseJournalEndPage>596</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn024.pdf#page=596</JournalLink>
+		</Action>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB1139&amp;year=2023&amp;code=R </Link>
+			<Description>Referred: Judiciary(H)</Description>
+			<Guid>548578</Guid>
+			<PubDate>2023-05-12</PubDate>
+			<HouseJournalStartPage>3503</HouseJournalStartPage>
+			<HouseJournalEndPage>3503</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn072.pdf#page=3503</JournalLink>
+		</Action>
+		<Sponsor>
+			<SponsorType>Sponsor</SponsorType>
+			<FullName>Keri Ingle</FullName>
+			<District>035</District>
+		</Sponsor>
+		<BillText>
+			<BillTextLink>https://documents.house.mo.gov/billtracking/bills231/hlrbillspdf/1307H.02I.pdf</BillTextLink>
+			<DocumentName>Introduced</DocumentName>
+			<VersionTypeCode>IN</VersionTypeCode>
+		</BillText>
+		<BillSummary>
+			<SummaryTextLink>https://documents.house.mo.gov/billtracking/bills231/sumpdf/HB1139I.pdf</SummaryTextLink>
+			<DocumentName>Introduced</DocumentName>
+			<VersionTypeCode>IN</VersionTypeCode>
+		</BillSummary>
+	</BillInformation>
+</ROOT>

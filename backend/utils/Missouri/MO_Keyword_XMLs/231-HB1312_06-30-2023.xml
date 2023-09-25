@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<ROOT>
+	<BillInformation>
+		<BillNumber>HB1312</BillNumber>
+		<CurrentBillString>HB 1312</CurrentBillString>
+		<SubstitutedBy/>
+		<Title>
+			<ShortTitle>DEATH INVESTIGATIONS</ShortTitle>
+			<LongTitle>Modifies provisions relating to death investigations</LongTitle>
+		</Title>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB1312&amp;year=2023&amp;code=R </Link>
+			<Description>Introduced and Read First Time (H)</Description>
+			<Guid>538685</Guid>
+			<PubDate>2023-02-28</PubDate>
+			<HouseJournalStartPage>693</HouseJournalStartPage>
+			<HouseJournalEndPage>693</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn030.pdf#page=693</JournalLink>
+		</Action>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB1312&amp;year=2023&amp;code=R </Link>
+			<Description>Read Second Time (H)</Description>
+			<Guid>538951</Guid>
+			<PubDate>2023-03-01</PubDate>
+			<HouseJournalStartPage>720</HouseJournalStartPage>
+			<HouseJournalEndPage>720</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn031.pdf#page=720</JournalLink>
+		</Action>
+		<Action>
+			<Link>https://house.mo.gov/bill.aspx?bill=HB1312&amp;year=2023&amp;code=R </Link>
+			<Description>Referred: Crime Prevention and Public Safety(H)</Description>
+			<Guid>548269</Guid>
+			<PubDate>2023-05-12</PubDate>
+			<HouseJournalStartPage>3505</HouseJournalStartPage>
+			<HouseJournalEndPage>3505</HouseJournalEndPage>
+			<JournalLink>https://documents.house.mo.gov/BillTracking/bills231/jrnpdf/jrn072.pdf#page=3505</JournalLink>
+		</Action>
+		<Sponsor>
+			<SponsorType>Sponsor</SponsorType>
+			<FullName>Robert Sauls</FullName>
+			<District>021</District>
+		</Sponsor>
+		<BillText>
+			<BillTextLink>https://documents.house.mo.gov/billtracking/bills231/hlrbillspdf/2655H.01I.pdf</BillTextLink>
+			<DocumentName>Introduced</DocumentName>
+			<VersionTypeCode>IN</VersionTypeCode>
+		</BillText>
+		<BillSummary>
+			<SummaryTextLink>https://documents.house.mo.gov/billtracking/bills231/sumpdf/HB1312I.pdf</SummaryTextLink>
+			<DocumentName>Introduced</DocumentName>
+			<VersionTypeCode>IN</VersionTypeCode>
+		</BillSummary>
+	</BillInformation>
+</ROOT>
