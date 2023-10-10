@@ -1,4 +1,5 @@
-# Policy Pulse
+# ---IN PROGRESS--- Keep checking back for updates!
+# Policy Pulse 
 
 We are in an era of unprecedented bills being introduced to limit or restrict the rights of LGBTQ+ individuals. Policy Pulse is an innovative tool designed to demystify complex policies and provide a clear, concise understanding of these bills and their implications. By leveraging advanced language models and real-time data integration, Policy Pulse offers users summarized versions of lengthy policy documents, extracts key points, and provides historical context. Whether you're an NGO, activist, government body, or a concerned citizen, Policy Pulse aims to keep your finger on the pulse of policies that matter.
 
